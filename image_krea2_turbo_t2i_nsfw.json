@@ -1,0 +1,2155 @@
+{
+ "id": "57543d08-8c90-4603-b708-e8c2ba3f2864",
+ "revision": 0,
+ "last_node_id": 65,
+ "last_link_id": 108,
+ "nodes": [
+  {
+   "id": 30,
+   "type": "b0e5ca93-2731-42b9-8e0a-d28ea851ff81",
+   "pos": [
+    -640,
+    -110
+   ],
+   "size": [
+    560,
+    1010
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "link": null,
+     "widget": {
+      "name": "value"
+     }
+    },
+    {
+     "name": "value_1",
+     "type": "BOOLEAN",
+     "link": null,
+     "widget": {
+      "name": "value_1"
+     },
+     "label": "prompt_enhance"
+    },
+    {
+     "name": "thinking",
+     "type": "BOOLEAN",
+     "link": null,
+     "widget": {
+      "name": "thinking"
+     },
+     "label": "LLM_thinking_mode"
+    },
+    {
+     "name": "max_length_1",
+     "type": "INT",
+     "link": null,
+     "widget": {
+      "name": "max_length_1"
+     },
+     "label": "LLM_max_token"
+    },
+    {
+     "name": "width_1",
+     "type": "INT",
+     "link": 104,
+     "widget": {
+      "name": "width_1"
+     },
+     "label": "width"
+    },
+    {
+     "name": "height_1",
+     "type": "INT",
+     "link": 105,
+     "widget": {
+      "name": "height_1"
+     },
+     "label": "height"
+    },
+    {
+     "name": "seed_1",
+     "type": "INT",
+     "link": 103,
+     "widget": {
+      "name": "seed_1"
+     },
+     "label": "seed"
+    },
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 101
+    },
+    {
+     "name": "string_b_1",
+     "type": "STRING",
+     "link": 102,
+     "widget": {
+      "name": "string_b_1"
+     },
+     "label": "trigger_word"
+    },
+    {
+     "name": "clip_name",
+     "type": "COMBO",
+     "link": null,
+     "widget": {
+      "name": "clip_name"
+     }
+    },
+    {
+     "name": "vae_name",
+     "type": "COMBO",
+     "link": null,
+     "widget": {
+      "name": "vae_name"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      106
+     ]
+    },
+    {
+     "name": "prompt",
+     "type": "STRING",
+     "links": [
+      107
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.25.0",
+    "previewExposures": [
+     {
+      "name": "$$canvas-image-preview",
+      "sourceNodeId": "3",
+      "sourcePreviewName": "$$canvas-image-preview"
+     }
+    ]
+   },
+   "widgets_values": [
+    "Ivan_Ryo.An anthropomorphic moth sorceress sitting alone on a windowsill above a sleeping city, legs folded beneath her, wings drooping, head bowed. Her wings — once woven from dreams — are now blank and grey, all visions stolen, leaving only empty membrane. Her antennae droop, no longer picking up thoughts, and her powdery body has lost its glow, dull and colourless. Her eyes are closed, leaking slow tears that fall onto the sill. Her hands are long and trembling, each fingertip's dream-light gone. She wears robes of spun sleep, their edges dissolving into dull mist, and her mantle of eyelids is shut tight, refusing to open. Below her, the city sleeps on, dreaming without her. Painterly digital art, cinematic composition, highly detailed textures, grey and faded dream tones, quietly devastating and melancholic mood. Detailed. XIBALBA, extremely intricate linework, monochromatic colors contrasts, bold accent colors, extreme ink hatching, crosshatching, dark gothic devilish imagery, bio-mechanical structure",
+    true,
+    false,
+    512,
+    1024,
+    1024,
+    1101812345050323,
+    "",
+    "qwen3vl_4b_fp8_scaled.safetensors",
+    "qwen_image_vae.safetensors"
+   ],
+   "title": "Krea-2 Turbo T2I v2 (NSFW prompt writer)"
+  },
+  {
+   "id": 47,
+   "type": "MarkdownNote",
+   "pos": [
+    -1200,
+    970
+   ],
+   "size": [
+    690,
+    510
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "title": "LoRA Trigger Words and Settings",
+   "properties": {},
+   "widgets_values": [
+    "## Model Links\n\n- [Hugging Face:Comfy-Org/Krea-2](https://huggingface.co/Comfy-Org/Krea-2)\n- [ModelScope:Comfy-Org/Krea-2](https://modelscope.cn/models/Comfy-Org/Krea-2)\n\nDownload the style LoRAs used in this workflow from [Comfy-Org/Krea-2/loras](https://huggingface.co/Comfy-Org/Krea-2/tree/main/loras). Place the `.safetensors` files in `ComfyUI/models/loras/`.\n\n| LoRA                   | Trigger Words                        | Recommended Strength |\n|------------------------|--------------------------------------|-------|\n| `krea2_darkbrush`      | `monochrome ink wash style`          | `1.0` |\n| `krea2_dotmatrix`      | `monochrome stippling style`         | `1.0` |\n| `krea2_kidsdrawing`    | `naive expressive sketch style`      | `1.0` |\n| `krea2_neondrip`       | `textured abstract style`            | `1.0` |\n| `krea2_rainywindow`    | `rainy window style`                 | `1.0` |\n| `krea2_retroanime`     | `purple retro anime style`           | `1.0` |\n| `krea2_softwatercolor` | `art deco watercolor style`          | `1.0` |\n| `krea2_sunsetblur`     | `ethereal motion blur style`         | `1.0` |\n| `krea2_vintagetarot`   | `vintage tarot style`                | `1.0` |"
+   ],
+   "widgets_values_named": {
+    "text": "## Model Links\n\n- [Hugging Face:Comfy-Org/Krea-2](https://huggingface.co/Comfy-Org/Krea-2)\n- [ModelScope:Comfy-Org/Krea-2](https://modelscope.cn/models/Comfy-Org/Krea-2)\n\nDownload the style LoRAs used in this workflow from [Comfy-Org/Krea-2/loras](https://huggingface.co/Comfy-Org/Krea-2/tree/main/loras). Place the `.safetensors` files in `ComfyUI/models/loras/`.\n\n| LoRA                   | Trigger Words                        | Recommended Strength |\n|------------------------|--------------------------------------|-------|\n| `krea2_darkbrush`      | `monochrome ink wash style`          | `1.0` |\n| `krea2_dotmatrix`      | `monochrome stippling style`         | `1.0` |\n| `krea2_kidsdrawing`    | `naive expressive sketch style`      | `1.0` |\n| `krea2_neondrip`       | `textured abstract style`            | `1.0` |\n| `krea2_rainywindow`    | `rainy window style`                 | `1.0` |\n| `krea2_retroanime`     | `purple retro anime style`           | `1.0` |\n| `krea2_softwatercolor` | `art deco watercolor style`          | `1.0` |\n| `krea2_sunsetblur`     | `ethereal motion blur style`         | `1.0` |\n| `krea2_vintagetarot`   | `vintage tarot style`                | `1.0` |"
+   },
+   "color": "#222",
+   "bgcolor": "#000"
+  },
+  {
+   "id": 48,
+   "type": "MarkdownNote",
+   "pos": [
+    -1940,
+    -90
+   ],
+   "size": [
+    700,
+    990
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "title": "Model Links",
+   "properties": {},
+   "widgets_values": [
+    "Guide: [Subgraph](https://docs.comfy.org/interface/features/subgraph)\n\n## Model Links\n\nFor BF16 and NVFP4 variants, see [Comfy-Org/Krea-2](https://huggingface.co/Comfy-Org/Krea-2)\n\n**diffusion_models**\n\n- [krea2_turbo_fp8_scaled.safetensors](https://huggingface.co/Comfy-Org/Krea-2/resolve/main/diffusion_models/krea2_turbo_fp8_scaled.safetensors) (12.24 GB)\n\n**text_encoders**\n\n- [qwen3vl_4b_fp8_scaled.safetensors](https://huggingface.co/Comfy-Org/Krea-2/resolve/main/text_encoders/qwen3vl_4b_fp8_scaled.safetensors) (4.88 GB)\n\n**vae**\n\n- [qwen_image_vae.safetensors](https://huggingface.co/Comfy-Org/Krea-2/resolve/main/vae/qwen_image_vae.safetensors) (242 MB)\n\n**loras**\n\n- [krea2_darkbrush.safetensors](https://huggingface.co/Comfy-Org/Krea-2/resolve/main/loras/krea2_darkbrush.safetensors) (447.6 MB)\n\n\n## Model Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 diffusion_models/\n│   │   └── krea2_turbo_fp8_scaled.safetensors\n│   ├── 📂 text_encoders/\n│   │   └── qwen3vl_4b_fp8_scaled.safetensors\n│   ├── 📂 vae/\n│   │   └── qwen_image_vae.safetensors\n│   └── 📂 loras/\n│       └── krea2_darkbrush.safetensors\n```\n\n## Report Issue\n\nNote: Please update ComfyUI first ([guide](https://docs.comfy.org/installation/update_comfyui)) and prepare required models. Desktop/Cloud updates follow stable releases, so some nightly-supported models may not be available yet.\n\n- Cannot run / runtime errors: [ComfyUI/issues](https://github.com/comfyanonymous/ComfyUI/issues)\n- UI / frontend issues: [ComfyUI_frontend/issues](https://github.com/Comfy-Org/ComfyUI_frontend/issues)\n- Workflow issues: [workflow_templates/issues](https://github.com/Comfy-Org/workflow_templates/issues)\n"
+   ],
+   "widgets_values_named": {
+    "text": "Guide: [Subgraph](https://docs.comfy.org/interface/features/subgraph)\n\n## Model Links\n\nFor BF16 and NVFP4 variants, see [Comfy-Org/Krea-2](https://huggingface.co/Comfy-Org/Krea-2)\n\n**diffusion_models**\n\n- [krea2_turbo_fp8_scaled.safetensors](https://huggingface.co/Comfy-Org/Krea-2/resolve/main/diffusion_models/krea2_turbo_fp8_scaled.safetensors) (12.24 GB)\n\n**text_encoders**\n\n- [qwen3vl_4b_fp8_scaled.safetensors](https://huggingface.co/Comfy-Org/Krea-2/resolve/main/text_encoders/qwen3vl_4b_fp8_scaled.safetensors) (4.88 GB)\n\n**vae**\n\n- [qwen_image_vae.safetensors](https://huggingface.co/Comfy-Org/Krea-2/resolve/main/vae/qwen_image_vae.safetensors) (242 MB)\n\n**loras**\n\n- [krea2_darkbrush.safetensors](https://huggingface.co/Comfy-Org/Krea-2/resolve/main/loras/krea2_darkbrush.safetensors) (447.6 MB)\n\n\n## Model Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 diffusion_models/\n│   │   └── krea2_turbo_fp8_scaled.safetensors\n│   ├── 📂 text_encoders/\n│   │   └── qwen3vl_4b_fp8_scaled.safetensors\n│   ├── 📂 vae/\n│   │   └── qwen_image_vae.safetensors\n│   └── 📂 loras/\n│       └── krea2_darkbrush.safetensors\n```\n\n## Report Issue\n\nNote: Please update ComfyUI first ([guide](https://docs.comfy.org/installation/update_comfyui)) and prepare required models. Desktop/Cloud updates follow stable releases, so some nightly-supported models may not be available yet.\n\n- Cannot run / runtime errors: [ComfyUI/issues](https://github.com/comfyanonymous/ComfyUI/issues)\n- UI / frontend issues: [ComfyUI_frontend/issues](https://github.com/Comfy-Org/ComfyUI_frontend/issues)\n- Workflow issues: [workflow_templates/issues](https://github.com/Comfy-Org/workflow_templates/issues)\n"
+   },
+   "color": "#222",
+   "bgcolor": "#000"
+  },
+  {
+   "id": 50,
+   "type": "MarkdownNote",
+   "pos": [
+    -1200,
+    -90
+   ],
+   "size": [
+    700,
+    990
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "title": "Note: Krea-2",
+   "properties": {},
+   "widgets_values": [
+    "Guide: [krea-2](https://docs.comfy.org/tutorials/image/krea/krea-2)\n\nThis workflow generates images with **Krea-2 Turbo**, a fast distilled text-to-image model. The workflow is organized into a few parts: each handles a different step so you can generate quickly without digging through every node.\n\n## Text to Image (Krea-2 Turbo) Subgraph\n\n- [Hugging Face:Comfy-Org/Krea-2](https://huggingface.co/Comfy-Org/Krea-2)\n- [ModelScope:Comfy-Org/Krea-2](https://modelscope.cn/models/Comfy-Org/Krea-2)\n\nDouble-click this node to open the full pipeline. Inside, the canvas is grouped into several areas:\n\n**Models**: Loads the diffusion model, text encoder, VAE, and optional style LoRA (`LoraLoaderModelOnly`).\n\n**Prompt**: Enter your image description in **Text String (User Prompt)**.\n\n**Prompt Enhancement**: Expands your prompt before generation. Enabled by default (`prompt_enhance`). You can turn it off to use your prompt as-is, or replace the built-in module with **OpenAI** or **Gemini** API nodes.\n\n**Feature Switch**: Quick toggles on the left side of the subgraph:\n- `prompt_enhance`: enable or disable prompt expansion\n- `enable_lora?`: enable or disable the style LoRA\n\n**Image Generation**: Handles latent sizing, sampling (8 steps), and VAE decode to produce the final image.\n\nWhen using a LoRA, set `enable_lora?` to true, select the matching file in **LoraLoaderModelOnly**, and adjust `lora_strength` as needed.\n\n## LoRA & Trigger Word (CustomCombo)\n\nOn the main canvas, the **CustomCombo** node is where you choose which style LoRA you are using (e.g. `krea2_coolblue`, `krea2_darkbrush`). The workflow uses your selection to automatically append the correct **trigger word** to your prompt.\n\n- Download LoRA files from [Comfy-Org/Krea-2/loras](https://huggingface.co/Comfy-Org/Krea-2/tree/main/loras) and place them in `ComfyUI/models/loras/`\n- Select the LoRA name that matches the file loaded inside the subgraph\n- The trigger word is applied for you: no need to type it manually\n- For trigger words and recommended strength values, see the **LoRA Trigger Words and Settings** note beside this workflow\n"
+   ],
+   "widgets_values_named": {
+    "text": "Guide: [krea-2](https://docs.comfy.org/tutorials/image/krea/krea-2)\n\nThis workflow generates images with **Krea-2 Turbo**, a fast distilled text-to-image model. The workflow is organized into a few parts: each handles a different step so you can generate quickly without digging through every node.\n\n## Text to Image (Krea-2 Turbo) Subgraph\n\n- [Hugging Face:Comfy-Org/Krea-2](https://huggingface.co/Comfy-Org/Krea-2)\n- [ModelScope:Comfy-Org/Krea-2](https://modelscope.cn/models/Comfy-Org/Krea-2)\n\nDouble-click this node to open the full pipeline. Inside, the canvas is grouped into several areas:\n\n**Models**: Loads the diffusion model, text encoder, VAE, and optional style LoRA (`LoraLoaderModelOnly`).\n\n**Prompt**: Enter your image description in **Text String (User Prompt)**.\n\n**Prompt Enhancement**: Expands your prompt before generation. Enabled by default (`prompt_enhance`). You can turn it off to use your prompt as-is, or replace the built-in module with **OpenAI** or **Gemini** API nodes.\n\n**Feature Switch**: Quick toggles on the left side of the subgraph:\n- `prompt_enhance`: enable or disable prompt expansion\n- `enable_lora?`: enable or disable the style LoRA\n\n**Image Generation**: Handles latent sizing, sampling (8 steps), and VAE decode to produce the final image.\n\nWhen using a LoRA, set `enable_lora?` to true, select the matching file in **LoraLoaderModelOnly**, and adjust `lora_strength` as needed.\n\n## LoRA & Trigger Word (CustomCombo)\n\nOn the main canvas, the **CustomCombo** node is where you choose which style LoRA you are using (e.g. `krea2_coolblue`, `krea2_darkbrush`). The workflow uses your selection to automatically append the correct **trigger word** to your prompt.\n\n- Download LoRA files from [Comfy-Org/Krea-2/loras](https://huggingface.co/Comfy-Org/Krea-2/tree/main/loras) and place them in `ComfyUI/models/loras/`\n- Select the LoRA name that matches the file loaded inside the subgraph\n- The trigger word is applied for you: no need to type it manually\n- For trigger words and recommended strength values, see the **LoRA Trigger Words and Settings** note beside this workflow\n"
+   },
+   "color": "#222",
+   "bgcolor": "#000"
+  },
+  {
+   "id": 60,
+   "type": "UNETLoader",
+   "pos": [
+    -1100,
+    -110
+   ],
+   "size": [
+    400,
+    110
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "unet_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "unet_name"
+     },
+     "link": null
+    },
+    {
+     "name": "weight_dtype",
+     "type": "COMBO",
+     "widget": {
+      "name": "weight_dtype"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      100
+     ]
+    }
+   ],
+   "title": "UNet Krea-2 Turbo",
+   "properties": {
+    "Node name for S&R": "UNETLoader"
+   },
+   "widgets_values": [
+    "krea2_turbo_fp8_scaled.safetensors",
+    "default"
+   ]
+  },
+  {
+   "id": 61,
+   "type": "Power Lora Loader (rgthree)",
+   "pos": [
+    -1100,
+    30
+   ],
+   "size": [
+    400,
+    220
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "dir": 3,
+     "name": "model",
+     "type": "MODEL",
+     "link": 100
+    },
+    {
+     "dir": 3,
+     "name": "clip",
+     "type": "CLIP",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": 4,
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      101
+     ]
+    },
+    {
+     "dir": 4,
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": []
+    }
+   ],
+   "title": "LoRA Krea2 (bat/tat tung LoRA)",
+   "properties": {
+    "Node name for S&R": "Power Lora Loader (rgthree)",
+    "Show Strengths": "Single Strength"
+   },
+   "widgets_values": [
+    {},
+    {
+     "type": "PowerLoraLoaderHeaderWidget"
+    },
+    {
+     "on": true,
+     "lora": "Ivan_Ryo_Krea2_V2_krea2_3389412_epoch_10.safetensors",
+     "strength": 1.0,
+     "strengthTwo": null
+    },
+    {
+     "on": true,
+     "lora": "sweatySkin_v1.safetensors",
+     "strength": 0.8,
+     "strengthTwo": null
+    },
+    {
+     "on": true,
+     "lora": "shavedMalePubes_v1.safetensors",
+     "strength": 0.8,
+     "strengthTwo": null
+    },
+    {},
+    ""
+   ]
+  },
+  {
+   "id": 62,
+   "type": "PrimitiveString",
+   "pos": [
+    -1100,
+    290
+   ],
+   "size": [
+    400,
+    60
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      102
+     ]
+    }
+   ],
+   "title": "Trigger word (noi truoc prompt)",
+   "properties": {
+    "Node name for S&R": "TriggerA"
+   },
+   "widgets_values": [
+    "Ivan_Ryo"
+   ]
+  },
+  {
+   "id": 63,
+   "type": "SaveImageA1Metadata",
+   "pos": [
+    460,
+    -110
+   ],
+   "size": [
+    420,
+    470
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 106
+    },
+    {
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
+    },
+    {
+     "name": "positive_prompt_override",
+     "shape": 7,
+     "type": "STRING",
+     "widget": {
+      "name": "positive_prompt_override"
+     },
+     "link": 107
+    },
+    {
+     "name": "negative_prompt_override",
+     "shape": 7,
+     "type": "STRING",
+     "widget": {
+      "name": "negative_prompt_override"
+     },
+     "link": null
+    },
+    {
+     "name": "extra_metadata",
+     "shape": 7,
+     "type": "STRING",
+     "widget": {
+      "name": "extra_metadata"
+     },
+     "link": null
+    },
+    {
+     "name": "include_lora_hashes",
+     "shape": 7,
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "include_lora_hashes"
+     },
+     "link": null
+    },
+    {
+     "name": "debug_sidecar",
+     "shape": 7,
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "debug_sidecar"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [],
+   "title": "Save (A1111 metadata)",
+   "properties": {
+    "Node name for S&R": "SaveImageA1Metadata"
+   },
+   "widgets_values": [
+    "Krea2_%date:yyyy_MM_dd%/Krea2_T2I_nsfw_%date:yyMMdd%_%TriggerA.value%_%Seed.value%",
+    "",
+    "",
+    "",
+    true,
+    false
+   ]
+  },
+  {
+   "id": 64,
+   "type": "PrimitiveInt",
+   "pos": [
+    -1100,
+    520
+   ],
+   "size": [
+    400,
+    90
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "value",
+     "type": "INT",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      103
+     ]
+    }
+   ],
+   "title": "Seed (fixed / increment / decrement / randomize)",
+   "properties": {
+    "Node name for S&R": "Seed"
+   },
+   "widgets_values": [
+    1101812345050323,
+    "randomize"
+   ]
+  },
+  {
+   "id": 49,
+   "type": "ResolutionSelector",
+   "pos": [
+    -1100,
+    390
+   ],
+   "size": [
+    270,
+    190
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "width",
+     "type": "INT",
+     "links": [
+      104
+     ]
+    },
+    {
+     "name": "height",
+     "type": "INT",
+     "links": [
+      105
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.25.0",
+    "Node name for S&R": "ResolutionSelector"
+   },
+   "widgets_values": [
+    "9:16 (Portrait Widescreen)",
+    1,
+    16
+   ],
+   "widgets_values_named": {
+    "aspect_ratio": "9:16 (Portrait Widescreen)",
+    "megapixels": 1,
+    "multiple": 8
+   }
+  }
+ ],
+ "links": [
+  [
+   100,
+   60,
+   0,
+   61,
+   0,
+   "MODEL"
+  ],
+  [
+   101,
+   61,
+   0,
+   30,
+   7,
+   "MODEL"
+  ],
+  [
+   102,
+   62,
+   0,
+   30,
+   8,
+   "STRING"
+  ],
+  [
+   103,
+   64,
+   0,
+   30,
+   6,
+   "INT"
+  ],
+  [
+   104,
+   49,
+   0,
+   30,
+   4,
+   "INT"
+  ],
+  [
+   105,
+   49,
+   1,
+   30,
+   5,
+   "INT"
+  ],
+  [
+   106,
+   30,
+   0,
+   63,
+   0,
+   "IMAGE"
+  ],
+  [
+   107,
+   30,
+   1,
+   63,
+   2,
+   "STRING"
+  ]
+ ],
+ "groups": [],
+ "definitions": {
+  "subgraphs": [
+   {
+    "id": "b0e5ca93-2731-42b9-8e0a-d28ea851ff81",
+    "version": 1,
+    "state": {
+     "lastGroupId": 10,
+     "lastNodeId": 29,
+     "lastLinkId": 90,
+     "lastRerouteId": 0
+    },
+    "revision": 0,
+    "config": {},
+    "name": "Krea-2 Turbo T2I v2 (NSFW prompt writer)",
+    "inputNode": {
+     "id": -10,
+     "bounding": [
+      -1663.0467311105908,
+      442.6713226822096,
+      160.76953125,
+      328
+     ]
+    },
+    "outputNode": {
+     "id": -20,
+     "bounding": [
+      1560,
+      496,
+      128,
+      68
+     ]
+    },
+    "inputs": [
+     {
+      "id": "b0f5c754-5322-440c-8c1c-ba732e910d33",
+      "name": "value",
+      "type": "STRING",
+      "linkIds": [
+       45
+      ],
+      "pos": [
+       -1523.0467311105908,
+       466.6713226822096
+      ]
+     },
+     {
+      "id": "47b0e74d-ef80-4423-a7a6-9bd1673092bb",
+      "name": "value_1",
+      "type": "BOOLEAN",
+      "linkIds": [
+       46
+      ],
+      "label": "prompt_enhance",
+      "pos": [
+       -1523.0467311105908,
+       486.6713226822096
+      ]
+     },
+     {
+      "id": "bece097f-5c57-4aeb-9113-16499634a69c",
+      "name": "thinking",
+      "type": "BOOLEAN",
+      "linkIds": [
+       73
+      ],
+      "label": "LLM_thinking_mode",
+      "pos": [
+       -1523.0467311105908,
+       506.6713226822096
+      ]
+     },
+     {
+      "id": "9b4edd63-9421-47d9-8c41-5a44510fcba9",
+      "name": "max_length_1",
+      "type": "INT",
+      "linkIds": [
+       74
+      ],
+      "label": "LLM_max_token",
+      "pos": [
+       -1523.0467311105908,
+       526.6713226822096
+      ]
+     },
+     {
+      "id": "2a2c225e-95ca-4c45-ab19-5072a890b064",
+      "name": "width_1",
+      "type": "INT",
+      "linkIds": [
+       75
+      ],
+      "label": "width",
+      "pos": [
+       -1523.0467311105908,
+       546.6713226822096
+      ]
+     },
+     {
+      "id": "acdd37ed-8b29-4b6d-8d6a-51aacaaefc73",
+      "name": "height_1",
+      "type": "INT",
+      "linkIds": [
+       76
+      ],
+      "label": "height",
+      "pos": [
+       -1523.0467311105908,
+       566.6713226822096
+      ]
+     },
+     {
+      "id": "08bcb3eb-ae87-41cc-b695-d1f934f05e35",
+      "name": "seed_1",
+      "type": "INT",
+      "linkIds": [
+       77
+      ],
+      "label": "seed",
+      "pos": [
+       -1523.0467311105908,
+       586.6713226822096
+      ]
+     },
+     {
+      "id": "1724870c-8f53-461d-9933-0331ac3b1cc7",
+      "name": "model",
+      "type": "MODEL",
+      "linkIds": [
+       85
+      ],
+      "label": "model",
+      "pos": [
+       -1523.0467311105908,
+       606.6713226822096
+      ]
+     },
+     {
+      "id": "9396dc65-64f2-4fb2-84d7-4a8fa853bd28",
+      "name": "string_b_1",
+      "type": "STRING",
+      "linkIds": [
+       86
+      ],
+      "label": "trigger_word",
+      "pos": [
+       -1523.0467311105908,
+       626.6713226822096
+      ]
+     },
+     {
+      "id": "add6cb96-21da-41c2-9ef9-60dfe1cb7535",
+      "name": "clip_name",
+      "type": "COMBO",
+      "linkIds": [
+       83
+      ],
+      "pos": [
+       -1523.0467311105908,
+       646.6713226822096
+      ]
+     },
+     {
+      "id": "81640110-5a4d-45c0-9d7c-59966875bf0f",
+      "name": "vae_name",
+      "type": "COMBO",
+      "linkIds": [
+       84
+      ],
+      "pos": [
+       -1523.0467311105908,
+       666.6713226822096
+      ]
+     }
+    ],
+    "outputs": [
+     {
+      "id": "e4073813-752d-4584-96b5-6e42eac355dd",
+      "name": "IMAGE",
+      "type": "IMAGE",
+      "linkIds": [
+       43
+      ],
+      "localized_name": "IMAGE",
+      "pos": [
+       1584,
+       520
+      ]
+     },
+     {
+      "id": "9eb7c20a-10bd-4702-824d-8ef69f12ae8d",
+      "name": "prompt",
+      "type": "STRING",
+      "linkIds": [
+       89
+      ],
+      "localized_name": "prompt",
+      "pos": [
+       1584,
+       540
+      ]
+     }
+    ],
+    "widgets": [],
+    "nodes": [
+     {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": [
+       100,
+       -250
+      ],
+      "size": [
+       480,
+       420
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "clip",
+        "name": "clip",
+        "type": "CLIP",
+        "link": 10
+       },
+       {
+        "localized_name": "text",
+        "name": "text",
+        "type": "STRING",
+        "widget": {
+         "name": "text"
+        },
+        "link": 88
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "CONDITIONING",
+        "name": "CONDITIONING",
+        "type": "CONDITIONING",
+        "slot_index": 0,
+        "links": [
+         4,
+         13
+        ]
+       }
+      ],
+      "properties": {
+       "cnr_id": "comfy-core",
+       "ver": "0.25.0",
+       "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+       "A high-resolution, surreal digital illustration showing a human hand holding a martini glass. The image is overlaid with whimsical, expressive ink-style doodles, including a cartoon figure inside the glass, a drawn citrus wedge on the rim, and various abstract sketches and faces surrounding the glass against a clean, white background. The style seamlessly blends a realistic, lit photograph with loose, hand-drawn marker artistry, creating a playful and artistic juxtaposition."
+      ],
+      "widgets_values_named": {
+       "text": "A high-resolution, surreal digital illustration showing a human hand holding a martini glass. The image is overlaid with whimsical, expressive ink-style doodles, including a cartoon figure inside the glass, a drawn citrus wedge on the rim, and various abstract sketches and faces surrounding the glass against a clean, white background. The style seamlessly blends a realistic, lit photograph with loose, hand-drawn marker artistry, creating a playful and artistic juxtaposition."
+      },
+      "color": "#232",
+      "bgcolor": "#353"
+     },
+     {
+      "id": 5,
+      "type": "EmptyLatentImage",
+      "pos": [
+       170,
+       350
+      ],
+      "size": [
+       320,
+       170
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "width",
+        "name": "width",
+        "type": "INT",
+        "widget": {
+         "name": "width"
+        },
+        "link": 75
+       },
+       {
+        "localized_name": "height",
+        "name": "height",
+        "type": "INT",
+        "widget": {
+         "name": "height"
+        },
+        "link": 76
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "LATENT",
+        "name": "LATENT",
+        "type": "LATENT",
+        "slot_index": 0,
+        "links": [
+         2
+        ]
+       }
+      ],
+      "properties": {
+       "cnr_id": "comfy-core",
+       "ver": "0.25.0",
+       "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+       1024,
+       1024,
+       1
+      ],
+      "widgets_values_named": {
+       "width": 1024,
+       "height": 1024,
+       "batch_size": 1
+      }
+     },
+     {
+      "id": 3,
+      "type": "KSampler",
+      "pos": [
+       640,
+       -100
+      ],
+      "size": [
+       320,
+       590
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "model",
+        "name": "model",
+        "type": "MODEL",
+        "link": 85
+       },
+       {
+        "localized_name": "positive",
+        "name": "positive",
+        "type": "CONDITIONING",
+        "link": 4
+       },
+       {
+        "localized_name": "negative",
+        "name": "negative",
+        "type": "CONDITIONING",
+        "link": 14
+       },
+       {
+        "localized_name": "latent_image",
+        "name": "latent_image",
+        "type": "LATENT",
+        "link": 2
+       },
+       {
+        "localized_name": "seed",
+        "name": "seed",
+        "type": "INT",
+        "widget": {
+         "name": "seed"
+        },
+        "link": 77
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "LATENT",
+        "name": "LATENT",
+        "type": "LATENT",
+        "slot_index": 0,
+        "links": [
+         7
+        ]
+       }
+      ],
+      "properties": {
+       "cnr_id": "comfy-core",
+       "ver": "0.25.0",
+       "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+       735915477938686,
+       "fixed",
+       8,
+       1,
+       "euler",
+       "simple",
+       1
+      ],
+      "widgets_values_named": {
+       "seed": 735915477938686,
+       "control_after_generate": "randomize",
+       "steps": 8,
+       "cfg": 1,
+       "sampler_name": "euler",
+       "scheduler": "simple",
+       "denoise": 1
+      }
+     },
+     {
+      "id": 8,
+      "type": "VAEDecode",
+      "pos": [
+       1010,
+       -270
+      ],
+      "size": [
+       230,
+       100
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "samples",
+        "name": "samples",
+        "type": "LATENT",
+        "link": 7
+       },
+       {
+        "localized_name": "vae",
+        "name": "vae",
+        "type": "VAE",
+        "link": 12
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "IMAGE",
+        "name": "IMAGE",
+        "type": "IMAGE",
+        "slot_index": 0,
+        "links": [
+         43
+        ]
+       }
+      ],
+      "properties": {
+       "cnr_id": "comfy-core",
+       "ver": "0.25.0",
+       "Node name for S&R": "VAEDecode"
+      }
+     },
+     {
+      "id": 11,
+      "type": "CLIPLoader",
+      "pos": [
+       -410,
+       150
+      ],
+      "size": [
+       450,
+       170
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "clip_name",
+        "name": "clip_name",
+        "type": "COMBO",
+        "widget": {
+         "name": "clip_name"
+        },
+        "link": 83
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "CLIP",
+        "name": "CLIP",
+        "type": "CLIP",
+        "links": [
+         10
+        ]
+       }
+      ],
+      "properties": {
+       "cnr_id": "comfy-core",
+       "ver": "0.25.0",
+       "Node name for S&R": "CLIPLoader",
+       "models": [
+        {
+         "name": "qwen3vl_4b_fp8_scaled.safetensors",
+         "url": "https://huggingface.co/Comfy-Org/Krea-2/resolve/main/text_encoders/qwen3vl_4b_fp8_scaled.safetensors",
+         "directory": "text_encoders"
+        }
+       ]
+      },
+      "widgets_values": [
+       "qwen3vl_4b_fp8_scaled.safetensors",
+       "krea2",
+       "default"
+      ],
+      "widgets_values_named": {
+       "clip_name": "qwen3vl_4b_fp8_scaled.safetensors",
+       "type": "krea2",
+       "device": "default"
+      }
+     },
+     {
+      "id": 12,
+      "type": "VAELoader",
+      "pos": [
+       -410,
+       390
+      ],
+      "size": [
+       450,
+       120
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "vae_name",
+        "name": "vae_name",
+        "type": "COMBO",
+        "widget": {
+         "name": "vae_name"
+        },
+        "link": 84
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "VAE",
+        "name": "VAE",
+        "type": "VAE",
+        "links": [
+         12
+        ]
+       }
+      ],
+      "properties": {
+       "cnr_id": "comfy-core",
+       "ver": "0.25.0",
+       "Node name for S&R": "VAELoader",
+       "models": [
+        {
+         "name": "qwen_image_vae.safetensors",
+         "url": "https://huggingface.co/Comfy-Org/Krea-2/resolve/main/vae/qwen_image_vae.safetensors",
+         "directory": "vae"
+        }
+       ]
+      },
+      "widgets_values": [
+       "qwen_image_vae.safetensors"
+      ],
+      "widgets_values_named": {
+       "vae_name": "qwen_image_vae.safetensors"
+      }
+     },
+     {
+      "id": 13,
+      "type": "ConditioningZeroOut",
+      "pos": [
+       350,
+       220
+      ],
+      "size": [
+       225,
+       26
+      ],
+      "flags": {
+       "collapsed": true
+      },
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "conditioning",
+        "name": "conditioning",
+        "type": "CONDITIONING",
+        "link": 13
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "CONDITIONING",
+        "name": "CONDITIONING",
+        "type": "CONDITIONING",
+        "links": [
+         14
+        ]
+       }
+      ],
+      "properties": {
+       "cnr_id": "comfy-core",
+       "ver": "0.25.0",
+       "Node name for S&R": "ConditioningZeroOut"
+      }
+     },
+     {
+      "id": 16,
+      "type": "TextGenerate",
+      "pos": [
+       60,
+       650
+      ],
+      "size": [
+       400,
+       490
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "clip",
+        "name": "clip",
+        "type": "CLIP",
+        "link": 90
+       },
+       {
+        "localized_name": "image",
+        "name": "image",
+        "shape": 7,
+        "type": "IMAGE",
+        "link": null
+       },
+       {
+        "localized_name": "video",
+        "name": "video",
+        "shape": 7,
+        "type": "IMAGE",
+        "link": null
+       },
+       {
+        "localized_name": "audio",
+        "name": "audio",
+        "shape": 7,
+        "type": "AUDIO",
+        "link": null
+       },
+       {
+        "localized_name": "system_prompt",
+        "name": "system_prompt",
+        "shape": 7,
+        "type": "STRING",
+        "link": null
+       },
+       {
+        "localized_name": "prompt",
+        "name": "prompt",
+        "type": "STRING",
+        "widget": {
+         "name": "prompt"
+        },
+        "link": 19
+       },
+       {
+        "localized_name": "max_length",
+        "name": "max_length",
+        "type": "INT",
+        "widget": {
+         "name": "max_length"
+        },
+        "link": 74
+       },
+       {
+        "localized_name": "thinking",
+        "name": "thinking",
+        "shape": 7,
+        "type": "BOOLEAN",
+        "widget": {
+         "name": "thinking"
+        },
+        "link": 73
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "generated_text",
+        "name": "generated_text",
+        "type": "STRING",
+        "links": [
+         33
+        ]
+       },
+       {
+        "localized_name": "thinking",
+        "name": "thinking",
+        "type": "STRING",
+        "links": []
+       }
+      ],
+      "properties": {
+       "cnr_id": "comfy-core",
+       "ver": "0.25.0",
+       "Node name for S&R": "TextGenerate"
+      },
+      "widgets_values": [
+       "",
+       512,
+       "on",
+       0.7,
+       64,
+       0.95,
+       0.05,
+       1.05,
+       0,
+       0,
+       true,
+       true,
+       "auto"
+      ],
+      "widgets_values_named": {
+       "prompt": "",
+       "max_length": 512,
+       "sampling_mode": "on",
+       "sampling_mode.temperature": 0.7,
+       "sampling_mode.top_k": 64,
+       "sampling_mode.top_p": 0.95,
+       "sampling_mode.min_p": 0.05,
+       "sampling_mode.repetition_penalty": 1.05,
+       "sampling_mode.seed": 0,
+       "sampling_mode.presence_penalty": 0,
+       "thinking": true,
+       "use_default_template": true,
+       "mtp": "auto"
+      }
+     },
+     {
+      "id": 17,
+      "type": "StringConcatenate",
+      "pos": [
+       -210,
+       1310
+      ],
+      "size": [
+       225,
+       34
+      ],
+      "flags": {
+       "collapsed": true
+      },
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "string_a",
+        "name": "string_a",
+        "type": "STRING",
+        "widget": {
+         "name": "string_a"
+        },
+        "link": 21
+       },
+       {
+        "localized_name": "string_b",
+        "name": "string_b",
+        "type": "STRING",
+        "widget": {
+         "name": "string_b"
+        },
+        "link": 22
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "STRING",
+        "name": "STRING",
+        "type": "STRING",
+        "links": [
+         19
+        ]
+       }
+      ],
+      "properties": {
+       "cnr_id": "comfy-core",
+       "ver": "0.25.0",
+       "Node name for S&R": "StringConcatenate"
+      },
+      "widgets_values": [
+       "",
+       "",
+       ""
+      ],
+      "widgets_values_named": {
+       "string_a": "",
+       "string_b": "",
+       "delimiter": ""
+      }
+     },
+     {
+      "id": 18,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+       -430,
+       650
+      ],
+      "size": [
+       460,
+       610
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+       {
+        "localized_name": "STRING",
+        "name": "STRING",
+        "type": "STRING",
+        "links": [
+         21
+        ]
+       }
+      ],
+      "title": "Text String (System Prompt)",
+      "properties": {
+       "cnr_id": "comfy-core",
+       "ver": "0.25.0",
+       "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+       "You are an expert prompt engineer for text-to-image models. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nThink step by step about the request before writing the answer:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nThen output a single expanded prompt paragraph.\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Structure:** Write one cohesive paragraph after the thinking block. No bullets, JSON, or markdown.\n7. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n8. **Respect the Human Form:** Treat depictions of people with dignity. Assume clothing covers genitals and intimate anatomy.\n9. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n\nUser's Input:\n\n"
+      ],
+      "widgets_values_named": {
+       "value": "You are an expert prompt engineer for text-to-image models. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nThink step by step about the request before writing the answer:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nThen output a single expanded prompt paragraph.\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Structure:** Write one cohesive paragraph after the thinking block. No bullets, JSON, or markdown.\n7. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n8. **Respect the Human Form:** Treat depictions of people with dignity. Assume clothing covers genitals and intimate anatomy.\n9. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n\nUser's Input:\n\n"
+      }
+     },
+     {
+      "id": 19,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+       -1070,
+       -290
+      ],
+      "size": [
+       570,
+       800
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "value",
+        "name": "value",
+        "type": "STRING",
+        "widget": {
+         "name": "value"
+        },
+        "link": 45
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "STRING",
+        "name": "STRING",
+        "type": "STRING",
+        "links": [
+         22,
+         34
+        ]
+       }
+      ],
+      "title": "Text String (User Prompt)",
+      "properties": {
+       "cnr_id": "comfy-core",
+       "ver": "0.25.0",
+       "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+       "A high-resolution, surreal digital illustration showing a human hand holding a martini glass. The image is overlaid with whimsical, expressive ink-style doodles, including a cartoon figure inside the glass, a drawn citrus wedge on the rim, and various abstract sketches and faces surrounding the glass against a clean, white background. The style seamlessly blends a realistic, lit photograph with loose, hand-drawn marker artistry, creating a playful and artistic juxtaposition."
+      ],
+      "widgets_values_named": {
+       "value": "A high-resolution, surreal digital illustration showing a human hand holding a martini glass. The image is overlaid with whimsical, expressive ink-style doodles, including a cartoon figure inside the glass, a drawn citrus wedge on the rim, and various abstract sketches and faces surrounding the glass against a clean, white background. The style seamlessly blends a realistic, lit photograph with loose, hand-drawn marker artistry, creating a playful and artistic juxtaposition."
+      },
+      "color": "#322",
+      "bgcolor": "#533"
+     },
+     {
+      "id": 20,
+      "type": "PreviewAny",
+      "pos": [
+       500,
+       660
+      ],
+      "size": [
+       470,
+       550
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "source",
+        "name": "source",
+        "type": "*",
+        "link": 27
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "STRING",
+        "name": "STRING",
+        "type": "STRING",
+        "links": [
+         87
+        ]
+       }
+      ],
+      "properties": {
+       "cnr_id": "comfy-core",
+       "ver": "0.25.0",
+       "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+     },
+     {
+      "id": 21,
+      "type": "ComfySwitchNode",
+      "pos": [
+       170,
+       1270
+      ],
+      "size": [
+       270,
+       130
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "on_false",
+        "name": "on_false",
+        "shape": 7,
+        "type": "STRING",
+        "link": 34
+       },
+       {
+        "localized_name": "on_true",
+        "name": "on_true",
+        "shape": 7,
+        "type": "STRING",
+        "link": 33
+       },
+       {
+        "localized_name": "switch",
+        "name": "switch",
+        "type": "BOOLEAN",
+        "widget": {
+         "name": "switch"
+        },
+        "link": 32
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "output",
+        "name": "output",
+        "type": "STRING",
+        "links": [
+         27
+        ]
+       }
+      ],
+      "properties": {
+       "cnr_id": "comfy-core",
+       "ver": "0.25.0",
+       "Node name for S&R": "ComfySwitchNode"
+      },
+      "widgets_values": [
+       false
+      ],
+      "widgets_values_named": {
+       "switch": false
+      }
+     },
+     {
+      "id": 24,
+      "type": "PrimitiveBoolean",
+      "pos": [
+       -910,
+       840
+      ],
+      "size": [
+       270,
+       110
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "value",
+        "name": "value",
+        "type": "BOOLEAN",
+        "widget": {
+         "name": "value"
+        },
+        "link": 46
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "BOOLEAN",
+        "name": "BOOLEAN",
+        "type": "BOOLEAN",
+        "links": [
+         32
+        ]
+       }
+      ],
+      "title": "Boolean (Refine Prompt?)",
+      "properties": {
+       "cnr_id": "comfy-core",
+       "ver": "0.25.0",
+       "Node name for S&R": "PrimitiveBoolean"
+      },
+      "widgets_values": [
+       true
+      ],
+      "widgets_values_named": {
+       "value": true
+      }
+     },
+     {
+      "id": 27,
+      "type": "StringConcatenate",
+      "pos": [
+       1030,
+       960
+      ],
+      "size": [
+       350,
+       250
+      ],
+      "flags": {
+       "collapsed": false
+      },
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+       {
+        "localized_name": "string_a",
+        "name": "string_a",
+        "type": "STRING",
+        "widget": {
+         "name": "string_a"
+        },
+        "link": 86
+       },
+       {
+        "localized_name": "string_b",
+        "name": "string_b",
+        "type": "STRING",
+        "widget": {
+         "name": "string_b"
+        },
+        "link": 87
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "STRING",
+        "name": "STRING",
+        "type": "STRING",
+        "links": [
+         88,
+         89
+        ]
+       }
+      ],
+      "title": "Trigger + prompt",
+      "properties": {
+       "cnr_id": "comfy-core",
+       "ver": "0.25.0",
+       "Node name for S&R": "StringConcatenate"
+      },
+      "widgets_values": [
+       "",
+       "",
+       ". "
+      ],
+      "widgets_values_named": {
+       "string_a": "",
+       "string_b": "muted minimalist sketch style",
+       "delimiter": ", "
+      }
+     },
+     {
+      "id": 29,
+      "type": "CLIPLoaderGGUF",
+      "pos": [
+       -410,
+       700
+      ],
+      "size": [
+       450,
+       110
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "title": "Prompt writer: Qwen3-8B uncensored (chi viet prompt)",
+      "inputs": [
+       {
+        "localized_name": "clip_name",
+        "name": "clip_name",
+        "type": "COMBO",
+        "widget": {
+         "name": "clip_name"
+        },
+        "link": null
+       },
+       {
+        "localized_name": "type",
+        "name": "type",
+        "type": "COMBO",
+        "widget": {
+         "name": "type"
+        },
+        "link": null
+       }
+      ],
+      "outputs": [
+       {
+        "localized_name": "CLIP",
+        "name": "CLIP",
+        "type": "CLIP",
+        "links": [
+         90
+        ]
+       }
+      ],
+      "properties": {
+       "cnr_id": "comfyui-gguf",
+       "Node name for S&R": "CLIPLoaderGGUF"
+      },
+      "widgets_values": [
+       "flux2-klein-9b-uncensored-q4_k_m.gguf",
+       "flux2"
+      ],
+      "color": "#a33",
+      "bgcolor": "#533"
+     }
+    ],
+    "groups": [
+     {
+      "id": 1,
+      "title": "Models",
+      "bounding": [
+       -430,
+       -320,
+       490,
+       850
+      ],
+      "color": "#3f789e",
+      "flags": {}
+     },
+     {
+      "id": 4,
+      "title": "Prompt Enhancement",
+      "bounding": [
+       -440,
+       580,
+       1940,
+       840
+      ],
+      "color": "#3f789e",
+      "flags": {}
+     },
+     {
+      "id": 5,
+      "title": "Group",
+      "bounding": [
+       -1080,
+       -360,
+       610,
+       910
+      ],
+      "color": "#3f789e",
+      "flags": {}
+     },
+     {
+      "id": 6,
+      "title": "Image Generation",
+      "bounding": [
+       -440,
+       -360,
+       1940,
+       910
+      ],
+      "color": "#3f789e",
+      "flags": {}
+     },
+     {
+      "id": 7,
+      "title": "Prompt",
+      "bounding": [
+       90,
+       -320,
+       500,
+       570
+      ],
+      "color": "#3f789e",
+      "flags": {}
+     },
+     {
+      "id": 8,
+      "title": "Size",
+      "bounding": [
+       90,
+       270,
+       500,
+       260
+      ],
+      "color": "#3f789e",
+      "flags": {}
+     },
+     {
+      "id": 9,
+      "title": "Feature Switch",
+      "bounding": [
+       -1080,
+       580,
+       610,
+       400
+      ],
+      "color": "#3f789e",
+      "flags": {}
+     }
+    ],
+    "links": [
+     {
+      "id": 2,
+      "origin_id": 5,
+      "origin_slot": 0,
+      "target_id": 3,
+      "target_slot": 3,
+      "type": "LATENT"
+     },
+     {
+      "id": 4,
+      "origin_id": 6,
+      "origin_slot": 0,
+      "target_id": 3,
+      "target_slot": 1,
+      "type": "CONDITIONING"
+     },
+     {
+      "id": 7,
+      "origin_id": 3,
+      "origin_slot": 0,
+      "target_id": 8,
+      "target_slot": 0,
+      "type": "LATENT"
+     },
+     {
+      "id": 10,
+      "origin_id": 11,
+      "origin_slot": 0,
+      "target_id": 6,
+      "target_slot": 0,
+      "type": "CLIP"
+     },
+     {
+      "id": 12,
+      "origin_id": 12,
+      "origin_slot": 0,
+      "target_id": 8,
+      "target_slot": 1,
+      "type": "VAE"
+     },
+     {
+      "id": 13,
+      "origin_id": 6,
+      "origin_slot": 0,
+      "target_id": 13,
+      "target_slot": 0,
+      "type": "CONDITIONING"
+     },
+     {
+      "id": 14,
+      "origin_id": 13,
+      "origin_slot": 0,
+      "target_id": 3,
+      "target_slot": 2,
+      "type": "CONDITIONING"
+     },
+     {
+      "id": 19,
+      "origin_id": 17,
+      "origin_slot": 0,
+      "target_id": 16,
+      "target_slot": 5,
+      "type": "STRING"
+     },
+     {
+      "id": 21,
+      "origin_id": 18,
+      "origin_slot": 0,
+      "target_id": 17,
+      "target_slot": 0,
+      "type": "STRING"
+     },
+     {
+      "id": 22,
+      "origin_id": 19,
+      "origin_slot": 0,
+      "target_id": 17,
+      "target_slot": 1,
+      "type": "STRING"
+     },
+     {
+      "id": 27,
+      "origin_id": 21,
+      "origin_slot": 0,
+      "target_id": 20,
+      "target_slot": 0,
+      "type": "STRING"
+     },
+     {
+      "id": 32,
+      "origin_id": 24,
+      "origin_slot": 0,
+      "target_id": 21,
+      "target_slot": 2,
+      "type": "BOOLEAN"
+     },
+     {
+      "id": 33,
+      "origin_id": 16,
+      "origin_slot": 0,
+      "target_id": 21,
+      "target_slot": 1,
+      "type": "STRING"
+     },
+     {
+      "id": 34,
+      "origin_id": 19,
+      "origin_slot": 0,
+      "target_id": 21,
+      "target_slot": 0,
+      "type": "STRING"
+     },
+     {
+      "id": 43,
+      "origin_id": 8,
+      "origin_slot": 0,
+      "target_id": -20,
+      "target_slot": 0,
+      "type": "IMAGE"
+     },
+     {
+      "id": 45,
+      "origin_id": -10,
+      "origin_slot": 0,
+      "target_id": 19,
+      "target_slot": 0,
+      "type": "STRING"
+     },
+     {
+      "id": 46,
+      "origin_id": -10,
+      "origin_slot": 1,
+      "target_id": 24,
+      "target_slot": 0,
+      "type": "BOOLEAN"
+     },
+     {
+      "id": 73,
+      "origin_id": -10,
+      "origin_slot": 2,
+      "target_id": 16,
+      "target_slot": 7,
+      "type": "BOOLEAN"
+     },
+     {
+      "id": 74,
+      "origin_id": -10,
+      "origin_slot": 3,
+      "target_id": 16,
+      "target_slot": 6,
+      "type": "INT"
+     },
+     {
+      "id": 75,
+      "origin_id": -10,
+      "origin_slot": 4,
+      "target_id": 5,
+      "target_slot": 0,
+      "type": "INT"
+     },
+     {
+      "id": 76,
+      "origin_id": -10,
+      "origin_slot": 5,
+      "target_id": 5,
+      "target_slot": 1,
+      "type": "INT"
+     },
+     {
+      "id": 77,
+      "origin_id": -10,
+      "origin_slot": 6,
+      "target_id": 3,
+      "target_slot": 4,
+      "type": "INT"
+     },
+     {
+      "id": 83,
+      "origin_id": -10,
+      "origin_slot": 9,
+      "target_id": 11,
+      "target_slot": 0,
+      "type": "COMBO"
+     },
+     {
+      "id": 84,
+      "origin_id": -10,
+      "origin_slot": 10,
+      "target_id": 12,
+      "target_slot": 0,
+      "type": "COMBO"
+     },
+     {
+      "id": 85,
+      "origin_id": -10,
+      "origin_slot": 7,
+      "target_id": 3,
+      "target_slot": 0,
+      "type": "MODEL"
+     },
+     {
+      "id": 86,
+      "origin_id": -10,
+      "origin_slot": 8,
+      "target_id": 27,
+      "target_slot": 0,
+      "type": "STRING"
+     },
+     {
+      "id": 87,
+      "origin_id": 20,
+      "origin_slot": 0,
+      "target_id": 27,
+      "target_slot": 1,
+      "type": "STRING"
+     },
+     {
+      "id": 88,
+      "origin_id": 27,
+      "origin_slot": 0,
+      "target_id": 6,
+      "target_slot": 1,
+      "type": "STRING"
+     },
+     {
+      "id": 89,
+      "origin_id": 27,
+      "origin_slot": 0,
+      "target_id": -20,
+      "target_slot": 1,
+      "type": "STRING"
+     },
+     {
+      "id": 90,
+      "origin_id": 29,
+      "origin_slot": 0,
+      "target_id": 16,
+      "target_slot": 0,
+      "type": "CLIP"
+     }
+    ],
+    "extra": {}
+   }
+  ]
+ },
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.8264462809917354,
+   "offset": [
+    273.0930952464471,
+    191.89740923648472
+   ]
+  },
+  "frontendVersion": "1.53.10",
+  "VHS_latentpreview": false,
+  "VHS_latentpreviewrate": 0,
+  "VHS_MetadataImage": true,
+  "VHS_KeepIntermediate": true
+ },
+ "version": 0.4
+}

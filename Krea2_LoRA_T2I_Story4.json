@@ -1,0 +1,3036 @@
+{
+ "id": "45ed058f-7d82-4bcf-aaf3-c779efef02a5",
+ "revision": 0,
+ "last_node_id": 35,
+ "last_link_id": 54,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "UNETLoader",
+   "pos": [
+    0,
+    60
+   ],
+   "size": [
+    420,
+    82
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "unet_name",
+     "name": "unet_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "unet_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "weight_dtype",
+     "name": "weight_dtype",
+     "type": "COMBO",
+     "widget": {
+      "name": "weight_dtype"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "MODEL",
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      1
+     ]
+    }
+   ],
+   "title": "UNet Krea-2 Turbo",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "UNETLoader"
+   },
+   "widgets_values": [
+    "krea2_turbo_fp8_scaled.safetensors",
+    "default"
+   ],
+   "widgets_values_named": {
+    "unet_name": "krea2_turbo_fp8_scaled.safetensors",
+    "weight_dtype": "default"
+   }
+  },
+  {
+   "id": 2,
+   "type": "CLIPLoader",
+   "pos": [
+    0,
+    202
+   ],
+   "size": [
+    420,
+    106
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "clip_name",
+     "name": "clip_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "clip_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "type",
+     "name": "type",
+     "type": "COMBO",
+     "widget": {
+      "name": "type"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "device",
+     "name": "device",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "device"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "CLIP",
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      8,
+      21,
+      33,
+      45
+     ]
+    }
+   ],
+   "title": "Text encoder Qwen3-VL-4B (type krea2)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "CLIPLoader"
+   },
+   "widgets_values": [
+    "qwen3vl_4b_fp8_scaled.safetensors",
+    "krea2",
+    "default"
+   ],
+   "widgets_values_named": {
+    "clip_name": "qwen3vl_4b_fp8_scaled.safetensors",
+    "type": "krea2",
+    "device": "default"
+   }
+  },
+  {
+   "id": 3,
+   "type": "VAELoader",
+   "pos": [
+    0,
+    368
+   ],
+   "size": [
+    420,
+    58
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "vae_name",
+     "name": "vae_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "vae_name"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "VAE",
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      16,
+      28,
+      40,
+      52
+     ]
+    }
+   ],
+   "title": "VAE qwen_image",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "VAELoader"
+   },
+   "widgets_values": [
+    "qwen_image_vae.safetensors"
+   ],
+   "widgets_values_named": {
+    "vae_name": "qwen_image_vae.safetensors"
+   }
+  },
+  {
+   "id": 4,
+   "type": "Power Lora Loader (rgthree)",
+   "pos": [
+    0,
+    620
+   ],
+   "size": [
+    420,
+    190
+   ],
+   "flags": {},
+   "order": 11,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 1
+    },
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "shape": 3,
+     "type": "MODEL",
+     "links": [
+      11,
+      23,
+      35,
+      47
+     ]
+    },
+    {
+     "name": "CLIP",
+     "shape": 3,
+     "type": "CLIP",
+     "links": null
+    }
+   ],
+   "title": "LoRA Krea2 (bật/tắt từng LoRA)",
+   "properties": {
+    "cnr_id": "rgthree-comfy",
+    "ver": "2c5342a8cb0eaecaabf61435a5f37dd594c510ba",
+    "Show Strengths": "Single Strength",
+    "Match": ""
+   },
+   "widgets_values": [
+    {},
+    {
+     "type": "PowerLoraLoaderHeaderWidget"
+    },
+    {
+     "on": true,
+     "lora": "Ivan_Ryo_Krea2_V2_krea2_3389412_epoch_10.safetensors",
+     "strength": 1,
+     "strengthTwo": null
+    },
+    {
+     "on": true,
+     "lora": "sweatySkin_v1.safetensors",
+     "strength": 0.8,
+     "strengthTwo": null
+    },
+    {
+     "on": true,
+     "lora": "shavedMalePubes_v1.safetensors",
+     "strength": 0.8,
+     "strengthTwo": null
+    },
+    {},
+    ""
+   ],
+   "widgets_values_named": {
+    "divider": {},
+    "PowerLoraLoaderHeaderWidget": {
+     "type": "PowerLoraLoaderHeaderWidget"
+    },
+    "lora_1": {
+     "on": true,
+     "lora": "Ivan_Ryo_Krea2_V2_krea2_3389412_epoch_10.safetensors",
+     "strength": 1,
+     "strengthTwo": null
+    },
+    "lora_2": {
+     "on": true,
+     "lora": "sweatySkin_v1.safetensors",
+     "strength": 0.8,
+     "strengthTwo": null
+    },
+    "lora_3": {
+     "on": true,
+     "lora": "shavedMalePubes_v1.safetensors",
+     "strength": 0.8,
+     "strengthTwo": null
+    },
+    "divider#1": {},
+    "➕ Add Lora": ""
+   }
+  },
+  {
+   "id": 5,
+   "type": "PrimitiveString",
+   "pos": [
+    0,
+    870
+   ],
+   "size": [
+    420,
+    58
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      2
+     ]
+    }
+   ],
+   "title": "Trigger word (nối trước sheet)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "TriggerA"
+   },
+   "widgets_values": [
+    "Ivan_Ryo"
+   ],
+   "widgets_values_named": {
+    "value": "Ivan_Ryo"
+   }
+  },
+  {
+   "id": 6,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    500,
+    60
+   ],
+   "size": [
+    420,
+    220
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      3
+     ]
+    }
+   ],
+   "title": "CHARACTER SHEET – trang phục + bối cảnh (ghép vào MỌI beat)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "PrimitiveStringMultiline"
+   },
+   "widgets_values": [
+    "Photorealistic cinematic photo series. One young handsome East Asian man, early 20s, short silver-ash hair with a purple tint, lean athletic muscular build, wearing a fitted black sleeveless tank top, grey athletic shorts and white sneakers, inside a modern minimalist gym with large floor-to-ceiling windows, warm early-morning sunlight, natural skin texture, shallow depth of field, 35mm photo"
+   ],
+   "widgets_values_named": {
+    "value": "Photorealistic cinematic photo series. One young handsome East Asian man, early 20s, short silver-ash hair with a purple tint, lean athletic muscular build, wearing a fitted black sleeveless tank top, grey athletic shorts and white sneakers, inside a modern minimalist gym with large floor-to-ceiling windows, warm early-morning sunlight, natural skin texture, shallow depth of field, 35mm photo"
+   }
+  },
+  {
+   "id": 7,
+   "type": "StringConcatenate",
+   "pos": [
+    500,
+    340
+   ],
+   "size": [
+    420,
+    166
+   ],
+   "flags": {},
+   "order": 12,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string_a",
+     "name": "string_a",
+     "type": "STRING",
+     "widget": {
+      "name": "string_a"
+     },
+     "link": 2
+    },
+    {
+     "localized_name": "string_b",
+     "name": "string_b",
+     "type": "STRING",
+     "widget": {
+      "name": "string_b"
+     },
+     "link": 3
+    },
+    {
+     "localized_name": "delimiter",
+     "name": "delimiter",
+     "type": "STRING",
+     "widget": {
+      "name": "delimiter"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      6,
+      19,
+      31,
+      43
+     ]
+    }
+   ],
+   "title": "trigger + sheet",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "StringConcatenate"
+   },
+   "widgets_values": [
+    "",
+    "",
+    ". "
+   ],
+   "widgets_values_named": {
+    "string_a": "",
+    "string_b": "",
+    "delimiter": ". "
+   }
+  },
+  {
+   "id": 8,
+   "type": "ResolutionSelector",
+   "pos": [
+    500,
+    566
+   ],
+   "size": [
+    420,
+    150
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "aspect_ratio",
+     "name": "aspect_ratio",
+     "type": "COMBO",
+     "widget": {
+      "name": "aspect_ratio"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "megapixels",
+     "name": "megapixels",
+     "type": "FLOAT",
+     "widget": {
+      "name": "megapixels"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "multiple",
+     "name": "multiple",
+     "type": "INT",
+     "widget": {
+      "name": "multiple"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "preview",
+     "name": "preview",
+     "shape": 7,
+     "type": "RESOLUTION_PREVIEW",
+     "widget": {
+      "name": "preview"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "links": [
+      4
+     ]
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "links": [
+      5
+     ]
+    }
+   ],
+   "title": "Kích thước (chung)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "ResolutionSelector"
+   },
+   "widgets_values": [
+    "9:16 (Portrait Widescreen)",
+    1,
+    16
+   ],
+   "widgets_values_named": {
+    "aspect_ratio": "9:16 (Portrait Widescreen)",
+    "megapixels": 1,
+    "multiple": 16
+   }
+  },
+  {
+   "id": 9,
+   "type": "EmptyLatentImage",
+   "pos": [
+    500,
+    776
+   ],
+   "size": [
+    420,
+    106
+   ],
+   "flags": {},
+   "order": 13,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": 4
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "widget": {
+      "name": "height"
+     },
+     "link": 5
+    },
+    {
+     "localized_name": "batch_size",
+     "name": "batch_size",
+     "type": "INT",
+     "widget": {
+      "name": "batch_size"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "LATENT",
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      14,
+      26,
+      38,
+      50
+     ]
+    }
+   ],
+   "title": "Empty latent (chung)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "EmptyLatentImage"
+   },
+   "widgets_values": [
+    1024,
+    1024,
+    1
+   ],
+   "widgets_values_named": {
+    "width": 1024,
+    "height": 1024,
+    "batch_size": 1
+   }
+  },
+  {
+   "id": 10,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    1000,
+    60
+   ],
+   "size": [
+    420,
+    160
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      7
+     ]
+    }
+   ],
+   "title": "Beat 1 – ANCHOR: bước vào phòng gym",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "PrimitiveStringMultiline"
+   },
+   "widgets_values": [
+    "He walks into the empty gym carrying a small towel over one shoulder, looking toward the windows with a calm focused expression, full-body shot from a low angle."
+   ],
+   "widgets_values_named": {
+    "value": "He walks into the empty gym carrying a small towel over one shoulder, looking toward the windows with a calm focused expression, full-body shot from a low angle."
+   }
+  },
+  {
+   "id": 11,
+   "type": "StringConcatenate",
+   "pos": [
+    1000,
+    280
+   ],
+   "size": [
+    420,
+    166
+   ],
+   "flags": {},
+   "order": 14,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string_a",
+     "name": "string_a",
+     "type": "STRING",
+     "widget": {
+      "name": "string_a"
+     },
+     "link": 6
+    },
+    {
+     "localized_name": "string_b",
+     "name": "string_b",
+     "type": "STRING",
+     "widget": {
+      "name": "string_b"
+     },
+     "link": 7
+    },
+    {
+     "localized_name": "delimiter",
+     "name": "delimiter",
+     "type": "STRING",
+     "widget": {
+      "name": "delimiter"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      9,
+      18
+     ]
+    }
+   ],
+   "title": "sheet + beat 1",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "StringConcatenate"
+   },
+   "widgets_values": [
+    "",
+    "",
+    ". "
+   ],
+   "widgets_values_named": {
+    "string_a": "",
+    "string_b": "",
+    "delimiter": ". "
+   }
+  },
+  {
+   "id": 12,
+   "type": "CLIPTextEncode",
+   "pos": [
+    1000,
+    506
+   ],
+   "size": [
+    420,
+    120
+   ],
+   "flags": {},
+   "order": 18,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "clip",
+     "name": "clip",
+     "type": "CLIP",
+     "link": 8
+    },
+    {
+     "localized_name": "text",
+     "name": "text",
+     "type": "STRING",
+     "widget": {
+      "name": "text"
+     },
+     "link": 9
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "CONDITIONING",
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      10,
+      12
+     ]
+    }
+   ],
+   "title": "CLIP Encode – Beat 1",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "CLIPTextEncode"
+   },
+   "widgets_values": [
+    ""
+   ],
+   "widgets_values_named": {
+    "text": ""
+   }
+  },
+  {
+   "id": 13,
+   "type": "ConditioningZeroOut",
+   "pos": [
+    1000,
+    686
+   ],
+   "size": [
+    420,
+    26
+   ],
+   "flags": {},
+   "order": 22,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "conditioning",
+     "name": "conditioning",
+     "type": "CONDITIONING",
+     "link": 10
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "CONDITIONING",
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      13,
+      25,
+      37,
+      49
+     ]
+    }
+   ],
+   "title": "Negative = zero (dùng chung)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "ConditioningZeroOut"
+   }
+  },
+  {
+   "id": 14,
+   "type": "KSampler",
+   "pos": [
+    1000,
+    772
+   ],
+   "size": [
+    420,
+    262
+   ],
+   "flags": {},
+   "order": 23,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 11
+    },
+    {
+     "localized_name": "positive",
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 12
+    },
+    {
+     "localized_name": "negative",
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 13
+    },
+    {
+     "localized_name": "latent_image",
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 14
+    },
+    {
+     "localized_name": "seed",
+     "name": "seed",
+     "type": "INT",
+     "widget": {
+      "name": "seed"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "steps",
+     "name": "steps",
+     "type": "INT",
+     "widget": {
+      "name": "steps"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "widget": {
+      "name": "cfg"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sampler_name",
+     "name": "sampler_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "sampler_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "scheduler",
+     "name": "scheduler",
+     "type": "COMBO",
+     "widget": {
+      "name": "scheduler"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "denoise",
+     "name": "denoise",
+     "type": "FLOAT",
+     "widget": {
+      "name": "denoise"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "LATENT",
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      15
+     ]
+    }
+   ],
+   "title": "Sampler – Beat 1",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "Beat1"
+   },
+   "widgets_values": [
+    649710128635041,
+    "fixed",
+    8,
+    1,
+    "euler",
+    "simple",
+    1
+   ],
+   "widgets_values_named": {
+    "seed": 649710128635041,
+    "control_after_generate": "fixed",
+    "steps": 8,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "denoise": 1
+   }
+  },
+  {
+   "id": 15,
+   "type": "VAEDecode",
+   "pos": [
+    1000,
+    1094
+   ],
+   "size": [
+    420,
+    46
+   ],
+   "flags": {},
+   "order": 27,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "samples",
+     "name": "samples",
+     "type": "LATENT",
+     "link": 15
+    },
+    {
+     "localized_name": "vae",
+     "name": "vae",
+     "type": "VAE",
+     "link": 16
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      17
+     ]
+    }
+   ],
+   "title": "Decode – Beat 1",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "VAEDecode"
+   }
+  },
+  {
+   "id": 16,
+   "type": "SaveImageA1Metadata",
+   "pos": [
+    1000,
+    1200
+   ],
+   "size": [
+    420,
+    470
+   ],
+   "flags": {},
+   "order": 31,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 17
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "positive_prompt_override",
+     "name": "positive_prompt_override",
+     "shape": 7,
+     "type": "STRING",
+     "widget": {
+      "name": "positive_prompt_override"
+     },
+     "link": 18
+    },
+    {
+     "localized_name": "negative_prompt_override",
+     "name": "negative_prompt_override",
+     "shape": 7,
+     "type": "STRING",
+     "widget": {
+      "name": "negative_prompt_override"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "extra_metadata",
+     "name": "extra_metadata",
+     "shape": 7,
+     "type": "STRING",
+     "widget": {
+      "name": "extra_metadata"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "include_lora_hashes",
+     "name": "include_lora_hashes",
+     "shape": 7,
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "include_lora_hashes"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "debug_sidecar",
+     "name": "debug_sidecar",
+     "shape": 7,
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "debug_sidecar"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [],
+   "title": "Save – Beat 1",
+   "properties": {
+    "aux_id": "tony71200/Load_IO_Tony",
+    "ver": "35a06a5efd38d558b03f04351ce9dd93f582ab21",
+    "Node name for S&R": "SaveImageA1Metadata"
+   },
+   "widgets_values": [
+    "Krea2_%date:yyyy_MM_dd%/Story4_%date:yyMMdd%_1_arrive_%Beat1.seed%",
+    "",
+    "",
+    "",
+    true,
+    false
+   ],
+   "widgets_values_named": {
+    "filename_prefix": "Krea2_%date:yyyy_MM_dd%/Story4_%date:yyMMdd%_1_arrive_%Beat1.seed%",
+    "positive_prompt_override": "",
+    "negative_prompt_override": "",
+    "extra_metadata": "",
+    "include_lora_hashes": true,
+    "debug_sidecar": false
+   }
+  },
+  {
+   "id": 17,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    1500,
+    60
+   ],
+   "size": [
+    420,
+    160
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      20
+     ]
+    }
+   ],
+   "title": "Beat 2: tập kéo xà",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "PrimitiveStringMultiline"
+   },
+   "widgets_values": [
+    "He is doing pull-ups on a black pull-up bar, arms fully engaged, back and shoulder muscles tense, medium shot from behind and slightly to the side."
+   ],
+   "widgets_values_named": {
+    "value": "He is doing pull-ups on a black pull-up bar, arms fully engaged, back and shoulder muscles tense, medium shot from behind and slightly to the side."
+   }
+  },
+  {
+   "id": 18,
+   "type": "StringConcatenate",
+   "pos": [
+    1500,
+    280
+   ],
+   "size": [
+    420,
+    166
+   ],
+   "flags": {},
+   "order": 15,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string_a",
+     "name": "string_a",
+     "type": "STRING",
+     "widget": {
+      "name": "string_a"
+     },
+     "link": 19
+    },
+    {
+     "localized_name": "string_b",
+     "name": "string_b",
+     "type": "STRING",
+     "widget": {
+      "name": "string_b"
+     },
+     "link": 20
+    },
+    {
+     "localized_name": "delimiter",
+     "name": "delimiter",
+     "type": "STRING",
+     "widget": {
+      "name": "delimiter"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      22,
+      30
+     ]
+    }
+   ],
+   "title": "sheet + beat 2",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "StringConcatenate"
+   },
+   "widgets_values": [
+    "",
+    "",
+    ". "
+   ],
+   "widgets_values_named": {
+    "string_a": "",
+    "string_b": "",
+    "delimiter": ". "
+   }
+  },
+  {
+   "id": 19,
+   "type": "CLIPTextEncode",
+   "pos": [
+    1500,
+    506
+   ],
+   "size": [
+    420,
+    120
+   ],
+   "flags": {},
+   "order": 19,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "clip",
+     "name": "clip",
+     "type": "CLIP",
+     "link": 21
+    },
+    {
+     "localized_name": "text",
+     "name": "text",
+     "type": "STRING",
+     "widget": {
+      "name": "text"
+     },
+     "link": 22
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "CONDITIONING",
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      24
+     ]
+    }
+   ],
+   "title": "CLIP Encode – Beat 2",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "CLIPTextEncode"
+   },
+   "widgets_values": [
+    ""
+   ],
+   "widgets_values_named": {
+    "text": ""
+   }
+  },
+  {
+   "id": 20,
+   "type": "KSampler",
+   "pos": [
+    1500,
+    686
+   ],
+   "size": [
+    420,
+    262
+   ],
+   "flags": {},
+   "order": 24,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 23
+    },
+    {
+     "localized_name": "positive",
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 24
+    },
+    {
+     "localized_name": "negative",
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 25
+    },
+    {
+     "localized_name": "latent_image",
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 26
+    },
+    {
+     "localized_name": "seed",
+     "name": "seed",
+     "type": "INT",
+     "widget": {
+      "name": "seed"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "steps",
+     "name": "steps",
+     "type": "INT",
+     "widget": {
+      "name": "steps"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "widget": {
+      "name": "cfg"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sampler_name",
+     "name": "sampler_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "sampler_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "scheduler",
+     "name": "scheduler",
+     "type": "COMBO",
+     "widget": {
+      "name": "scheduler"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "denoise",
+     "name": "denoise",
+     "type": "FLOAT",
+     "widget": {
+      "name": "denoise"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "LATENT",
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      27
+     ]
+    }
+   ],
+   "title": "Sampler – Beat 2",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "Beat2"
+   },
+   "widgets_values": [
+    379239329701384,
+    "randomize",
+    8,
+    1,
+    "euler",
+    "simple",
+    1
+   ],
+   "widgets_values_named": {
+    "seed": 379239329701384,
+    "control_after_generate": "randomize",
+    "steps": 8,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "denoise": 1
+   }
+  },
+  {
+   "id": 21,
+   "type": "VAEDecode",
+   "pos": [
+    1500,
+    1008
+   ],
+   "size": [
+    420,
+    46
+   ],
+   "flags": {},
+   "order": 28,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "samples",
+     "name": "samples",
+     "type": "LATENT",
+     "link": 27
+    },
+    {
+     "localized_name": "vae",
+     "name": "vae",
+     "type": "VAE",
+     "link": 28
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      29
+     ]
+    }
+   ],
+   "title": "Decode – Beat 2",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "VAEDecode"
+   }
+  },
+  {
+   "id": 22,
+   "type": "SaveImageA1Metadata",
+   "pos": [
+    1500,
+    1114
+   ],
+   "size": [
+    420,
+    470
+   ],
+   "flags": {},
+   "order": 32,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 29
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "positive_prompt_override",
+     "name": "positive_prompt_override",
+     "shape": 7,
+     "type": "STRING",
+     "widget": {
+      "name": "positive_prompt_override"
+     },
+     "link": 30
+    },
+    {
+     "localized_name": "negative_prompt_override",
+     "name": "negative_prompt_override",
+     "shape": 7,
+     "type": "STRING",
+     "widget": {
+      "name": "negative_prompt_override"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "extra_metadata",
+     "name": "extra_metadata",
+     "shape": 7,
+     "type": "STRING",
+     "widget": {
+      "name": "extra_metadata"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "include_lora_hashes",
+     "name": "include_lora_hashes",
+     "shape": 7,
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "include_lora_hashes"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "debug_sidecar",
+     "name": "debug_sidecar",
+     "shape": 7,
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "debug_sidecar"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [],
+   "title": "Save – Beat 2",
+   "properties": {
+    "aux_id": "tony71200/Load_IO_Tony",
+    "ver": "35a06a5efd38d558b03f04351ce9dd93f582ab21",
+    "Node name for S&R": "SaveImageA1Metadata"
+   },
+   "widgets_values": [
+    "Krea2_%date:yyyy_MM_dd%/Story4_%date:yyMMdd%_2_pullup_%Beat2.seed%",
+    "",
+    "",
+    "",
+    true,
+    false
+   ],
+   "widgets_values_named": {
+    "filename_prefix": "Krea2_%date:yyyy_MM_dd%/Story4_%date:yyMMdd%_2_pullup_%Beat2.seed%",
+    "positive_prompt_override": "",
+    "negative_prompt_override": "",
+    "extra_metadata": "",
+    "include_lora_hashes": true,
+    "debug_sidecar": false
+   }
+  },
+  {
+   "id": 23,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    2000,
+    60
+   ],
+   "size": [
+    420,
+    160
+   ],
+   "flags": {},
+   "order": 8,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      32
+     ]
+    }
+   ],
+   "title": "Beat 3: nghỉ, mồ hôi",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "PrimitiveStringMultiline"
+   },
+   "widgets_values": [
+    "He sits on a weight bench resting between sets, sweaty skin glistening in the sunlight, elbows on knees, breathing hard, looking at the camera with a tired smile, medium close-up."
+   ],
+   "widgets_values_named": {
+    "value": "He sits on a weight bench resting between sets, sweaty skin glistening in the sunlight, elbows on knees, breathing hard, looking at the camera with a tired smile, medium close-up."
+   }
+  },
+  {
+   "id": 24,
+   "type": "StringConcatenate",
+   "pos": [
+    2000,
+    280
+   ],
+   "size": [
+    420,
+    166
+   ],
+   "flags": {},
+   "order": 16,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string_a",
+     "name": "string_a",
+     "type": "STRING",
+     "widget": {
+      "name": "string_a"
+     },
+     "link": 31
+    },
+    {
+     "localized_name": "string_b",
+     "name": "string_b",
+     "type": "STRING",
+     "widget": {
+      "name": "string_b"
+     },
+     "link": 32
+    },
+    {
+     "localized_name": "delimiter",
+     "name": "delimiter",
+     "type": "STRING",
+     "widget": {
+      "name": "delimiter"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      34,
+      42
+     ]
+    }
+   ],
+   "title": "sheet + beat 3",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "StringConcatenate"
+   },
+   "widgets_values": [
+    "",
+    "",
+    ". "
+   ],
+   "widgets_values_named": {
+    "string_a": "",
+    "string_b": "",
+    "delimiter": ". "
+   }
+  },
+  {
+   "id": 25,
+   "type": "CLIPTextEncode",
+   "pos": [
+    2000,
+    506
+   ],
+   "size": [
+    420,
+    120
+   ],
+   "flags": {},
+   "order": 20,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "clip",
+     "name": "clip",
+     "type": "CLIP",
+     "link": 33
+    },
+    {
+     "localized_name": "text",
+     "name": "text",
+     "type": "STRING",
+     "widget": {
+      "name": "text"
+     },
+     "link": 34
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "CONDITIONING",
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      36
+     ]
+    }
+   ],
+   "title": "CLIP Encode – Beat 3",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "CLIPTextEncode"
+   },
+   "widgets_values": [
+    ""
+   ],
+   "widgets_values_named": {
+    "text": ""
+   }
+  },
+  {
+   "id": 26,
+   "type": "KSampler",
+   "pos": [
+    2000,
+    686
+   ],
+   "size": [
+    420,
+    262
+   ],
+   "flags": {},
+   "order": 25,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 35
+    },
+    {
+     "localized_name": "positive",
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 36
+    },
+    {
+     "localized_name": "negative",
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 37
+    },
+    {
+     "localized_name": "latent_image",
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 38
+    },
+    {
+     "localized_name": "seed",
+     "name": "seed",
+     "type": "INT",
+     "widget": {
+      "name": "seed"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "steps",
+     "name": "steps",
+     "type": "INT",
+     "widget": {
+      "name": "steps"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "widget": {
+      "name": "cfg"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sampler_name",
+     "name": "sampler_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "sampler_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "scheduler",
+     "name": "scheduler",
+     "type": "COMBO",
+     "widget": {
+      "name": "scheduler"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "denoise",
+     "name": "denoise",
+     "type": "FLOAT",
+     "widget": {
+      "name": "denoise"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "LATENT",
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      39
+     ]
+    }
+   ],
+   "title": "Sampler – Beat 3",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "Beat3"
+   },
+   "widgets_values": [
+    889399409970997,
+    "randomize",
+    8,
+    1,
+    "euler",
+    "simple",
+    1
+   ],
+   "widgets_values_named": {
+    "seed": 889399409970997,
+    "control_after_generate": "randomize",
+    "steps": 8,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "denoise": 1
+   }
+  },
+  {
+   "id": 27,
+   "type": "VAEDecode",
+   "pos": [
+    2000,
+    1008
+   ],
+   "size": [
+    420,
+    46
+   ],
+   "flags": {},
+   "order": 29,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "samples",
+     "name": "samples",
+     "type": "LATENT",
+     "link": 39
+    },
+    {
+     "localized_name": "vae",
+     "name": "vae",
+     "type": "VAE",
+     "link": 40
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      41
+     ]
+    }
+   ],
+   "title": "Decode – Beat 3",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "VAEDecode"
+   }
+  },
+  {
+   "id": 28,
+   "type": "SaveImageA1Metadata",
+   "pos": [
+    2000,
+    1114
+   ],
+   "size": [
+    420,
+    470
+   ],
+   "flags": {},
+   "order": 33,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 41
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "positive_prompt_override",
+     "name": "positive_prompt_override",
+     "shape": 7,
+     "type": "STRING",
+     "widget": {
+      "name": "positive_prompt_override"
+     },
+     "link": 42
+    },
+    {
+     "localized_name": "negative_prompt_override",
+     "name": "negative_prompt_override",
+     "shape": 7,
+     "type": "STRING",
+     "widget": {
+      "name": "negative_prompt_override"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "extra_metadata",
+     "name": "extra_metadata",
+     "shape": 7,
+     "type": "STRING",
+     "widget": {
+      "name": "extra_metadata"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "include_lora_hashes",
+     "name": "include_lora_hashes",
+     "shape": 7,
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "include_lora_hashes"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "debug_sidecar",
+     "name": "debug_sidecar",
+     "shape": 7,
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "debug_sidecar"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [],
+   "title": "Save – Beat 3",
+   "properties": {
+    "aux_id": "tony71200/Load_IO_Tony",
+    "ver": "35a06a5efd38d558b03f04351ce9dd93f582ab21",
+    "Node name for S&R": "SaveImageA1Metadata"
+   },
+   "widgets_values": [
+    "Krea2_%date:yyyy_MM_dd%/Story4_%date:yyMMdd%_3_rest_%Beat3.seed%",
+    "",
+    "",
+    "",
+    true,
+    false
+   ],
+   "widgets_values_named": {
+    "filename_prefix": "Krea2_%date:yyyy_MM_dd%/Story4_%date:yyMMdd%_3_rest_%Beat3.seed%",
+    "positive_prompt_override": "",
+    "negative_prompt_override": "",
+    "extra_metadata": "",
+    "include_lora_hashes": true,
+    "debug_sidecar": false
+   }
+  },
+  {
+   "id": 29,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    2500,
+    60
+   ],
+   "size": [
+    420,
+    160
+   ],
+   "flags": {},
+   "order": 9,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      44
+     ]
+    }
+   ],
+   "title": "Beat 4: lau mồ hôi bên cửa sổ",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "PrimitiveStringMultiline"
+   },
+   "widgets_values": [
+    "He stands by the window wiping his face with the towel, golden backlight outlining his silhouette and arms, relaxed satisfied expression, three-quarter view."
+   ],
+   "widgets_values_named": {
+    "value": "He stands by the window wiping his face with the towel, golden backlight outlining his silhouette and arms, relaxed satisfied expression, three-quarter view."
+   }
+  },
+  {
+   "id": 30,
+   "type": "StringConcatenate",
+   "pos": [
+    2500,
+    280
+   ],
+   "size": [
+    420,
+    166
+   ],
+   "flags": {},
+   "order": 17,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "string_a",
+     "name": "string_a",
+     "type": "STRING",
+     "widget": {
+      "name": "string_a"
+     },
+     "link": 43
+    },
+    {
+     "localized_name": "string_b",
+     "name": "string_b",
+     "type": "STRING",
+     "widget": {
+      "name": "string_b"
+     },
+     "link": 44
+    },
+    {
+     "localized_name": "delimiter",
+     "name": "delimiter",
+     "type": "STRING",
+     "widget": {
+      "name": "delimiter"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      46,
+      54
+     ]
+    }
+   ],
+   "title": "sheet + beat 4",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "StringConcatenate"
+   },
+   "widgets_values": [
+    "",
+    "",
+    ". "
+   ],
+   "widgets_values_named": {
+    "string_a": "",
+    "string_b": "",
+    "delimiter": ". "
+   }
+  },
+  {
+   "id": 31,
+   "type": "CLIPTextEncode",
+   "pos": [
+    2500,
+    506
+   ],
+   "size": [
+    420,
+    120
+   ],
+   "flags": {},
+   "order": 21,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "clip",
+     "name": "clip",
+     "type": "CLIP",
+     "link": 45
+    },
+    {
+     "localized_name": "text",
+     "name": "text",
+     "type": "STRING",
+     "widget": {
+      "name": "text"
+     },
+     "link": 46
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "CONDITIONING",
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      48
+     ]
+    }
+   ],
+   "title": "CLIP Encode – Beat 4",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "CLIPTextEncode"
+   },
+   "widgets_values": [
+    ""
+   ],
+   "widgets_values_named": {
+    "text": ""
+   }
+  },
+  {
+   "id": 32,
+   "type": "KSampler",
+   "pos": [
+    2500,
+    686
+   ],
+   "size": [
+    420,
+    262
+   ],
+   "flags": {},
+   "order": 26,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 47
+    },
+    {
+     "localized_name": "positive",
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 48
+    },
+    {
+     "localized_name": "negative",
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 49
+    },
+    {
+     "localized_name": "latent_image",
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 50
+    },
+    {
+     "localized_name": "seed",
+     "name": "seed",
+     "type": "INT",
+     "widget": {
+      "name": "seed"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "steps",
+     "name": "steps",
+     "type": "INT",
+     "widget": {
+      "name": "steps"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "widget": {
+      "name": "cfg"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sampler_name",
+     "name": "sampler_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "sampler_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "scheduler",
+     "name": "scheduler",
+     "type": "COMBO",
+     "widget": {
+      "name": "scheduler"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "denoise",
+     "name": "denoise",
+     "type": "FLOAT",
+     "widget": {
+      "name": "denoise"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "LATENT",
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      51
+     ]
+    }
+   ],
+   "title": "Sampler – Beat 4",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "Beat4"
+   },
+   "widgets_values": [
+    220254102507891,
+    "randomize",
+    8,
+    1,
+    "euler",
+    "simple",
+    1
+   ],
+   "widgets_values_named": {
+    "seed": 220254102507891,
+    "control_after_generate": "randomize",
+    "steps": 8,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "denoise": 1
+   }
+  },
+  {
+   "id": 33,
+   "type": "VAEDecode",
+   "pos": [
+    2500,
+    1008
+   ],
+   "size": [
+    420,
+    46
+   ],
+   "flags": {},
+   "order": 30,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "samples",
+     "name": "samples",
+     "type": "LATENT",
+     "link": 51
+    },
+    {
+     "localized_name": "vae",
+     "name": "vae",
+     "type": "VAE",
+     "link": 52
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      53
+     ]
+    }
+   ],
+   "title": "Decode – Beat 4",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "VAEDecode"
+   }
+  },
+  {
+   "id": 34,
+   "type": "SaveImageA1Metadata",
+   "pos": [
+    2500,
+    1114
+   ],
+   "size": [
+    420,
+    470
+   ],
+   "flags": {},
+   "order": 34,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 53
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "positive_prompt_override",
+     "name": "positive_prompt_override",
+     "shape": 7,
+     "type": "STRING",
+     "widget": {
+      "name": "positive_prompt_override"
+     },
+     "link": 54
+    },
+    {
+     "localized_name": "negative_prompt_override",
+     "name": "negative_prompt_override",
+     "shape": 7,
+     "type": "STRING",
+     "widget": {
+      "name": "negative_prompt_override"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "extra_metadata",
+     "name": "extra_metadata",
+     "shape": 7,
+     "type": "STRING",
+     "widget": {
+      "name": "extra_metadata"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "include_lora_hashes",
+     "name": "include_lora_hashes",
+     "shape": 7,
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "include_lora_hashes"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "debug_sidecar",
+     "name": "debug_sidecar",
+     "shape": 7,
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "debug_sidecar"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [],
+   "title": "Save – Beat 4",
+   "properties": {
+    "aux_id": "tony71200/Load_IO_Tony",
+    "ver": "35a06a5efd38d558b03f04351ce9dd93f582ab21",
+    "Node name for S&R": "SaveImageA1Metadata"
+   },
+   "widgets_values": [
+    "Krea2_%date:yyyy_MM_dd%/Story4_%date:yyMMdd%_4_window_%Beat4.seed%",
+    "",
+    "",
+    "",
+    true,
+    false
+   ],
+   "widgets_values_named": {
+    "filename_prefix": "Krea2_%date:yyyy_MM_dd%/Story4_%date:yyMMdd%_4_window_%Beat4.seed%",
+    "positive_prompt_override": "",
+    "negative_prompt_override": "",
+    "extra_metadata": "",
+    "include_lora_hashes": true,
+    "debug_sidecar": false
+   }
+  },
+  {
+   "id": 35,
+   "type": "MarkdownNote",
+   "pos": [
+    0,
+    1100
+   ],
+   "size": [
+    420,
+    420
+   ],
+   "flags": {},
+   "order": 10,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "title": "README – Story 4 beat (Krea2)",
+   "properties": {},
+   "widgets_values": [
+    "## Krea-2 Turbo + LoRA — 4 ảnh cùng 1 câu chuyện\n\nLoRA chỉ giữ **khuôn mặt**. Trang phục + bối cảnh khoá bằng **character sheet** (ghép trước MỌI beat, sau trigger).\n\n- **Beat 1 = anchor**: seed *fixed* — khi đã ưng, giữ nguyên.\n- **Beat 2–4**: seed *randomize* — chạy lại tới khi ưng, rồi đổi sang *fixed*.\n- Mỗi beat có KSampler riêng → đổi control_after_generate (fixed/increment/decrement/randomize) từng beat.\n- Lưu: SaveImageA1Metadata, positive = trigger + sheet + beat.\n\n**Chưa có:** tham chiếu ảnh anchor cho beat 2–4 (Klein dùng ReferenceLatent). Krea2 cần LoRA `krea2_style_reference` + TextEncodeQwenImageEditPlus — thêm khi đã tải LoRA."
+   ],
+   "widgets_values_named": {
+    "text": "## Krea-2 Turbo + LoRA — 4 ảnh cùng 1 câu chuyện\n\nLoRA chỉ giữ **khuôn mặt**. Trang phục + bối cảnh khoá bằng **character sheet** (ghép trước MỌI beat, sau trigger).\n\n- **Beat 1 = anchor**: seed *fixed* — khi đã ưng, giữ nguyên.\n- **Beat 2–4**: seed *randomize* — chạy lại tới khi ưng, rồi đổi sang *fixed*.\n- Mỗi beat có KSampler riêng → đổi control_after_generate (fixed/increment/decrement/randomize) từng beat.\n- Lưu: SaveImageA1Metadata, positive = trigger + sheet + beat.\n\n**Chưa có:** tham chiếu ảnh anchor cho beat 2–4 (Klein dùng ReferenceLatent). Krea2 cần LoRA `krea2_style_reference` + TextEncodeQwenImageEditPlus — thêm khi đã tải LoRA."
+   },
+   "color": "#432",
+   "bgcolor": "#653"
+  }
+ ],
+ "links": [
+  [
+   1,
+   1,
+   0,
+   4,
+   0,
+   "MODEL"
+  ],
+  [
+   2,
+   5,
+   0,
+   7,
+   0,
+   "STRING"
+  ],
+  [
+   3,
+   6,
+   0,
+   7,
+   1,
+   "STRING"
+  ],
+  [
+   4,
+   8,
+   0,
+   9,
+   0,
+   "INT"
+  ],
+  [
+   5,
+   8,
+   1,
+   9,
+   1,
+   "INT"
+  ],
+  [
+   6,
+   7,
+   0,
+   11,
+   0,
+   "STRING"
+  ],
+  [
+   7,
+   10,
+   0,
+   11,
+   1,
+   "STRING"
+  ],
+  [
+   8,
+   2,
+   0,
+   12,
+   0,
+   "CLIP"
+  ],
+  [
+   9,
+   11,
+   0,
+   12,
+   1,
+   "STRING"
+  ],
+  [
+   10,
+   12,
+   0,
+   13,
+   0,
+   "CONDITIONING"
+  ],
+  [
+   11,
+   4,
+   0,
+   14,
+   0,
+   "MODEL"
+  ],
+  [
+   12,
+   12,
+   0,
+   14,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   13,
+   13,
+   0,
+   14,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   14,
+   9,
+   0,
+   14,
+   3,
+   "LATENT"
+  ],
+  [
+   15,
+   14,
+   0,
+   15,
+   0,
+   "LATENT"
+  ],
+  [
+   16,
+   3,
+   0,
+   15,
+   1,
+   "VAE"
+  ],
+  [
+   17,
+   15,
+   0,
+   16,
+   0,
+   "IMAGE"
+  ],
+  [
+   18,
+   11,
+   0,
+   16,
+   2,
+   "STRING"
+  ],
+  [
+   19,
+   7,
+   0,
+   18,
+   0,
+   "STRING"
+  ],
+  [
+   20,
+   17,
+   0,
+   18,
+   1,
+   "STRING"
+  ],
+  [
+   21,
+   2,
+   0,
+   19,
+   0,
+   "CLIP"
+  ],
+  [
+   22,
+   18,
+   0,
+   19,
+   1,
+   "STRING"
+  ],
+  [
+   23,
+   4,
+   0,
+   20,
+   0,
+   "MODEL"
+  ],
+  [
+   24,
+   19,
+   0,
+   20,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   25,
+   13,
+   0,
+   20,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   26,
+   9,
+   0,
+   20,
+   3,
+   "LATENT"
+  ],
+  [
+   27,
+   20,
+   0,
+   21,
+   0,
+   "LATENT"
+  ],
+  [
+   28,
+   3,
+   0,
+   21,
+   1,
+   "VAE"
+  ],
+  [
+   29,
+   21,
+   0,
+   22,
+   0,
+   "IMAGE"
+  ],
+  [
+   30,
+   18,
+   0,
+   22,
+   2,
+   "STRING"
+  ],
+  [
+   31,
+   7,
+   0,
+   24,
+   0,
+   "STRING"
+  ],
+  [
+   32,
+   23,
+   0,
+   24,
+   1,
+   "STRING"
+  ],
+  [
+   33,
+   2,
+   0,
+   25,
+   0,
+   "CLIP"
+  ],
+  [
+   34,
+   24,
+   0,
+   25,
+   1,
+   "STRING"
+  ],
+  [
+   35,
+   4,
+   0,
+   26,
+   0,
+   "MODEL"
+  ],
+  [
+   36,
+   25,
+   0,
+   26,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   37,
+   13,
+   0,
+   26,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   38,
+   9,
+   0,
+   26,
+   3,
+   "LATENT"
+  ],
+  [
+   39,
+   26,
+   0,
+   27,
+   0,
+   "LATENT"
+  ],
+  [
+   40,
+   3,
+   0,
+   27,
+   1,
+   "VAE"
+  ],
+  [
+   41,
+   27,
+   0,
+   28,
+   0,
+   "IMAGE"
+  ],
+  [
+   42,
+   24,
+   0,
+   28,
+   2,
+   "STRING"
+  ],
+  [
+   43,
+   7,
+   0,
+   30,
+   0,
+   "STRING"
+  ],
+  [
+   44,
+   29,
+   0,
+   30,
+   1,
+   "STRING"
+  ],
+  [
+   45,
+   2,
+   0,
+   31,
+   0,
+   "CLIP"
+  ],
+  [
+   46,
+   30,
+   0,
+   31,
+   1,
+   "STRING"
+  ],
+  [
+   47,
+   4,
+   0,
+   32,
+   0,
+   "MODEL"
+  ],
+  [
+   48,
+   31,
+   0,
+   32,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   49,
+   13,
+   0,
+   32,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   50,
+   9,
+   0,
+   32,
+   3,
+   "LATENT"
+  ],
+  [
+   51,
+   32,
+   0,
+   33,
+   0,
+   "LATENT"
+  ],
+  [
+   52,
+   3,
+   0,
+   33,
+   1,
+   "VAE"
+  ],
+  [
+   53,
+   33,
+   0,
+   34,
+   0,
+   "IMAGE"
+  ],
+  [
+   54,
+   30,
+   0,
+   34,
+   2,
+   "STRING"
+  ]
+ ],
+ "groups": [
+  {
+   "id": "#3f789e",
+   "title": "Model",
+   "bounding": [
+    -20,
+    0,
+    460,
+    466
+   ],
+   "color": "#3f789e",
+   "flags": {}
+  },
+  {
+   "id": 1,
+   "title": "LoRA + trigger",
+   "bounding": [
+    -20,
+    560,
+    460,
+    408
+   ],
+   "color": "#3f789e",
+   "flags": {}
+  },
+  {
+   "id": 2,
+   "title": "Setup dùng chung – sheet + size",
+   "bounding": [
+    480,
+    0,
+    460,
+    922
+   ],
+   "color": "#3f789e",
+   "flags": {}
+  },
+  {
+   "id": "#8A8",
+   "title": "Beat 1 – ANCHOR",
+   "bounding": [
+    980,
+    0,
+    460,
+    1710
+   ],
+   "color": "#3f789e",
+   "flags": {}
+  },
+  {
+   "id": 3,
+   "title": "Beat 2",
+   "bounding": [
+    1480,
+    0,
+    460,
+    1624
+   ],
+   "color": "#3f789e",
+   "flags": {}
+  },
+  {
+   "id": 4,
+   "title": "Beat 3",
+   "bounding": [
+    1980,
+    0,
+    460,
+    1624
+   ],
+   "color": "#3f789e",
+   "flags": {}
+  },
+  {
+   "id": 5,
+   "title": "Beat 4",
+   "bounding": [
+    2480,
+    0,
+    460,
+    1624
+   ],
+   "color": "#3f789e",
+   "flags": {}
+  }
+ ],
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.5,
+   "offset": [
+    100,
+    100
+   ]
+  }
+ },
+ "version": 0.4
+}
