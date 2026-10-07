@@ -1,0 +1,8 @@
+# Whitelist: only track the curated workflows
+/*
+!.gitignore
+!FluxKlein_*.json
+!z_image_turbo (GGUF).json
+!Z-Image +LoRA.json
+!image_krea2_*.json
+!Krea2_*.json
