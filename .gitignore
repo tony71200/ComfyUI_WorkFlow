@@ -6,3 +6,5 @@
 !Z-Image +LoRA.json
 !image_krea2_*.json
 !Krea2_*.json
+!docs/
+!tools/
