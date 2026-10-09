@@ -3,13 +3,14 @@
 Run from the workflow folder:
     python tools/krea2_v3/build_v3.py Krea2_LoRA_T2I_v2.json Krea2_LoRA_T2I_v3.json t2i
     python tools/krea2_v3/build_v3.py Krea2_LoRA_T2I_v2.json Krea2_LoRA_I2I_v3.json i2i
+    python tools/krea2_v3/build_v3.py Krea2_LoRA_T2I_v2.json Krea2_LoRA_T2I_Story4_v3.json story4
     python tools/krea2_v3/check_v3.py Krea2_LoRA_I2I_v3.json
 System prompts live in sysprompt_v3.py, cleanup / identity regexes in regex_v3.py (self-check: python regex_v3.py).
 """
 import copy, json, os, sys, uuid
 
 SRC, DST = sys.argv[1], sys.argv[2]
-MODE = sys.argv[3] if len(sys.argv) > 3 else "t2i"  # t2i | i2i
+MODE = sys.argv[3] if len(sys.argv) > 3 else "t2i"  # t2i | i2i | story4
 v2 = json.load(open(SRC, encoding="utf-8"))
 V2 = {n["id"]: n for n in v2["nodes"]}
 _I2I_SRC = os.path.join(os.path.dirname(SRC) or ".", "Krea2_LoRA_I2I_v2.json")
@@ -41,6 +42,24 @@ README = """## Krea-2 Turbo + LoRA — T2I v3
 **Seed:** node *Seed* (randomize / fixed / increment / decrement).
 
 **Lưu:** `Krea2_<ngày>/Krea2_T2I_v3_<yyMMdd>_<Trigger>_<TextSplitter.index>_<Seed>` — index đếm từ 0. Metadata A1111: final prompt + LoRA + hash."""
+
+README_STORY4 = """## Krea-2 Turbo + LoRA — Story4 v3 (Qwen viết tiếp câu chuyện)
+
+**Model:** krea2_turbo_fp8_scaled · qwen3vl_4b_fp8_scaled (type krea2) · qwen_image_vae. 8 bước, euler/simple, CFG 1, negative = zero.
+
+**Bạn nhập:** *Character sheet* (trang phục + bối cảnh + ánh sáng — ghép vào MỌI ảnh, sau trigger), *Beat 1 – anchor* (cảnh mở đầu), *Hướng câu chuyện* (tuỳ chọn, để trống = Qwen tự nối tiếp).
+
+**Luồng:** Prompt 1 = `trigger. sheet. beat 1` → Sampler #1 → ảnh 1 → **Krea2 Story Writer** (Qwen3-VL-4B nhìn ảnh 1 + đọc sheet/beat 1/hướng → JSON `scene2–4`) → `trigger. sheet. cảnh N` → Sampler #2–4.
+
+**Toggle trên Story Writer:** `use_qwen` (tắt = dùng 3 ô *Beat 2–4 gõ tay* trong subgraph, như Story4 cũ) · `see_image` (Qwen nhìn ảnh 1; tắt = chạy song song, nhanh hơn) · `nsfw` (chọn system prompt Story NSFW).
+
+**Dự phòng:** Qwen từ chối / rỗng / chép system prompt → cả 3 cảnh dùng ô gõ tay. JSON hỏng / thiếu cảnh → riêng cảnh đó dùng ô gõ tay. Cảnh Qwen viết được dọn (negative prompt, câu bình luận) + regex tóc/mặt; sheet và beat 1 giữ nguyên.
+
+**Seed:** *Seed1* = anchor (fixed — ưng rồi giữ), *Seed2–4* randomize → chạy lại tới khi ưng rồi đổi sang fixed.
+
+**Preview:** 3 node *Preview prompt 2–4* để xem Qwen viết gì.
+
+**Lưu:** `Krea2_<ngày>/Story4_v3_<yyMMdd>_<N>_<Trigger>_<SeedN>`."""
 
 README_I2I = """## Krea-2 Turbo + LoRA — I2I v3
 
@@ -292,7 +311,7 @@ sp = Graph(sub=True)
 enc = reuse(19, [0, 160], "CLIP Encode", wv=[""])
 neg = reuse(20, [0, 340], "Negative = zero (Krea2 CFG 1)")
 dec = reuse(39, [880, 0])
-if MODE == "t2i":
+if MODE in ("t2i", "story4"):
     lat = reuse(18, [0, 0], "Empty latent", wv=[1024, 1024, 1])
     ks = reuse(21, [440, 0], "KSampler (CFG 1)", sr="KSampler", wv=[0, "fixed", 8, 1, "euler", "simple", 1])
     sp.add(lat, enc, neg, ks, dec)
@@ -373,6 +392,171 @@ for w in lora["widgets_values"]:
     if k:
         w["on"], w["strength"] = LORA_DEFAULTS[k]
 trig = g.add(reuse(5, [0, 840], "Trigger", sr="Trigger"))
+
+if MODE == "story4":
+    from sysprompt_v3 import SYS_STORY_SFW, SYS_STORY_NSFW
+    V2S = {n["id"]: n for n in json.load(open(os.path.join(os.path.dirname(SRC) or ".", "Krea2_LoRA_T2I_Story4.json"),
+                                              encoding="utf-8"))["nodes"]}
+
+    def multiline(pos, title, text, size=(420, 200)):
+        return node("PrimitiveStringMultiline", pos, list(size), [I("value", "STRING", True)],
+                    [O("STRING", "STRING")], [text], title)
+
+    def regex_match(pos, title, pattern):
+        return node("RegexMatch", pos, [320, 180],
+                    [I("string", "STRING", True), I("regex_pattern", "STRING", True), I("case_insensitive", "BOOLEAN", True),
+                     I("multiline", "BOOLEAN", True), I("dotall", "BOOLEAN", True)],
+                    [O("matches", "BOOLEAN")], ["", pattern, True, False, False], title)
+
+    # ------------------------------------------------ subgraph: Krea2 Story Writer
+    sw = Graph(sub=True)
+    b_qwen = sw.add(prim_bool([0, 0], "use_qwen (bật = Qwen viết cảnh 2–4)", True))
+    b_img = sw.add(prim_bool([0, 100], "see_image (Qwen nhìn ảnh 1)", True))
+    b_ns = sw.add(prim_bool([0, 200], "nsfw", False))
+    sys_s = sw.add(multiline([0, -1500], "System prompt Story SFW", SYS_STORY_SFW, (520, 640)))
+    sys_n = sw.add(multiline([560, -1500], "System prompt Story NSFW", SYS_STORY_NSFW, (520, 640)))
+    sw_sys = sw.add(switch([400, 0], "2a. System: NSFW / SFW"))
+    sw_img = sw.add(switch([400, 120], "2b. Nhìn ảnh 1? (tắt = không chờ ảnh)", "IMAGE"))
+    m1 = sw.add(concat([0, 320], "1a. CHARACTER SHEET", "CHARACTER SHEET:\n", "", ""))
+    m2 = sw.add(concat([0, 520], "1b. + nhãn SCENE 1", "", "SCENE 1:\n", "\n\n"))
+    m3 = sw.add(concat([0, 720], "1c. + scene 1", "", "", ""))
+    m4 = sw.add(concat([0, 920], "1d. + nhãn STORY DIRECTION", "", "STORY DIRECTION:\n", "\n\n"))
+    m5 = sw.add(concat([0, 1120], "1e. + direction", "", "", ""))
+    tg = sw.add(reuse(13, [400, 300], "2c. Qwen3-VL-4B viết cảnh 2–4 (JSON)",
+                      wv=["", 1024, "on", 0.7, 64, 0.95, 0.05, 1.05, 0, 0, False, True, "auto"]))
+    refused_s = sw.add(regex_match([400, 800], "2d. Qwen từ chối / rỗng / chép system?", RX_REFUSE[0]))
+    ts = sw.add(concat([2800, 0], "7a. trigger + sheet", "", "", ". "))
+    for a, b in ((m1, m2), (m2, m3), (m3, m4), (m4, m5)):
+        sw.link(a, 0, b, "string_a", "STRING")
+    sw.link(m5, 0, tg, "prompt", "STRING")
+    sw.link(sys_s, 0, sw_sys, "on_false", "STRING")
+    sw.link(sys_n, 0, sw_sys, "on_true", "STRING")
+    sw.link(b_ns, 0, sw_sys, "switch", "BOOLEAN")
+    sw.link(sw_sys, 0, tg, "system_prompt", "STRING")
+    sw.link(b_img, 0, sw_img, "switch", "BOOLEAN")
+    sw.link(sw_img, 0, tg, "image", "IMAGE")
+    sw.link(tg, 0, refused_s, "string", "STRING")
+
+    scene_out = {}
+    for k, v2s_id in ((2, 17), (3, 23), (4, 29)):
+        x, y = 800, (k - 2) * 1700
+        manual = sw.add(reuse(v2s_id, [x, y], f"Beat {k} gõ tay (dự phòng)", src=V2S))
+        jx = sw.add(node("JsonExtractString", [x + 440, y], [320, 100],
+                         [I("json_string", "STRING", True), I("key", "STRING", True)],
+                         [O("STRING", "STRING")], ["", f"scene{k}"], f"3. scene{k} từ JSON"))
+        chain = [rx_replace([x + 440, y + 140], f"4a. scene{k}: bỏ 'negative prompt'", RX_NEG),
+                 rx_replace([x + 440, y + 380], f"4b. scene{k}: bỏ câu bình luận", RX_META),
+                 rx_replace([x + 840, y], f"5a. scene{k}: tóc → short", RX_HAIR, RX_HAIR_REPL),
+                 rx_replace([x + 840, y + 240], f"5b. scene{k}: gộp 'short short'", RX_HAIR_DEDUP),
+                 rx_replace([x + 840, y + 480], f"5c. scene{k}: bỏ jawline/chin…", RX_FACE),
+                 rx_replace([x + 840, y + 720], f"5d. scene{k}: dọn dấu phẩy", RX_TIDY),
+                 rx_replace([x + 840, y + 960], f"5e. scene{k}: dọn khoảng trắng", RX_SPACE, " ")]
+        trim_k = node("StringTrim", [x + 1240, y], [320, 82], [I("string", "STRING", True), I("mode", "COMBO", True)],
+                      [O("STRING", "STRING")], ["", "Both"], f"5f. scene{k}: trim")
+        empty_k = regex_match([x + 1240, y + 120], f"6a. scene{k} rỗng?", r"^\s*$")
+        s_empty = switch([x + 1640, y], f"6b. scene{k}: rỗng → gõ tay")
+        s_ref = switch([x + 1640, y + 120], f"6c. scene{k}: Qwen lỗi → gõ tay")
+        s_use = switch([x + 1640, y + 240], f"6d. scene{k}: use_qwen / gõ tay")
+        p_k = concat([x + 2000, y], f"7b. prompt {k} = trigger. sheet. scene{k}", "", "", ". ")
+        sw.add(jx, *chain, trim_k, empty_k, s_empty, s_ref, s_use, p_k)
+        sw.link(tg, 0, jx, "json_string", "STRING")
+        prev = jx
+        for r in chain + [trim_k]:
+            sw.link(prev, 0, r, "string", "STRING")
+            prev = r
+        sw.link(trim_k, 0, empty_k, "string", "STRING")
+        sw.link(trim_k, 0, s_empty, "on_false", "STRING")
+        sw.link(manual, 0, s_empty, "on_true", "STRING")
+        sw.link(empty_k, 0, s_empty, "switch", "BOOLEAN")
+        sw.link(s_empty, 0, s_ref, "on_false", "STRING")
+        sw.link(manual, 0, s_ref, "on_true", "STRING")
+        sw.link(refused_s, 0, s_ref, "switch", "BOOLEAN")
+        sw.link(s_ref, 0, s_use, "on_true", "STRING")
+        sw.link(manual, 0, s_use, "on_false", "STRING")
+        sw.link(b_qwen, 0, s_use, "switch", "BOOLEAN")
+        sw.link(ts, 0, p_k, "string_a", "STRING")
+        sw.link(s_use, 0, p_k, "string_b", "STRING")
+        scene_out[k] = p_k
+
+    SW_IN = [
+        ("clip", "CLIP", [(tg, "clip")], None),
+        ("image1", "IMAGE", [(sw_img, "on_true")], None),
+        ("trigger", "STRING", [(ts, "string_a")], ""),
+        ("sheet", "STRING", [(m1, "string_b"), (ts, "string_b")], ""),
+        ("beat1", "STRING", [(m3, "string_b")], ""),
+        ("direction", "STRING", [(m5, "string_b")], ""),
+        ("use_qwen", "BOOLEAN", [(b_qwen, "value")], True),
+        ("see_image", "BOOLEAN", [(b_img, "value")], True),
+        ("nsfw", "BOOLEAN", [(b_ns, "value")], False),
+        ("max_length", "INT", [(tg, "max_length")], 1024),
+        ("temperature", "FLOAT", [(tg, "sampling_mode.temperature")], 0.7),
+    ]
+    for name, typ, tgts, _ in SW_IN:
+        sw.sg_input(name, typ, tgts)
+    for k, p_k in scene_out.items():
+        sw.sg_output(f"prompt{k}", "STRING", p_k, 0)
+    SG_SW = finish_subgraph(sw, "Krea2 Story Writer", -800, 4800)
+
+    # ------------------------------------------------ root graph (story4)
+    size = g.add(reuse(17, [0, 960], "Kích thước"))
+    seeds = {k: g.add(node("PrimitiveInt", [0, 1100 + (k - 1) * 120], [420, 82], [I("value", "INT", True)],
+                           [O("INT", "INT")], [20261008 + k, "fixed" if k == 1 else "randomize"],
+                           f"Seed{k}", sr=f"Seed{k}")) for k in (1, 2, 3, 4)}
+    sheet = g.add(reuse(6, [500, 60], "Character sheet (ghép vào MỌI ảnh)", src=V2S))
+    beat1 = g.add(reuse(10, [500, 420], "Beat 1 – anchor", src=V2S))
+    direction = g.add(multiline([500, 700], "Hướng câu chuyện (để trống = Qwen tự nối tiếp)", ""))
+    p_ts = g.add(concat([1000, 60], "trigger + sheet", "", "", ". "))
+    p1 = g.add(concat([1000, 280], "Prompt 1 = trigger. sheet. beat 1", "", "", ". "))
+    inst_sw = g.add(instance(SG_SW, SW_IN, [1000, 560], [420, 480], "Krea2 Story Writer"))
+    samplers, saves = {}, {}
+    for k in (1, 2, 3, 4):
+        x, y = 1500 + (k - 1) * 460, 60
+        samplers[k] = g.add(instance(SG_SP, SP_IN, [x, y], [420, 420], f"Krea2 Sampler T2I #{k}"))
+        saves[k] = g.add(reuse(40, [x, y + 480], f"Save {k}", wv=[
+            f"Krea2_%date:yyyy_MM_dd%/Story4_v3_%date:yyMMdd%_{k}_%Trigger.value%_%Seed{k}.value%", "", "", "", True, False]))
+    previews = {k: g.add(reuse(16, [1000 + (k - 2) * 460, 1100], f"Preview prompt {k}")) for k in (2, 3, 4)}
+    g.add(node("MarkdownNote", [-560, 60], [520, 900], [], [], [README_STORY4], "README – Krea2 LoRA T2I Story4 v3", props={}))
+
+    g.link(unet, 0, lora, "model", "MODEL")
+    g.link(trig, 0, p_ts, "string_a", "STRING")
+    g.link(sheet, 0, p_ts, "string_b", "STRING")
+    g.link(p_ts, 0, p1, "string_a", "STRING")
+    g.link(beat1, 0, p1, "string_b", "STRING")
+    g.link(clip, 0, inst_sw, "clip", "CLIP")
+    g.link(trig, 0, inst_sw, "trigger", "STRING")
+    g.link(sheet, 0, inst_sw, "sheet", "STRING")
+    g.link(beat1, 0, inst_sw, "beat1", "STRING")
+    g.link(direction, 0, inst_sw, "direction", "STRING")
+    g.link(samplers[1], 0, inst_sw, "image1", "IMAGE")
+    for k in (1, 2, 3, 4):
+        s = samplers[k]
+        g.link(lora, 0, s, "model", "MODEL")
+        g.link(clip, 0, s, "clip", "CLIP")
+        g.link(vae, 0, s, "vae", "VAE")
+        g.link(size, "width", s, "width", "INT")
+        g.link(size, "height", s, "height", "INT")
+        g.link(seeds[k], 0, s, "seed", "INT")
+        src_prompt, src_out = (p1, 0) if k == 1 else (inst_sw, f"prompt{k}")
+        g.link(src_prompt, src_out, s, "prompt", "STRING")
+        g.link(src_prompt, src_out, saves[k], "positive_prompt_override", "STRING")
+        g.link(s, 0, saves[k], "images", "IMAGE")
+        if k > 1:
+            g.link(inst_sw, f"prompt{k}", previews[k], "source", "STRING")
+
+    out = {
+        "id": str(uuid.uuid4()), "revision": 0, "last_node_id": _nid[0], "last_link_id": _lid[0],
+        "nodes": g.nodes, "links": g.links,
+        "groups": [grp(1, "Model + LoRA + Trigger + Size + Seed", -20, 0, 460, 1620, "#3f789e"),
+                   grp(2, "Sheet + Beat 1 + Hướng câu chuyện", 480, 0, 460, 960, "#a1309b"),
+                   grp(3, "Prompt 1 + Story Writer", 980, 0, 460, 1060, "#b06634"),
+                   grp(4, "Sampler + Save (4 cảnh)", 1480, 0, 1840, 1020, "#88A")],
+        "definitions": {"subgraphs": [SG_SP, SG_SW]},
+        "config": {}, "extra": {"ds": {"scale": 0.45, "offset": [700, 100]}, "frontendVersion": "1.53.10"},
+        "version": 0.4,
+    }
+    json.dump(out, open(DST, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+    print("ok", DST, "nodes", len(g.nodes), "links", _lid[0])
+    sys.exit(0)
 seed = g.add(node("PrimitiveInt", [0, 960], [420, 82], [I("value", "INT", True)], [O("INT", "INT")],
                   [630833735766694, "randomize"], "Seed", sr="Seed"))
 manual = g.add(reuse(6, [500, 60], "Prompt tay",

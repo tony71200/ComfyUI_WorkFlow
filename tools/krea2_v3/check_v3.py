@@ -29,12 +29,13 @@ def check(nodes, links, sub=None):
 print("root links", check(d["nodes"], d["links"]))
 for sg in d["definitions"]["subgraphs"]:
     print(sg["name"], "links", check(sg["nodes"], sg["links"], sg), [i["name"] for i in sg["inputs"]])
-    inst = next(n for n in d["nodes"] if n["type"] == sg["id"])
-    assert [i["name"] for i in inst["inputs"]] == [i["name"] for i in sg["inputs"]], "instance inputs != subgraph inputs"
-    assert len(inst["widgets_values"]) == sum("widget" in i for i in inst["inputs"]), "widgets_values length"
+    for inst in (n for n in d["nodes"] if n["type"] == sg["id"]):
+        assert [i["name"] for i in inst["inputs"]] == [i["name"] for i in sg["inputs"]], "instance inputs != subgraph inputs"
+        assert len(inst["widgets_values"]) == sum("widget" in i for i in inst["inputs"]), "widgets_values length"
 
 srs = {n["properties"].get("Node name for S&R") for n in d["nodes"]}
-fp = next(n for n in d["nodes"] if n["type"] == "SaveImageA1Metadata")["widgets_values"][0]
-for ref in re.findall(r"%([A-Za-z]+)\.", fp):
-    assert ref in srs, ref
-print("filename refs ok:", fp)
+for save in (n for n in d["nodes"] if n["type"] == "SaveImageA1Metadata"):
+    fp = save["widgets_values"][0]
+    for ref in re.findall(r"%([A-Za-z0-9_]+)\.", fp):
+        assert ref in srs, ref
+    print("filename refs ok:", fp)
