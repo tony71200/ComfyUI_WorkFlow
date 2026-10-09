@@ -8,3 +8,4 @@
 !Krea2_*.json
 !docs/
 !tools/
+__pycache__/
