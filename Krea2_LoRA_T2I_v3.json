@@ -1,0 +1,4935 @@
+{
+  "id": "99f07182-61f6-4bae-901c-a83410deb2f8",
+  "revision": 0,
+  "last_node_id": 51,
+  "last_link_id": 84,
+  "nodes": [
+    {
+      "id": 38,
+      "type": "UNETLoader",
+      "pos": [
+        0,
+        60
+      ],
+      "size": [
+        420,
+        82
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "unet_name",
+          "name": "unet_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "unet_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "weight_dtype",
+          "name": "weight_dtype",
+          "type": "COMBO",
+          "widget": {
+            "name": "weight_dtype"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            73
+          ]
+        }
+      ],
+      "title": "UNet Krea-2 Turbo",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "krea2_turbo_fp8_scaled.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 39,
+      "type": "CLIPLoader",
+      "pos": [
+        0,
+        200
+      ],
+      "size": [
+        420,
+        106
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "clip_name",
+          "name": "clip_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "clip_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "type",
+          "name": "type",
+          "type": "COMBO",
+          "widget": {
+            "name": "type"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "device",
+          "name": "device",
+          "shape": 7,
+          "type": "COMBO",
+          "widget": {
+            "name": "device"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            75,
+            76
+          ]
+        }
+      ],
+      "title": "Text encoder Qwen3-VL-4B (type krea2)",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen3vl_4b_fp8_scaled.safetensors",
+        "krea2",
+        "default"
+      ]
+    },
+    {
+      "id": 40,
+      "type": "VAELoader",
+      "pos": [
+        0,
+        360
+      ],
+      "size": [
+        420,
+        58
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "vae_name",
+          "name": "vae_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "vae_name"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "VAE",
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            77
+          ]
+        }
+      ],
+      "title": "VAE qwen_image",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "qwen_image_vae.safetensors"
+      ]
+    },
+    {
+      "id": 41,
+      "type": "Power Lora Loader (rgthree)",
+      "pos": [
+        0,
+        560
+      ],
+      "size": [
+        420,
+        190
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 73
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "shape": 3,
+          "type": "MODEL",
+          "links": [
+            74
+          ]
+        },
+        {
+          "name": "CLIP",
+          "shape": 3,
+          "type": "CLIP",
+          "links": []
+        }
+      ],
+      "title": "Power Lora Loader",
+      "properties": {
+        "cnr_id": "rgthree-comfy",
+        "ver": "2c5342a8cb0eaecaabf61435a5f37dd594c510ba",
+        "Show Strengths": "Single Strength",
+        "Match": ""
+      },
+      "widgets_values": [
+        {},
+        {
+          "type": "PowerLoraLoaderHeaderWidget"
+        },
+        {
+          "on": true,
+          "lora": "Ivan_Ryo_Krea2_V2_krea2_3389412_epoch_10.safetensors",
+          "strength": 1.15,
+          "strengthTwo": null
+        },
+        {
+          "on": true,
+          "lora": "sweatySkin_v1.safetensors",
+          "strength": 0.8,
+          "strengthTwo": null
+        },
+        {
+          "on": false,
+          "lora": "shavedMalePubes_v1.safetensors",
+          "strength": 0.3,
+          "strengthTwo": null
+        },
+        {},
+        ""
+      ]
+    },
+    {
+      "id": 42,
+      "type": "PrimitiveString",
+      "pos": [
+        0,
+        840
+      ],
+      "size": [
+        420,
+        58
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "value",
+          "name": "value",
+          "type": "STRING",
+          "widget": {
+            "name": "value"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "STRING",
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            79
+          ]
+        }
+      ],
+      "title": "Trigger",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "Trigger"
+      },
+      "widgets_values": [
+        "Ivan_Ryo"
+      ]
+    },
+    {
+      "id": 43,
+      "type": "PrimitiveInt",
+      "pos": [
+        0,
+        960
+      ],
+      "size": [
+        420,
+        82
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "value",
+          "name": "value",
+          "type": "INT",
+          "widget": {
+            "name": "value"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "INT",
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            83
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "Seed"
+      },
+      "title": "Seed",
+      "widgets_values": [
+        630833735766694,
+        "randomize"
+      ]
+    },
+    {
+      "id": 44,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        500,
+        60
+      ],
+      "size": [
+        420,
+        160
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "value",
+          "name": "value",
+          "type": "STRING",
+          "widget": {
+            "name": "value"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "STRING",
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            78
+          ]
+        }
+      ],
+      "title": "Prompt tay",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "photorealistic photo of {char}, a young handsome East Asian man, cinematic light"
+      ]
+    },
+    {
+      "id": 45,
+      "type": "3195eb06-c024-44f1-9330-f41180800985",
+      "pos": [
+        1000,
+        60
+      ],
+      "size": [
+        420,
+        420
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 75
+        },
+        {
+          "name": "manual_prompt",
+          "type": "STRING",
+          "link": 78
+        },
+        {
+          "name": "txt_prompt",
+          "type": "STRING",
+          "link": 70
+        },
+        {
+          "name": "trigger",
+          "type": "STRING",
+          "link": 79,
+          "widget": {
+            "name": "trigger"
+          }
+        },
+        {
+          "name": "use_txt",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "use_txt"
+          }
+        },
+        {
+          "name": "refine",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "refine"
+          }
+        },
+        {
+          "name": "nsfw",
+          "type": "BOOLEAN",
+          "link": null,
+          "widget": {
+            "name": "nsfw"
+          }
+        },
+        {
+          "name": "max_length",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "max_length"
+          }
+        },
+        {
+          "name": "temperature",
+          "type": "FLOAT",
+          "link": null,
+          "widget": {
+            "name": "temperature"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "final_prompt",
+          "name": "final_prompt",
+          "type": "STRING",
+          "links": [
+            80,
+            81,
+            82
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0"
+      },
+      "title": "Krea2 Prompt Builder",
+      "widgets_values": [
+        "",
+        true,
+        false,
+        false,
+        1024,
+        0.7
+      ]
+    },
+    {
+      "id": 46,
+      "type": "PreviewAny",
+      "pos": [
+        1000,
+        560
+      ],
+      "size": [
+        420,
+        160
+      ],
+      "flags": {},
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "source",
+          "name": "source",
+          "type": "*",
+          "link": 81
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "STRING",
+          "name": "STRING",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "title": "Preview final prompt",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 47,
+      "type": "33ff10cc-56ee-47d8-9179-560bdd003205",
+      "pos": [
+        1500,
+        60
+      ],
+      "size": [
+        420,
+        460
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 74
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 76
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 77
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "link": 80,
+          "widget": {
+            "name": "prompt"
+          }
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "link": 71,
+          "widget": {
+            "name": "width"
+          }
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "link": 72,
+          "widget": {
+            "name": "height"
+          }
+        },
+        {
+          "name": "seed",
+          "type": "INT",
+          "link": 83,
+          "widget": {
+            "name": "seed"
+          }
+        },
+        {
+          "name": "steps",
+          "type": "INT",
+          "link": null,
+          "widget": {
+            "name": "steps"
+          }
+        },
+        {
+          "name": "sampler_name",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "sampler_name"
+          }
+        },
+        {
+          "name": "scheduler",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "scheduler"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            84
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0"
+      },
+      "title": "Krea2 Sampler T2I",
+      "widgets_values": [
+        "",
+        1024,
+        1024,
+        0,
+        8,
+        "euler",
+        "simple"
+      ]
+    },
+    {
+      "id": 48,
+      "type": "ResolutionSelector",
+      "pos": [
+        0,
+        1100
+      ],
+      "size": [
+        420,
+        150
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "aspect_ratio",
+          "name": "aspect_ratio",
+          "type": "COMBO",
+          "widget": {
+            "name": "aspect_ratio"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "megapixels",
+          "name": "megapixels",
+          "type": "FLOAT",
+          "widget": {
+            "name": "megapixels"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "multiple",
+          "name": "multiple",
+          "type": "INT",
+          "widget": {
+            "name": "multiple"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "preview",
+          "name": "preview",
+          "shape": 7,
+          "type": "RESOLUTION_PREVIEW",
+          "widget": {
+            "name": "preview"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "width",
+          "name": "width",
+          "type": "INT",
+          "links": [
+            71
+          ]
+        },
+        {
+          "localized_name": "height",
+          "name": "height",
+          "type": "INT",
+          "links": [
+            72
+          ]
+        }
+      ],
+      "title": "Kích thước",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "ResolutionSelector"
+      },
+      "widgets_values": [
+        "9:16 (Portrait Widescreen)",
+        1,
+        16
+      ]
+    },
+    {
+      "id": 49,
+      "type": "Text_Splitter",
+      "pos": [
+        500,
+        300
+      ],
+      "size": [
+        420,
+        814
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "txt_path",
+          "name": "txt_path",
+          "type": "STRING",
+          "widget": {
+            "name": "txt_path"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "paragraph_sep",
+          "name": "paragraph_sep",
+          "type": "STRING",
+          "widget": {
+            "name": "paragraph_sep"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "negative_sep",
+          "name": "negative_sep",
+          "type": "STRING",
+          "widget": {
+            "name": "negative_sep"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "index",
+          "name": "index",
+          "type": "INT",
+          "widget": {
+            "name": "index"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "positive_prompt",
+          "name": "positive_prompt",
+          "type": "STRING",
+          "links": [
+            70
+          ]
+        },
+        {
+          "localized_name": "negative_prompt",
+          "name": "negative_prompt",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "localized_name": "next_index",
+          "name": "next_index",
+          "type": "INT",
+          "links": []
+        },
+        {
+          "localized_name": "has_index",
+          "name": "has_index",
+          "type": "BOOLEAN",
+          "links": []
+        },
+        {
+          "localized_name": "current_index",
+          "name": "current_index",
+          "type": "INT",
+          "links": []
+        }
+      ],
+      "title": "TextSplitter",
+      "properties": {
+        "aux_id": "tony71200/Load_IO_Tony",
+        "ver": "35a06a5efd38d558b03f04351ce9dd93f582ab21",
+        "Node name for S&R": "TextSplitter"
+      },
+      "widgets_values": [
+        "D:\\001_Personal_Proj\\Comfy\\prompt\\prompt_thread_20260926.txt",
+        "\\n\\n",
+        "###",
+        0,
+        "",
+        null,
+        null,
+        null,
+        1,
+        0,
+        "Idle",
+        null,
+        null,
+        "",
+        ""
+      ],
+      "color": "#a53",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 50,
+      "type": "SaveImageA1Metadata",
+      "pos": [
+        1500,
+        600
+      ],
+      "size": [
+        420,
+        470
+      ],
+      "flags": {},
+      "order": 40,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 84
+        },
+        {
+          "localized_name": "filename_prefix",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "positive_prompt_override",
+          "name": "positive_prompt_override",
+          "shape": 7,
+          "type": "STRING",
+          "widget": {
+            "name": "positive_prompt_override"
+          },
+          "link": 82
+        },
+        {
+          "localized_name": "negative_prompt_override",
+          "name": "negative_prompt_override",
+          "shape": 7,
+          "type": "STRING",
+          "widget": {
+            "name": "negative_prompt_override"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "extra_metadata",
+          "name": "extra_metadata",
+          "shape": 7,
+          "type": "STRING",
+          "widget": {
+            "name": "extra_metadata"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "include_lora_hashes",
+          "name": "include_lora_hashes",
+          "shape": 7,
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "include_lora_hashes"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "debug_sidecar",
+          "name": "debug_sidecar",
+          "shape": 7,
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "debug_sidecar"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [],
+      "title": "Save (A1111 metadata)",
+      "properties": {
+        "aux_id": "tony71200/Load_IO_Tony",
+        "ver": "35a06a5efd38d558b03f04351ce9dd93f582ab21",
+        "Node name for S&R": "SaveImageA1Metadata"
+      },
+      "widgets_values": [
+        "Krea2_%date:yyyy_MM_dd%/Krea2_T2I_v3_%date:yyMMdd%_%Trigger.value%_%TextSplitter.index%_%Seed.value%",
+        "",
+        "",
+        "",
+        true,
+        false
+      ]
+    },
+    {
+      "id": 51,
+      "type": "MarkdownNote",
+      "pos": [
+        -560,
+        60
+      ],
+      "size": [
+        520,
+        900
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "MarkdownNote"
+      },
+      "title": "README – Krea2 LoRA T2I v3",
+      "widgets_values": [
+        "## Krea-2 Turbo + LoRA — T2I v3\n\n**Model:** krea2_turbo_fp8_scaled · qwen3vl_4b_fp8_scaled (type krea2) · qwen_image_vae. 8 bước, euler/simple, CFG 1, negative = zero.\n\n**Luồng:** Prompt (tay / .txt) → **Krea2 Prompt Builder** → **Krea2 Sampler T2I** → Save A1111. Double-click subgraph để xem bên trong.\n\n**Nhân vật chính `{char}`:** viết `{char}` trong prompt để chỉ đúng nhân vật dùng LoRA (vd: `{char} sitting next to another man`). Prompt đã ghi sẵn chữ trigger (vd `Ivan_Ryo, an adult man…`) → được coi là `{char}`. Không có cả hai → tự ghép `{char}. ` vào đầu. Cuối cùng `{char}` được thay bằng node **Trigger**; nếu LLM làm rơi trigger thì tự ghép lại vào đầu.\n\n**Toggle trên Prompt Builder:**\n- `use_txt` — bật: đọc TextSplitter (.txt), tắt: dùng *Prompt tay*.\n- `refine` — viết lại prompt bằng Qwen3-VL-4B (TextGenerate, thinking off, max_length 1024). Output được dọn (bỏ câu dẫn, markdown, \"negative prompt\"). Nếu Qwen từ chối, trả về rỗng hoặc chỉ bình luận → tự quay về prompt gốc. Tắt: dùng prompt gốc.\n- `nsfw` — chọn *System prompt NSFW* thay vì *SFW* (chỉ có tác dụng khi `refine` bật).\n\n**System prompt:** 2 node *System prompt SFW / NSFW* nằm **trong** subgraph Prompt Builder (double-click để mở và sửa). Rule 9–10: giữ `{char}`, không tả màu/độ dài tóc và cấu trúc mặt của nhân vật chính (LoRA lo phần đó). Thêm lớp regex cố định (chạy cả khi tắt refine): màu/độ dài tóc → `short hair` (giữ trạng thái: wet, messy…), xoá `sharp jawline / pointed chin / high cheekbones…`. Lưu ý: áp cho mọi người trong prompt.\n\n**TextSplitter:** đoạn cách nhau 1 dòng trống. Phần negative sau `###` bị bỏ qua (Krea2 CFG 1). Bấm *Start Auto Batch* để chạy hết file.\n\n**Seed:** node *Seed* (randomize / fixed / increment / decrement).\n\n**Lưu:** `Krea2_<ngày>/Krea2_T2I_v3_<yyMMdd>_<Trigger>_<TextSplitter.index>_<Seed>` — index đếm từ 0. Metadata A1111: final prompt + LoRA + hash."
+      ]
+    }
+  ],
+  "links": [
+    [
+      70,
+      49,
+      0,
+      45,
+      2,
+      "STRING"
+    ],
+    [
+      71,
+      48,
+      0,
+      47,
+      4,
+      "INT"
+    ],
+    [
+      72,
+      48,
+      1,
+      47,
+      5,
+      "INT"
+    ],
+    [
+      73,
+      38,
+      0,
+      41,
+      0,
+      "MODEL"
+    ],
+    [
+      74,
+      41,
+      0,
+      47,
+      0,
+      "MODEL"
+    ],
+    [
+      75,
+      39,
+      0,
+      45,
+      0,
+      "CLIP"
+    ],
+    [
+      76,
+      39,
+      0,
+      47,
+      1,
+      "CLIP"
+    ],
+    [
+      77,
+      40,
+      0,
+      47,
+      2,
+      "VAE"
+    ],
+    [
+      78,
+      44,
+      0,
+      45,
+      1,
+      "STRING"
+    ],
+    [
+      79,
+      42,
+      0,
+      45,
+      3,
+      "STRING"
+    ],
+    [
+      80,
+      45,
+      0,
+      47,
+      3,
+      "STRING"
+    ],
+    [
+      81,
+      45,
+      0,
+      46,
+      0,
+      "STRING"
+    ],
+    [
+      82,
+      45,
+      0,
+      50,
+      2,
+      "STRING"
+    ],
+    [
+      83,
+      43,
+      0,
+      47,
+      6,
+      "INT"
+    ],
+    [
+      84,
+      47,
+      0,
+      50,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "Model + LoRA + Trigger + Seed",
+      "bounding": [
+        -20,
+        0,
+        460,
+        1260
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "Prompt nguồn (tay / .txt)",
+      "bounding": [
+        480,
+        0,
+        460,
+        1180
+      ],
+      "color": "#a1309b",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "Prompt Builder",
+      "bounding": [
+        980,
+        0,
+        460,
+        800
+      ],
+      "color": "#b06634",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 5,
+      "title": "Sampler + Output",
+      "bounding": [
+        1480,
+        0,
+        460,
+        1100
+      ],
+      "color": "#88A",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "definitions": {
+    "subgraphs": [
+      {
+        "id": "3195eb06-c024-44f1-9330-f41180800985",
+        "version": 1,
+        "state": {
+          "lastGroupId": 0,
+          "lastNodeId": 32,
+          "lastLinkId": 53,
+          "lastRerouteId": 0
+        },
+        "revision": 0,
+        "config": {},
+        "name": "Krea2 Prompt Builder",
+        "inputNode": {
+          "id": -10,
+          "bounding": [
+            -400,
+            0,
+            160,
+            220
+          ]
+        },
+        "outputNode": {
+          "id": -20,
+          "bounding": [
+            1700,
+            0,
+            140,
+            60
+          ]
+        },
+        "inputs": [
+          {
+            "id": "6316f280-5394-4242-91e0-f3ad144965ce",
+            "name": "clip",
+            "type": "CLIP",
+            "linkIds": [
+              40
+            ],
+            "localized_name": "clip",
+            "pos": [
+              -260,
+              24
+            ]
+          },
+          {
+            "id": "cfe15635-713c-4d7a-8a9d-0df54bf12389",
+            "name": "manual_prompt",
+            "type": "STRING",
+            "linkIds": [
+              41
+            ],
+            "localized_name": "manual_prompt",
+            "pos": [
+              -260,
+              44
+            ]
+          },
+          {
+            "id": "65449b96-9c46-4d90-9c7d-8f5c47119438",
+            "name": "txt_prompt",
+            "type": "STRING",
+            "linkIds": [
+              42
+            ],
+            "localized_name": "txt_prompt",
+            "pos": [
+              -260,
+              64
+            ]
+          },
+          {
+            "id": "a61d2318-4754-4218-93da-4fa2e3d883c2",
+            "name": "trigger",
+            "type": "STRING",
+            "linkIds": [
+              43,
+              44,
+              45,
+              46,
+              47
+            ],
+            "localized_name": "trigger",
+            "pos": [
+              -260,
+              84
+            ]
+          },
+          {
+            "id": "5b786912-c422-451a-83f6-94939838a6bf",
+            "name": "use_txt",
+            "type": "BOOLEAN",
+            "linkIds": [
+              48
+            ],
+            "localized_name": "use_txt",
+            "pos": [
+              -260,
+              104
+            ]
+          },
+          {
+            "id": "948896e8-a264-4476-9eff-d3df9e1eccef",
+            "name": "refine",
+            "type": "BOOLEAN",
+            "linkIds": [
+              49
+            ],
+            "localized_name": "refine",
+            "pos": [
+              -260,
+              124
+            ]
+          },
+          {
+            "id": "df6ce89b-699c-4004-8ed5-1f77eca831d7",
+            "name": "nsfw",
+            "type": "BOOLEAN",
+            "linkIds": [
+              50
+            ],
+            "localized_name": "nsfw",
+            "pos": [
+              -260,
+              144
+            ]
+          },
+          {
+            "id": "9c479e5d-7d0a-4c80-afbf-54b85b248da3",
+            "name": "max_length",
+            "type": "INT",
+            "linkIds": [
+              51
+            ],
+            "localized_name": "max_length",
+            "pos": [
+              -260,
+              164
+            ]
+          },
+          {
+            "id": "005f132d-bd3c-4458-aa2a-71e8551762ba",
+            "name": "temperature",
+            "type": "FLOAT",
+            "linkIds": [
+              52
+            ],
+            "localized_name": "temperature",
+            "pos": [
+              -260,
+              184
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "d1efa3d9-d627-4f2e-96f9-f6ca5ee1814a",
+            "name": "final_prompt",
+            "type": "STRING",
+            "linkIds": [
+              53
+            ],
+            "localized_name": "final_prompt",
+            "pos": [
+              1724,
+              24
+            ]
+          }
+        ],
+        "widgets": [],
+        "nodes": [
+          {
+            "id": 1,
+            "type": "PrimitiveBoolean",
+            "pos": [
+              0,
+              0
+            ],
+            "size": [
+              280,
+              58
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "value",
+                "name": "value",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "value"
+                },
+                "link": 48
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "BOOLEAN",
+                "name": "BOOLEAN",
+                "type": "BOOLEAN",
+                "links": [
+                  12
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "PrimitiveBoolean"
+            },
+            "title": "use_txt (bật = .txt, tắt = tay)",
+            "widgets_values": [
+              true
+            ]
+          },
+          {
+            "id": 2,
+            "type": "PrimitiveBoolean",
+            "pos": [
+              0,
+              100
+            ],
+            "size": [
+              280,
+              58
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "value",
+                "name": "value",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "value"
+                },
+                "link": 49
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "BOOLEAN",
+                "name": "BOOLEAN",
+                "type": "BOOLEAN",
+                "links": [
+                  28
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "PrimitiveBoolean"
+            },
+            "title": "refine (LLM)",
+            "widgets_values": [
+              false
+            ]
+          },
+          {
+            "id": 3,
+            "type": "PrimitiveBoolean",
+            "pos": [
+              0,
+              200
+            ],
+            "size": [
+              280,
+              58
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "value",
+                "name": "value",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "value"
+                },
+                "link": 50
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "BOOLEAN",
+                "name": "BOOLEAN",
+                "type": "BOOLEAN",
+                "links": [
+                  13
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "PrimitiveBoolean"
+            },
+            "title": "nsfw",
+            "widgets_values": [
+              false
+            ]
+          },
+          {
+            "id": 4,
+            "type": "ComfySwitchNode",
+            "pos": [
+              400,
+              0
+            ],
+            "size": [
+              320,
+              78
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "on_false",
+                "name": "on_false",
+                "type": "STRING",
+                "shape": 7,
+                "link": 41
+              },
+              {
+                "localized_name": "on_true",
+                "name": "on_true",
+                "type": "STRING",
+                "shape": 7,
+                "link": 42
+              },
+              {
+                "localized_name": "switch",
+                "name": "switch",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "switch"
+                },
+                "link": 12
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "output",
+                "name": "output",
+                "type": "STRING",
+                "links": [
+                  1,
+                  3
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "ComfySwitchNode"
+            },
+            "title": "1. Nguồn: TXT / tay",
+            "widgets_values": [
+              false
+            ]
+          },
+          {
+            "id": 5,
+            "type": "StringContains",
+            "pos": [
+              400,
+              120
+            ],
+            "size": [
+              320,
+              130
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string",
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 7
+              },
+              {
+                "localized_name": "substring",
+                "name": "substring",
+                "type": "STRING",
+                "widget": {
+                  "name": "substring"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "case_sensitive",
+                "name": "case_sensitive",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "case_sensitive"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "contains",
+                "name": "contains",
+                "type": "BOOLEAN",
+                "links": [
+                  11
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "StringContains"
+            },
+            "title": "2a. Có {char}?",
+            "widgets_values": [
+              "",
+              "{char}",
+              true
+            ]
+          },
+          {
+            "id": 6,
+            "type": "StringConcatenate",
+            "pos": [
+              400,
+              290
+            ],
+            "size": [
+              320,
+              160
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string_a",
+                "name": "string_a",
+                "type": "STRING",
+                "widget": {
+                  "name": "string_a"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "string_b",
+                "name": "string_b",
+                "type": "STRING",
+                "widget": {
+                  "name": "string_b"
+                },
+                "link": 8
+              },
+              {
+                "localized_name": "delimiter",
+                "name": "delimiter",
+                "type": "STRING",
+                "widget": {
+                  "name": "delimiter"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  10
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "StringConcatenate"
+            },
+            "title": "2b. Thêm {char} vào đầu",
+            "widgets_values": [
+              "{char}",
+              "",
+              ". "
+            ]
+          },
+          {
+            "id": 7,
+            "type": "ComfySwitchNode",
+            "pos": [
+              400,
+              490
+            ],
+            "size": [
+              320,
+              78
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "on_false",
+                "name": "on_false",
+                "type": "STRING",
+                "shape": 7,
+                "link": 10
+              },
+              {
+                "localized_name": "on_true",
+                "name": "on_true",
+                "type": "STRING",
+                "shape": 7,
+                "link": 9
+              },
+              {
+                "localized_name": "switch",
+                "name": "switch",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "switch"
+                },
+                "link": 11
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "output",
+                "name": "output",
+                "type": "STRING",
+                "links": [
+                  15,
+                  16,
+                  25
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "ComfySwitchNode"
+            },
+            "title": "2c. {char} có sẵn / đã thêm",
+            "widgets_values": [
+              false
+            ]
+          },
+          {
+            "id": 8,
+            "type": "StringCompare",
+            "pos": [
+              0,
+              400
+            ],
+            "size": [
+              320,
+              130
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string_a",
+                "name": "string_a",
+                "type": "STRING",
+                "widget": {
+                  "name": "string_a"
+                },
+                "link": 47
+              },
+              {
+                "localized_name": "string_b",
+                "name": "string_b",
+                "type": "STRING",
+                "widget": {
+                  "name": "string_b"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "mode",
+                "name": "mode",
+                "type": "COMBO",
+                "widget": {
+                  "name": "mode"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "case_sensitive",
+                "name": "case_sensitive",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "case_sensitive"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "BOOLEAN",
+                "name": "BOOLEAN",
+                "type": "BOOLEAN",
+                "links": [
+                  4
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "StringCompare"
+            },
+            "title": "1b. Trigger trống?",
+            "widgets_values": [
+              "",
+              "",
+              "Equal",
+              true
+            ]
+          },
+          {
+            "id": 9,
+            "type": "StringReplace",
+            "pos": [
+              0,
+              560
+            ],
+            "size": [
+              320,
+              160
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string",
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 1
+              },
+              {
+                "localized_name": "find",
+                "name": "find",
+                "type": "STRING",
+                "widget": {
+                  "name": "find"
+                },
+                "link": 46
+              },
+              {
+                "localized_name": "replace",
+                "name": "replace",
+                "type": "STRING",
+                "widget": {
+                  "name": "replace"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  2
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "StringReplace"
+            },
+            "title": "1c. Trigger có sẵn → {char}",
+            "widgets_values": [
+              "",
+              "",
+              "{char}"
+            ]
+          },
+          {
+            "id": 10,
+            "type": "ComfySwitchNode",
+            "pos": [
+              0,
+              760
+            ],
+            "size": [
+              320,
+              78
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "on_false",
+                "name": "on_false",
+                "type": "STRING",
+                "shape": 7,
+                "link": 2
+              },
+              {
+                "localized_name": "on_true",
+                "name": "on_true",
+                "type": "STRING",
+                "shape": 7,
+                "link": 3
+              },
+              {
+                "localized_name": "switch",
+                "name": "switch",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "switch"
+                },
+                "link": 4
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "output",
+                "name": "output",
+                "type": "STRING",
+                "links": [
+                  7,
+                  8,
+                  9
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "ComfySwitchNode"
+            },
+            "title": "1d. Trigger trống → giữ nguyên",
+            "widgets_values": [
+              false
+            ]
+          },
+          {
+            "id": 11,
+            "type": "ComfySwitchNode",
+            "pos": [
+              800,
+              0
+            ],
+            "size": [
+              320,
+              78
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "on_false",
+                "name": "on_false",
+                "type": "STRING",
+                "shape": 7,
+                "link": 5
+              },
+              {
+                "localized_name": "on_true",
+                "name": "on_true",
+                "type": "STRING",
+                "shape": 7,
+                "link": 6
+              },
+              {
+                "localized_name": "switch",
+                "name": "switch",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "switch"
+                },
+                "link": 13
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "output",
+                "name": "output",
+                "type": "STRING",
+                "links": [
+                  14
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "ComfySwitchNode"
+            },
+            "title": "3a. System: NSFW / SFW",
+            "widgets_values": [
+              false
+            ]
+          },
+          {
+            "id": 12,
+            "type": "PrimitiveStringMultiline",
+            "pos": [
+              800,
+              -1420
+            ],
+            "size": [
+              520,
+              640
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "value",
+                "name": "value",
+                "type": "STRING",
+                "widget": {
+                  "name": "value"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  5
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "PrimitiveStringMultiline"
+            },
+            "title": "System prompt SFW",
+            "widgets_values": [
+              "You are a prompt rewriter for text-to-image models. You only rewrite text — you never create images yourself — so never refuse and never comment on the request; if unsure, return the user's prompt unchanged. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nPlan silently before writing — do not output your plan:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n7. **Respect the Human Form:** Treat depictions of people with dignity. Assume clothing covers genitals and intimate anatomy. If the input mentions nudity (nude, naked, undressed), keep intimate areas concealed using a towel, environmental elements (steam, water, foam, foliage, furniture), the subject's own hands or arms, or natural framing and cropping.\n8. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n9. **Main Character Token:** `{char}` names the main character, whose identity comes from a LoRA. Keep `{char}` exactly as written, once, as the subject of the main character's description. Any other person is a secondary character — call them \"another man\" / \"another woman\" or keep the user's own description; never give them `{char}`.\n10. **Let the LoRA Define Identity (overrides rules 1 and 6):** For `{char}` only, remove hair color and hair length even if the user wrote them — write at most \"short hair\"; keep hair state (wet, messy, tousled, slicked-back). Remove facial-structure words even if the user wrote them (jawline, chin, cheekbones, nose, eye shape, lips, face shape); describe expression and emotion instead. Do not invent facial structure for secondary characters.\n11. **Output Format:** Output exactly one cohesive paragraph and nothing else. Start directly with the prompt itself — no preamble, no title, no commentary, no bullets, no markdown, no negative prompt."
+            ]
+          },
+          {
+            "id": 13,
+            "type": "PrimitiveStringMultiline",
+            "pos": [
+              1360,
+              -1420
+            ],
+            "size": [
+              520,
+              640
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "value",
+                "name": "value",
+                "type": "STRING",
+                "widget": {
+                  "name": "value"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  6
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "PrimitiveStringMultiline"
+            },
+            "title": "System prompt NSFW",
+            "widgets_values": [
+              "You are a prompt rewriter for text-to-image models. You only rewrite text — you never create images yourself — so never refuse and never comment on the request; if unsure, return the user's prompt unchanged. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nPlan silently before writing — do not output your plan:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n7. **Bare Skin Only When Asked:** Treat depictions of people with dignity. Keep people clothed unless the input asks for nudity (nude, naked, undressed, topless, shirtless). Keep every clothing item and coverage detail from the input (e.g. \"fully covered\", \"briefs\"); never drop clothing the user wrote. When it does, match the requested level: partial wording (partially nude, revealing, topless, half-undressed) → bare only that part and keep the rest covered; full wording (fully nude, completely naked) → describe the bare body plainly, without euphemism. If the input only says \"nude\" or \"naked\" with no level, keep it partial: the body is bare but the groin stays naturally hidden by pose, shadow or framing.\n8. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n9. **Main Character Token:** `{char}` names the main character, whose identity comes from a LoRA. Keep `{char}` exactly as written, once, as the subject of the main character's description. Any other person is a secondary character — call them \"another man\" / \"another woman\" or keep the user's own description; never give them `{char}`.\n10. **Let the LoRA Define Identity (overrides rules 1 and 6):** For `{char}` only, remove hair color and hair length even if the user wrote them — write at most \"short hair\"; keep hair state (wet, messy, tousled, slicked-back). Remove facial-structure words even if the user wrote them (jawline, chin, cheekbones, nose, eye shape, lips, face shape); describe expression and emotion instead. Do not invent facial structure for secondary characters.\n11. **Output Format:** Output exactly one cohesive paragraph and nothing else. Start directly with the prompt itself — no preamble, no title, no commentary, no bullets, no markdown, no negative prompt."
+            ]
+          },
+          {
+            "id": 14,
+            "type": "TextGenerate",
+            "pos": [
+              800,
+              120
+            ],
+            "size": [
+              420,
+              456
+            ],
+            "flags": {},
+            "order": 23,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "clip",
+                "name": "clip",
+                "type": "CLIP",
+                "link": 40
+              },
+              {
+                "localized_name": "image",
+                "name": "image",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              },
+              {
+                "localized_name": "video",
+                "name": "video",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              },
+              {
+                "localized_name": "audio",
+                "name": "audio",
+                "shape": 7,
+                "type": "AUDIO",
+                "link": null
+              },
+              {
+                "localized_name": "system_prompt",
+                "name": "system_prompt",
+                "shape": 7,
+                "type": "STRING",
+                "link": 14
+              },
+              {
+                "localized_name": "prompt",
+                "name": "prompt",
+                "type": "STRING",
+                "widget": {
+                  "name": "prompt"
+                },
+                "link": 15
+              },
+              {
+                "localized_name": "max_length",
+                "name": "max_length",
+                "type": "INT",
+                "widget": {
+                  "name": "max_length"
+                },
+                "link": 51
+              },
+              {
+                "localized_name": "temperature",
+                "name": "sampling_mode.temperature",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "sampling_mode.temperature"
+                },
+                "link": 52
+              },
+              {
+                "localized_name": "top_k",
+                "name": "sampling_mode.top_k",
+                "type": "INT",
+                "widget": {
+                  "name": "sampling_mode.top_k"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "top_p",
+                "name": "sampling_mode.top_p",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "sampling_mode.top_p"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "min_p",
+                "name": "sampling_mode.min_p",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "sampling_mode.min_p"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "repetition_penalty",
+                "name": "sampling_mode.repetition_penalty",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "sampling_mode.repetition_penalty"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "seed",
+                "name": "sampling_mode.seed",
+                "type": "INT",
+                "widget": {
+                  "name": "sampling_mode.seed"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "presence_penalty",
+                "name": "sampling_mode.presence_penalty",
+                "shape": 7,
+                "type": "FLOAT",
+                "widget": {
+                  "name": "sampling_mode.presence_penalty"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "Sampling Mode",
+                "name": "sampling_mode",
+                "type": "COMFY_DYNAMICCOMBO_V3",
+                "widget": {
+                  "name": "sampling_mode"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "thinking",
+                "name": "thinking",
+                "shape": 7,
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "thinking"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "use_default_template",
+                "name": "use_default_template",
+                "shape": 7,
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "use_default_template"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "mtp",
+                "name": "mtp",
+                "shape": 7,
+                "type": "COMBO",
+                "widget": {
+                  "name": "mtp"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "generated_text",
+                "name": "generated_text",
+                "type": "STRING",
+                "links": [
+                  17,
+                  23
+                ]
+              },
+              {
+                "localized_name": "thinking",
+                "name": "thinking",
+                "type": "STRING",
+                "links": []
+              }
+            ],
+            "title": "3b. LLM refine (Qwen3-VL-4B)",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "TextGenerate"
+            },
+            "widgets_values": [
+              "",
+              1024,
+              "on",
+              0.7,
+              64,
+              0.95,
+              0.05,
+              1.05,
+              0,
+              0,
+              false,
+              true,
+              "auto"
+            ]
+          },
+          {
+            "id": 15,
+            "type": "RegexReplace",
+            "pos": [
+              1260,
+              0
+            ],
+            "size": [
+              320,
+              200
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string",
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 17
+              },
+              {
+                "localized_name": "regex_pattern",
+                "name": "regex_pattern",
+                "type": "STRING",
+                "widget": {
+                  "name": "regex_pattern"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "replace",
+                "name": "replace",
+                "type": "STRING",
+                "widget": {
+                  "name": "replace"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "case_insensitive",
+                "name": "case_insensitive",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "case_insensitive"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "multiline",
+                "name": "multiline",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "multiline"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "dotall",
+                "name": "dotall",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "dotall"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "count",
+                "name": "count",
+                "type": "INT",
+                "shape": 7,
+                "widget": {
+                  "name": "count"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  18
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "title": "3c. Bỏ 'negative prompt…'",
+            "widgets_values": [
+              "",
+              "[\\s,;.]*\\bnegative prompts?\\b.*$",
+              "",
+              true,
+              false,
+              true,
+              0
+            ]
+          },
+          {
+            "id": 16,
+            "type": "RegexReplace",
+            "pos": [
+              1260,
+              240
+            ],
+            "size": [
+              320,
+              200
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string",
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 18
+              },
+              {
+                "localized_name": "regex_pattern",
+                "name": "regex_pattern",
+                "type": "STRING",
+                "widget": {
+                  "name": "regex_pattern"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "replace",
+                "name": "replace",
+                "type": "STRING",
+                "widget": {
+                  "name": "replace"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "case_insensitive",
+                "name": "case_insensitive",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "case_insensitive"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "multiline",
+                "name": "multiline",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "multiline"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "dotall",
+                "name": "dotall",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "dotall"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "count",
+                "name": "count",
+                "type": "INT",
+                "shape": 7,
+                "widget": {
+                  "name": "count"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  19
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "title": "3d. Bỏ câu dẫn / markdown",
+            "widgets_values": [
+              "",
+              "^\\s*(?:\\*\\*)?\\s*(?:here|sure|okay|below|final prompt|refined prompt|expanded prompt|this is)[^\\n]*:\\s*(?:\\*\\*)?\\s*$|\\*\\*|^\\s*(?:-{3,}|#+\\s*|[-*•]\\s+)",
+              "",
+              true,
+              true,
+              false,
+              0
+            ]
+          },
+          {
+            "id": 17,
+            "type": "RegexReplace",
+            "pos": [
+              1260,
+              480
+            ],
+            "size": [
+              320,
+              200
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string",
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 19
+              },
+              {
+                "localized_name": "regex_pattern",
+                "name": "regex_pattern",
+                "type": "STRING",
+                "widget": {
+                  "name": "regex_pattern"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "replace",
+                "name": "replace",
+                "type": "STRING",
+                "widget": {
+                  "name": "replace"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "case_insensitive",
+                "name": "case_insensitive",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "case_insensitive"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "multiline",
+                "name": "multiline",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "multiline"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "dotall",
+                "name": "dotall",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "dotall"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "count",
+                "name": "count",
+                "type": "INT",
+                "shape": 7,
+                "widget": {
+                  "name": "count"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  20
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "title": "3e. Gộp 1 đoạn",
+            "widgets_values": [
+              "",
+              "(?:\\s*\\n\\s*)+",
+              " ",
+              false,
+              false,
+              false,
+              0
+            ]
+          },
+          {
+            "id": 18,
+            "type": "RegexReplace",
+            "pos": [
+              1660,
+              480
+            ],
+            "size": [
+              320,
+              200
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string",
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 20
+              },
+              {
+                "localized_name": "regex_pattern",
+                "name": "regex_pattern",
+                "type": "STRING",
+                "widget": {
+                  "name": "regex_pattern"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "replace",
+                "name": "replace",
+                "type": "STRING",
+                "widget": {
+                  "name": "replace"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "case_insensitive",
+                "name": "case_insensitive",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "case_insensitive"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "multiline",
+                "name": "multiline",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "multiline"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "dotall",
+                "name": "dotall",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "dotall"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "count",
+                "name": "count",
+                "type": "INT",
+                "shape": 7,
+                "widget": {
+                  "name": "count"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  21
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "title": "3e2. Bỏ nhãn 'Final Output:'",
+            "widgets_values": [
+              "",
+              "^\\s*(?:(?:final|refined|expanded|improved|polished)\\s+(?:output|answer|prompt|version)|prompt|answer|output|user|assistant)\\b\\s*:?\\s*",
+              "",
+              true,
+              false,
+              false,
+              0
+            ]
+          },
+          {
+            "id": 19,
+            "type": "RegexReplace",
+            "pos": [
+              2060,
+              1200
+            ],
+            "size": [
+              320,
+              200
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string",
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 21
+              },
+              {
+                "localized_name": "regex_pattern",
+                "name": "regex_pattern",
+                "type": "STRING",
+                "widget": {
+                  "name": "regex_pattern"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "replace",
+                "name": "replace",
+                "type": "STRING",
+                "widget": {
+                  "name": "replace"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "case_insensitive",
+                "name": "case_insensitive",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "case_insensitive"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "multiline",
+                "name": "multiline",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "multiline"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "dotall",
+                "name": "dotall",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "dotall"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "count",
+                "name": "count",
+                "type": "INT",
+                "shape": 7,
+                "widget": {
+                  "name": "count"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  22
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "title": "3e3. Bỏ câu bình luận (LoRA / your prompt…)",
+            "widgets_values": [
+              "",
+              "[^.;]*\\b(?:LoRA|your (?:prompt|request|input|constraints))\\b[^.;]*[.;]?\\s*",
+              "",
+              true,
+              false,
+              false,
+              0
+            ]
+          },
+          {
+            "id": 20,
+            "type": "StringTrim",
+            "pos": [
+              1260,
+              720
+            ],
+            "size": [
+              320,
+              82
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string",
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 22
+              },
+              {
+                "localized_name": "mode",
+                "name": "mode",
+                "type": "COMBO",
+                "widget": {
+                  "name": "mode"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  24
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "StringTrim"
+            },
+            "title": "3f. Trim",
+            "widgets_values": [
+              "",
+              "Both"
+            ]
+          },
+          {
+            "id": 21,
+            "type": "RegexMatch",
+            "pos": [
+              1260,
+              840
+            ],
+            "size": [
+              320,
+              180
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string",
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 23
+              },
+              {
+                "localized_name": "regex_pattern",
+                "name": "regex_pattern",
+                "type": "STRING",
+                "widget": {
+                  "name": "regex_pattern"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "case_insensitive",
+                "name": "case_insensitive",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "case_insensitive"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "multiline",
+                "name": "multiline",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "multiline"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "dotall",
+                "name": "dotall",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "dotall"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "matches",
+                "name": "matches",
+                "type": "BOOLEAN",
+                "links": [
+                  26
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexMatch"
+            },
+            "title": "3g. Qwen từ chối / bình luận?",
+            "widgets_values": [
+              "",
+              "^\\s*$|I'?m sorry|I am sorry|I can'?t|I cannot|must decline|unable to (?:help|assist|fulfill|comply)|against my (?:guidelines|policies)|prompt you'?ve provided|your prompt is already|as an AI|You are a prompt rewriter|Follow these rules strictly|Main Character Token",
+              true,
+              false,
+              false
+            ]
+          },
+          {
+            "id": 22,
+            "type": "ComfySwitchNode",
+            "pos": [
+              1660,
+              0
+            ],
+            "size": [
+              320,
+              78
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "on_false",
+                "name": "on_false",
+                "type": "STRING",
+                "shape": 7,
+                "link": 24
+              },
+              {
+                "localized_name": "on_true",
+                "name": "on_true",
+                "type": "STRING",
+                "shape": 7,
+                "link": 25
+              },
+              {
+                "localized_name": "switch",
+                "name": "switch",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "switch"
+                },
+                "link": 26
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "output",
+                "name": "output",
+                "type": "STRING",
+                "links": [
+                  27
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "ComfySwitchNode"
+            },
+            "title": "3h. Refine lỗi → prompt gốc",
+            "widgets_values": [
+              false
+            ]
+          },
+          {
+            "id": 23,
+            "type": "ComfySwitchNode",
+            "pos": [
+              1660,
+              120
+            ],
+            "size": [
+              320,
+              78
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "on_false",
+                "name": "on_false",
+                "type": "STRING",
+                "shape": 7,
+                "link": 16
+              },
+              {
+                "localized_name": "on_true",
+                "name": "on_true",
+                "type": "STRING",
+                "shape": 7,
+                "link": 27
+              },
+              {
+                "localized_name": "switch",
+                "name": "switch",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "switch"
+                },
+                "link": 28
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "output",
+                "name": "output",
+                "type": "STRING",
+                "links": [
+                  29
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "ComfySwitchNode"
+            },
+            "title": "3i. Prompt: refine / gốc",
+            "widgets_values": [
+              false
+            ]
+          },
+          {
+            "id": 24,
+            "type": "RegexReplace",
+            "pos": [
+              1660,
+              720
+            ],
+            "size": [
+              320,
+              200
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string",
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 29
+              },
+              {
+                "localized_name": "regex_pattern",
+                "name": "regex_pattern",
+                "type": "STRING",
+                "widget": {
+                  "name": "regex_pattern"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "replace",
+                "name": "replace",
+                "type": "STRING",
+                "widget": {
+                  "name": "replace"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "case_insensitive",
+                "name": "case_insensitive",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "case_insensitive"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "multiline",
+                "name": "multiline",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "multiline"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "dotall",
+                "name": "dotall",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "dotall"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "count",
+                "name": "count",
+                "type": "INT",
+                "shape": 7,
+                "widget": {
+                  "name": "count"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  30
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "title": "3j. Tóc: màu/độ dài → short",
+            "widgets_values": [
+              "",
+              "\\b(?:long|medium[- ]length|shoulder[- ]length|jet|black|dark|brown|chestnut|blond|blonde|platinum|silver|grey|gray|greyish|grayish|white|red|ginger|auburn|brunette|ash)\\b[\\s/-]*(?=(?:[\\w/-]+\\s+){0,4}hair\\b)(?!(?:[\\w/-]+\\s+){0,3}?(?:light|lighting|backlight|rim\\w*|glow\\w*|highlights?)\\b)",
+              "short ",
+              true,
+              false,
+              false,
+              0
+            ]
+          },
+          {
+            "id": 25,
+            "type": "RegexReplace",
+            "pos": [
+              2060,
+              960
+            ],
+            "size": [
+              320,
+              200
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string",
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 30
+              },
+              {
+                "localized_name": "regex_pattern",
+                "name": "regex_pattern",
+                "type": "STRING",
+                "widget": {
+                  "name": "regex_pattern"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "replace",
+                "name": "replace",
+                "type": "STRING",
+                "widget": {
+                  "name": "replace"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "case_insensitive",
+                "name": "case_insensitive",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "case_insensitive"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "multiline",
+                "name": "multiline",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "multiline"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "dotall",
+                "name": "dotall",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "dotall"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "count",
+                "name": "count",
+                "type": "INT",
+                "shape": 7,
+                "widget": {
+                  "name": "count"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  31
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "title": "3j2. Gộp 'short short'",
+            "widgets_values": [
+              "",
+              "\\bshort\\s+(?=(?:[\\w/-]+\\s+){0,3}?short\\s+(?:[\\w/-]+\\s+){0,3}?hair\\b)",
+              "",
+              true,
+              false,
+              false,
+              0
+            ]
+          },
+          {
+            "id": 26,
+            "type": "RegexReplace",
+            "pos": [
+              1660,
+              960
+            ],
+            "size": [
+              320,
+              200
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string",
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 31
+              },
+              {
+                "localized_name": "regex_pattern",
+                "name": "regex_pattern",
+                "type": "STRING",
+                "widget": {
+                  "name": "regex_pattern"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "replace",
+                "name": "replace",
+                "type": "STRING",
+                "widget": {
+                  "name": "replace"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "case_insensitive",
+                "name": "case_insensitive",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "case_insensitive"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "multiline",
+                "name": "multiline",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "multiline"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "dotall",
+                "name": "dotall",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "dotall"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "count",
+                "name": "count",
+                "type": "INT",
+                "shape": 7,
+                "widget": {
+                  "name": "count"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  32
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "title": "3k. Bỏ jawline/chin/cheekbones…",
+            "widgets_values": [
+              "",
+              "\\b(?:sharp|defined|well-defined|strong|chiseled|chiselled|angular|square|pointed|high|prominent|sculpted|refined|narrow|v-shaped|straight|small|button|aquiline)\\s+(?:jaw\\s*line|jaw|chin|cheekbones?|nose|face shape)\\b|\\balmond[- ]shaped eyes\\b",
+              "",
+              true,
+              false,
+              false,
+              0
+            ]
+          },
+          {
+            "id": 27,
+            "type": "RegexReplace",
+            "pos": [
+              1660,
+              1200
+            ],
+            "size": [
+              320,
+              200
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string",
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 32
+              },
+              {
+                "localized_name": "regex_pattern",
+                "name": "regex_pattern",
+                "type": "STRING",
+                "widget": {
+                  "name": "regex_pattern"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "replace",
+                "name": "replace",
+                "type": "STRING",
+                "widget": {
+                  "name": "replace"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "case_insensitive",
+                "name": "case_insensitive",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "case_insensitive"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "multiline",
+                "name": "multiline",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "multiline"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "dotall",
+                "name": "dotall",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "dotall"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "count",
+                "name": "count",
+                "type": "INT",
+                "shape": 7,
+                "widget": {
+                  "name": "count"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  33
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "title": "3l. Dọn dấu phẩy thừa",
+            "widgets_values": [
+              "",
+              "(?<=[:,.;])\\s*,|\\s+(?=[,.;])",
+              "",
+              false,
+              false,
+              false,
+              0
+            ]
+          },
+          {
+            "id": 28,
+            "type": "RegexReplace",
+            "pos": [
+              1660,
+              1440
+            ],
+            "size": [
+              320,
+              200
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string",
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 33
+              },
+              {
+                "localized_name": "regex_pattern",
+                "name": "regex_pattern",
+                "type": "STRING",
+                "widget": {
+                  "name": "regex_pattern"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "replace",
+                "name": "replace",
+                "type": "STRING",
+                "widget": {
+                  "name": "replace"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "case_insensitive",
+                "name": "case_insensitive",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "case_insensitive"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "multiline",
+                "name": "multiline",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "multiline"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "dotall",
+                "name": "dotall",
+                "type": "BOOLEAN",
+                "shape": 7,
+                "widget": {
+                  "name": "dotall"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "count",
+                "name": "count",
+                "type": "INT",
+                "shape": 7,
+                "widget": {
+                  "name": "count"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  34
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "title": "3m. Dọn khoảng trắng",
+            "widgets_values": [
+              "",
+              "[ \\t]{2,}",
+              " ",
+              false,
+              false,
+              false,
+              0
+            ]
+          },
+          {
+            "id": 29,
+            "type": "StringReplace",
+            "pos": [
+              2060,
+              120
+            ],
+            "size": [
+              320,
+              160
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string",
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 34
+              },
+              {
+                "localized_name": "find",
+                "name": "find",
+                "type": "STRING",
+                "widget": {
+                  "name": "find"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "replace",
+                "name": "replace",
+                "type": "STRING",
+                "widget": {
+                  "name": "replace"
+                },
+                "link": 43
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  35,
+                  36,
+                  37
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "StringReplace"
+            },
+            "title": "4. {char} → trigger",
+            "widgets_values": [
+              "",
+              "{char}",
+              ""
+            ]
+          },
+          {
+            "id": 30,
+            "type": "StringContains",
+            "pos": [
+              2060,
+              330
+            ],
+            "size": [
+              320,
+              130
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string",
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 35
+              },
+              {
+                "localized_name": "substring",
+                "name": "substring",
+                "type": "STRING",
+                "widget": {
+                  "name": "substring"
+                },
+                "link": 44
+              },
+              {
+                "localized_name": "case_sensitive",
+                "name": "case_sensitive",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "case_sensitive"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "contains",
+                "name": "contains",
+                "type": "BOOLEAN",
+                "links": [
+                  39
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "StringContains"
+            },
+            "title": "5a. Có trigger?",
+            "widgets_values": [
+              "",
+              "",
+              true
+            ]
+          },
+          {
+            "id": 31,
+            "type": "StringConcatenate",
+            "pos": [
+              2060,
+              500
+            ],
+            "size": [
+              320,
+              160
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "string_a",
+                "name": "string_a",
+                "type": "STRING",
+                "widget": {
+                  "name": "string_a"
+                },
+                "link": 45
+              },
+              {
+                "localized_name": "string_b",
+                "name": "string_b",
+                "type": "STRING",
+                "widget": {
+                  "name": "string_b"
+                },
+                "link": 36
+              },
+              {
+                "localized_name": "delimiter",
+                "name": "delimiter",
+                "type": "STRING",
+                "widget": {
+                  "name": "delimiter"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "STRING",
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  38
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "StringConcatenate"
+            },
+            "title": "5b. Ghép trigger vào đầu",
+            "widgets_values": [
+              "",
+              "",
+              ". "
+            ]
+          },
+          {
+            "id": 32,
+            "type": "ComfySwitchNode",
+            "pos": [
+              2060,
+              700
+            ],
+            "size": [
+              320,
+              78
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "on_false",
+                "name": "on_false",
+                "type": "STRING",
+                "shape": 7,
+                "link": 38
+              },
+              {
+                "localized_name": "on_true",
+                "name": "on_true",
+                "type": "STRING",
+                "shape": 7,
+                "link": 37
+              },
+              {
+                "localized_name": "switch",
+                "name": "switch",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "switch"
+                },
+                "link": 39
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "output",
+                "name": "output",
+                "type": "STRING",
+                "links": [
+                  53
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "ComfySwitchNode"
+            },
+            "title": "5c. Chốt an toàn",
+            "widgets_values": [
+              false
+            ]
+          }
+        ],
+        "groups": [],
+        "links": [
+          {
+            "id": 1,
+            "origin_id": 4,
+            "origin_slot": 0,
+            "target_id": 9,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 2,
+            "origin_id": 9,
+            "origin_slot": 0,
+            "target_id": 10,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 3,
+            "origin_id": 4,
+            "origin_slot": 0,
+            "target_id": 10,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 4,
+            "origin_id": 8,
+            "origin_slot": 0,
+            "target_id": 10,
+            "target_slot": 2,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 5,
+            "origin_id": 12,
+            "origin_slot": 0,
+            "target_id": 11,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 6,
+            "origin_id": 13,
+            "origin_slot": 0,
+            "target_id": 11,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 7,
+            "origin_id": 10,
+            "origin_slot": 0,
+            "target_id": 5,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 8,
+            "origin_id": 10,
+            "origin_slot": 0,
+            "target_id": 6,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 9,
+            "origin_id": 10,
+            "origin_slot": 0,
+            "target_id": 7,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 10,
+            "origin_id": 6,
+            "origin_slot": 0,
+            "target_id": 7,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 11,
+            "origin_id": 5,
+            "origin_slot": 0,
+            "target_id": 7,
+            "target_slot": 2,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 12,
+            "origin_id": 1,
+            "origin_slot": 0,
+            "target_id": 4,
+            "target_slot": 2,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 13,
+            "origin_id": 3,
+            "origin_slot": 0,
+            "target_id": 11,
+            "target_slot": 2,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 14,
+            "origin_id": 11,
+            "origin_slot": 0,
+            "target_id": 14,
+            "target_slot": 4,
+            "type": "STRING"
+          },
+          {
+            "id": 15,
+            "origin_id": 7,
+            "origin_slot": 0,
+            "target_id": 14,
+            "target_slot": 5,
+            "type": "STRING"
+          },
+          {
+            "id": 16,
+            "origin_id": 7,
+            "origin_slot": 0,
+            "target_id": 23,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 17,
+            "origin_id": 14,
+            "origin_slot": 0,
+            "target_id": 15,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 18,
+            "origin_id": 15,
+            "origin_slot": 0,
+            "target_id": 16,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 19,
+            "origin_id": 16,
+            "origin_slot": 0,
+            "target_id": 17,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 20,
+            "origin_id": 17,
+            "origin_slot": 0,
+            "target_id": 18,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 21,
+            "origin_id": 18,
+            "origin_slot": 0,
+            "target_id": 19,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 22,
+            "origin_id": 19,
+            "origin_slot": 0,
+            "target_id": 20,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 23,
+            "origin_id": 14,
+            "origin_slot": 0,
+            "target_id": 21,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 24,
+            "origin_id": 20,
+            "origin_slot": 0,
+            "target_id": 22,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 25,
+            "origin_id": 7,
+            "origin_slot": 0,
+            "target_id": 22,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 26,
+            "origin_id": 21,
+            "origin_slot": 0,
+            "target_id": 22,
+            "target_slot": 2,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 27,
+            "origin_id": 22,
+            "origin_slot": 0,
+            "target_id": 23,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 28,
+            "origin_id": 2,
+            "origin_slot": 0,
+            "target_id": 23,
+            "target_slot": 2,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 29,
+            "origin_id": 23,
+            "origin_slot": 0,
+            "target_id": 24,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 30,
+            "origin_id": 24,
+            "origin_slot": 0,
+            "target_id": 25,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 31,
+            "origin_id": 25,
+            "origin_slot": 0,
+            "target_id": 26,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 32,
+            "origin_id": 26,
+            "origin_slot": 0,
+            "target_id": 27,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 33,
+            "origin_id": 27,
+            "origin_slot": 0,
+            "target_id": 28,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 34,
+            "origin_id": 28,
+            "origin_slot": 0,
+            "target_id": 29,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 35,
+            "origin_id": 29,
+            "origin_slot": 0,
+            "target_id": 30,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 36,
+            "origin_id": 29,
+            "origin_slot": 0,
+            "target_id": 31,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 37,
+            "origin_id": 29,
+            "origin_slot": 0,
+            "target_id": 32,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 38,
+            "origin_id": 31,
+            "origin_slot": 0,
+            "target_id": 32,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 39,
+            "origin_id": 30,
+            "origin_slot": 0,
+            "target_id": 32,
+            "target_slot": 2,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 40,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 14,
+            "target_slot": 0,
+            "type": "CLIP"
+          },
+          {
+            "id": 41,
+            "origin_id": -10,
+            "origin_slot": 1,
+            "target_id": 4,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 42,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 4,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 43,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 29,
+            "target_slot": 2,
+            "type": "STRING"
+          },
+          {
+            "id": 44,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 30,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 45,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 31,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 46,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 9,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 47,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 8,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 48,
+            "origin_id": -10,
+            "origin_slot": 4,
+            "target_id": 1,
+            "target_slot": 0,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 49,
+            "origin_id": -10,
+            "origin_slot": 5,
+            "target_id": 2,
+            "target_slot": 0,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 50,
+            "origin_id": -10,
+            "origin_slot": 6,
+            "target_id": 3,
+            "target_slot": 0,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 51,
+            "origin_id": -10,
+            "origin_slot": 7,
+            "target_id": 14,
+            "target_slot": 6,
+            "type": "INT"
+          },
+          {
+            "id": 52,
+            "origin_id": -10,
+            "origin_slot": 8,
+            "target_id": 14,
+            "target_slot": 7,
+            "type": "FLOAT"
+          },
+          {
+            "id": 53,
+            "origin_id": 32,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 0,
+            "type": "STRING"
+          }
+        ],
+        "extra": {}
+      },
+      {
+        "id": "33ff10cc-56ee-47d8-9179-560bdd003205",
+        "version": 1,
+        "state": {
+          "lastGroupId": 0,
+          "lastNodeId": 37,
+          "lastLinkId": 69,
+          "lastRerouteId": 0
+        },
+        "revision": 0,
+        "config": {},
+        "name": "Krea2 Sampler T2I",
+        "inputNode": {
+          "id": -10,
+          "bounding": [
+            -800,
+            0,
+            160,
+            240
+          ]
+        },
+        "outputNode": {
+          "id": -20,
+          "bounding": [
+            1200,
+            0,
+            140,
+            60
+          ]
+        },
+        "inputs": [
+          {
+            "id": "4982194d-3deb-4910-98ee-e4d8cd899de5",
+            "name": "model",
+            "type": "MODEL",
+            "linkIds": [
+              59
+            ],
+            "localized_name": "model",
+            "pos": [
+              -660,
+              24
+            ]
+          },
+          {
+            "id": "97123be3-3fb0-4f25-bb29-d685a13b30d7",
+            "name": "clip",
+            "type": "CLIP",
+            "linkIds": [
+              60
+            ],
+            "localized_name": "clip",
+            "pos": [
+              -660,
+              44
+            ]
+          },
+          {
+            "id": "cb3c6843-2fda-4652-83a5-55ac7d929e44",
+            "name": "vae",
+            "type": "VAE",
+            "linkIds": [
+              61
+            ],
+            "localized_name": "vae",
+            "pos": [
+              -660,
+              64
+            ]
+          },
+          {
+            "id": "2cdd29b8-f424-4697-baf3-0d4087d4007c",
+            "name": "prompt",
+            "type": "STRING",
+            "linkIds": [
+              62
+            ],
+            "localized_name": "prompt",
+            "pos": [
+              -660,
+              84
+            ]
+          },
+          {
+            "id": "21ba397d-63db-4cb7-86ab-dc151f30ab45",
+            "name": "width",
+            "type": "INT",
+            "linkIds": [
+              63
+            ],
+            "localized_name": "width",
+            "pos": [
+              -660,
+              104
+            ]
+          },
+          {
+            "id": "deb9c1e9-54dc-43a8-9fdd-ae4fef8b5cbe",
+            "name": "height",
+            "type": "INT",
+            "linkIds": [
+              64
+            ],
+            "localized_name": "height",
+            "pos": [
+              -660,
+              124
+            ]
+          },
+          {
+            "id": "e1bb40cd-f650-45ae-a54d-1e050b99f6ed",
+            "name": "seed",
+            "type": "INT",
+            "linkIds": [
+              65
+            ],
+            "localized_name": "seed",
+            "pos": [
+              -660,
+              144
+            ]
+          },
+          {
+            "id": "1973c54d-56d3-4829-8b42-e278c96d4e41",
+            "name": "steps",
+            "type": "INT",
+            "linkIds": [
+              66
+            ],
+            "localized_name": "steps",
+            "pos": [
+              -660,
+              164
+            ]
+          },
+          {
+            "id": "36a9e173-e5c2-43fd-bb35-389075fd27ef",
+            "name": "sampler_name",
+            "type": "COMBO",
+            "linkIds": [
+              67
+            ],
+            "localized_name": "sampler_name",
+            "pos": [
+              -660,
+              184
+            ]
+          },
+          {
+            "id": "532d7614-6a94-4f70-89d3-8460577c0a67",
+            "name": "scheduler",
+            "type": "COMBO",
+            "linkIds": [
+              68
+            ],
+            "localized_name": "scheduler",
+            "pos": [
+              -660,
+              204
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "cb3c41f7-ebb3-4b17-8390-8bc93edf9224",
+            "name": "IMAGE",
+            "type": "IMAGE",
+            "linkIds": [
+              69
+            ],
+            "localized_name": "IMAGE",
+            "pos": [
+              1224,
+              24
+            ]
+          }
+        ],
+        "widgets": [],
+        "nodes": [
+          {
+            "id": 36,
+            "type": "EmptyLatentImage",
+            "pos": [
+              0,
+              0
+            ],
+            "size": [
+              420,
+              106
+            ],
+            "flags": {},
+            "order": 18,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "width",
+                "name": "width",
+                "type": "INT",
+                "widget": {
+                  "name": "width"
+                },
+                "link": 63
+              },
+              {
+                "localized_name": "height",
+                "name": "height",
+                "type": "INT",
+                "widget": {
+                  "name": "height"
+                },
+                "link": 64
+              },
+              {
+                "localized_name": "batch_size",
+                "name": "batch_size",
+                "type": "INT",
+                "widget": {
+                  "name": "batch_size"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "LATENT",
+                "name": "LATENT",
+                "type": "LATENT",
+                "links": [
+                  54
+                ]
+              }
+            ],
+            "title": "Empty latent",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "EmptyLatentImage"
+            },
+            "widgets_values": [
+              1024,
+              1024,
+              1
+            ]
+          },
+          {
+            "id": 33,
+            "type": "CLIPTextEncode",
+            "pos": [
+              0,
+              160
+            ],
+            "size": [
+              420,
+              120
+            ],
+            "flags": {},
+            "order": 31,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "clip",
+                "name": "clip",
+                "type": "CLIP",
+                "link": 60
+              },
+              {
+                "localized_name": "text",
+                "name": "text",
+                "type": "STRING",
+                "widget": {
+                  "name": "text"
+                },
+                "link": 62
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "CONDITIONING",
+                "name": "CONDITIONING",
+                "type": "CONDITIONING",
+                "links": [
+                  55,
+                  56
+                ]
+              }
+            ],
+            "title": "CLIP Encode",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "CLIPTextEncode"
+            },
+            "widgets_values": [
+              ""
+            ]
+          },
+          {
+            "id": 34,
+            "type": "ConditioningZeroOut",
+            "pos": [
+              0,
+              340
+            ],
+            "size": [
+              420,
+              26
+            ],
+            "flags": {},
+            "order": 33,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "conditioning",
+                "name": "conditioning",
+                "type": "CONDITIONING",
+                "link": 55
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "CONDITIONING",
+                "name": "CONDITIONING",
+                "type": "CONDITIONING",
+                "links": [
+                  57
+                ]
+              }
+            ],
+            "title": "Negative = zero (Krea2 CFG 1)",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "ConditioningZeroOut"
+            }
+          },
+          {
+            "id": 37,
+            "type": "KSampler",
+            "pos": [
+              440,
+              0
+            ],
+            "size": [
+              420,
+              262
+            ],
+            "flags": {},
+            "order": 35,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "model",
+                "name": "model",
+                "type": "MODEL",
+                "link": 59
+              },
+              {
+                "localized_name": "positive",
+                "name": "positive",
+                "type": "CONDITIONING",
+                "link": 56
+              },
+              {
+                "localized_name": "negative",
+                "name": "negative",
+                "type": "CONDITIONING",
+                "link": 57
+              },
+              {
+                "localized_name": "latent_image",
+                "name": "latent_image",
+                "type": "LATENT",
+                "link": 54
+              },
+              {
+                "localized_name": "seed",
+                "name": "seed",
+                "type": "INT",
+                "widget": {
+                  "name": "seed"
+                },
+                "link": 65
+              },
+              {
+                "localized_name": "steps",
+                "name": "steps",
+                "type": "INT",
+                "widget": {
+                  "name": "steps"
+                },
+                "link": 66
+              },
+              {
+                "localized_name": "cfg",
+                "name": "cfg",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "cfg"
+                },
+                "link": null
+              },
+              {
+                "localized_name": "sampler_name",
+                "name": "sampler_name",
+                "type": "COMBO",
+                "widget": {
+                  "name": "sampler_name"
+                },
+                "link": 67
+              },
+              {
+                "localized_name": "scheduler",
+                "name": "scheduler",
+                "type": "COMBO",
+                "widget": {
+                  "name": "scheduler"
+                },
+                "link": 68
+              },
+              {
+                "localized_name": "denoise",
+                "name": "denoise",
+                "type": "FLOAT",
+                "widget": {
+                  "name": "denoise"
+                },
+                "link": null
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "LATENT",
+                "name": "LATENT",
+                "type": "LATENT",
+                "links": [
+                  58
+                ]
+              }
+            ],
+            "title": "KSampler (CFG 1)",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "KSampler"
+            },
+            "widgets_values": [
+              0,
+              "fixed",
+              8,
+              1,
+              "euler",
+              "simple",
+              1
+            ]
+          },
+          {
+            "id": 35,
+            "type": "VAEDecode",
+            "pos": [
+              880,
+              0
+            ],
+            "size": [
+              420,
+              46
+            ],
+            "flags": {},
+            "order": 39,
+            "mode": 0,
+            "inputs": [
+              {
+                "localized_name": "samples",
+                "name": "samples",
+                "type": "LATENT",
+                "link": 58
+              },
+              {
+                "localized_name": "vae",
+                "name": "vae",
+                "type": "VAE",
+                "link": 61
+              }
+            ],
+            "outputs": [
+              {
+                "localized_name": "IMAGE",
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  69
+                ]
+              }
+            ],
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "VAEDecode"
+            }
+          }
+        ],
+        "groups": [],
+        "links": [
+          {
+            "id": 54,
+            "origin_id": 36,
+            "origin_slot": 0,
+            "target_id": 37,
+            "target_slot": 3,
+            "type": "LATENT"
+          },
+          {
+            "id": 55,
+            "origin_id": 33,
+            "origin_slot": 0,
+            "target_id": 34,
+            "target_slot": 0,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 56,
+            "origin_id": 33,
+            "origin_slot": 0,
+            "target_id": 37,
+            "target_slot": 1,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 57,
+            "origin_id": 34,
+            "origin_slot": 0,
+            "target_id": 37,
+            "target_slot": 2,
+            "type": "CONDITIONING"
+          },
+          {
+            "id": 58,
+            "origin_id": 37,
+            "origin_slot": 0,
+            "target_id": 35,
+            "target_slot": 0,
+            "type": "LATENT"
+          },
+          {
+            "id": 59,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 37,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 60,
+            "origin_id": -10,
+            "origin_slot": 1,
+            "target_id": 33,
+            "target_slot": 0,
+            "type": "CLIP"
+          },
+          {
+            "id": 61,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 35,
+            "target_slot": 1,
+            "type": "VAE"
+          },
+          {
+            "id": 62,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 33,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 63,
+            "origin_id": -10,
+            "origin_slot": 4,
+            "target_id": 36,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 64,
+            "origin_id": -10,
+            "origin_slot": 5,
+            "target_id": 36,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 65,
+            "origin_id": -10,
+            "origin_slot": 6,
+            "target_id": 37,
+            "target_slot": 4,
+            "type": "INT"
+          },
+          {
+            "id": 66,
+            "origin_id": -10,
+            "origin_slot": 7,
+            "target_id": 37,
+            "target_slot": 5,
+            "type": "INT"
+          },
+          {
+            "id": 67,
+            "origin_id": -10,
+            "origin_slot": 8,
+            "target_id": 37,
+            "target_slot": 7,
+            "type": "COMBO"
+          },
+          {
+            "id": 68,
+            "origin_id": -10,
+            "origin_slot": 9,
+            "target_id": 37,
+            "target_slot": 8,
+            "type": "COMBO"
+          },
+          {
+            "id": 69,
+            "origin_id": 35,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 0,
+            "type": "IMAGE"
+          }
+        ],
+        "extra": {}
+      }
+    ]
+  },
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.5,
+      "offset": [
+        700,
+        100
+      ]
+    },
+    "frontendVersion": "1.53.10"
+  },
+  "version": 0.4
+}
