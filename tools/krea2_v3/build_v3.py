@@ -55,6 +55,10 @@ README_STORY4 = """## Krea-2 Turbo + LoRA — Story4 v3 (Qwen viết tiếp câu
 
 **Dự phòng:** Qwen từ chối / rỗng / chép system prompt → cả 3 cảnh dùng ô gõ tay. JSON hỏng / thiếu cảnh → riêng cảnh đó dùng ô gõ tay. Cảnh Qwen viết được dọn (negative prompt, câu bình luận) + regex tóc/mặt; sheet và beat 1 giữ nguyên.
 
+**SFW:** khi `nsfw` tắt, *Câu che chắn SFW* được ghép vào cuối prompt 2–4 (Qwen 4B hay bỏ qua rule che chắn). Đổi câu theo bối cảnh (vd "dark swim trunks"). Nên **tắt LoRA shavedMalePubes** khi chạy SFW.
+
+**Motion prompt cho video:** Qwen viết thêm `motion1–4` (1 cho mỗi ảnh) → *Save motion prompts* lưu `Story4_v3_<Trigger>_<Seed1>_motion.txt` (cùng trigger + Seed1 thì ghi đè), 4 đoạn cách nhau 1 dòng trống (đọc được bằng TextSplitter, hoặc dán vào 4 ô *Motion prompt* của workflow Reel Wan22 / LTXV). Motion lỗi → câu mặc định trong subgraph. Thư mục lưu: sửa `output_dir` trên node.
+
 **Seed:** *Seed1* = anchor (fixed — ưng rồi giữ), *Seed2–4* randomize → chạy lại tới khi ưng rồi đổi sang fixed.
 
 **Preview:** 3 node *Preview prompt 2–4* để xem Qwen viết gì.
@@ -437,28 +441,24 @@ if MODE == "story4":
     sw.link(sw_img, 0, tg, "image", "IMAGE")
     sw.link(tg, 0, refused_s, "string", "STRING")
 
-    scene_out = {}
-    for k, v2s_id in ((2, 17), (3, 23), (4, 29)):
-        x, y = 800, (k - 2) * 1700
-        manual = sw.add(reuse(v2s_id, [x, y], f"Beat {k} gõ tay (dự phòng)", src=V2S))
-        jx = sw.add(node("JsonExtractString", [x + 440, y], [320, 100],
-                         [I("json_string", "STRING", True), I("key", "STRING", True)],
-                         [O("STRING", "STRING")], ["", f"scene{k}"], f"3. scene{k} từ JSON"))
-        chain = [rx_replace([x + 440, y + 140], f"4a. scene{k}: bỏ 'negative prompt'", RX_NEG),
-                 rx_replace([x + 440, y + 380], f"4b. scene{k}: bỏ câu bình luận", RX_META),
-                 rx_replace([x + 840, y], f"5a. scene{k}: tóc → short", RX_HAIR, RX_HAIR_REPL),
-                 rx_replace([x + 840, y + 240], f"5b. scene{k}: gộp 'short short'", RX_HAIR_DEDUP),
-                 rx_replace([x + 840, y + 480], f"5c. scene{k}: bỏ jawline/chin…", RX_FACE),
-                 rx_replace([x + 840, y + 720], f"5d. scene{k}: dọn dấu phẩy", RX_TIDY),
-                 rx_replace([x + 840, y + 960], f"5e. scene{k}: dọn khoảng trắng", RX_SPACE, " ")]
-        trim_k = node("StringTrim", [x + 1240, y], [320, 82], [I("string", "STRING", True), I("mode", "COMBO", True)],
-                      [O("STRING", "STRING")], ["", "Both"], f"5f. scene{k}: trim")
-        empty_k = regex_match([x + 1240, y + 120], f"6a. scene{k} rỗng?", r"^\s*$")
-        s_empty = switch([x + 1640, y], f"6b. scene{k}: rỗng → gõ tay")
-        s_ref = switch([x + 1640, y + 120], f"6c. scene{k}: Qwen lỗi → gõ tay")
-        s_use = switch([x + 1640, y + 240], f"6d. scene{k}: use_qwen / gõ tay")
-        p_k = concat([x + 2000, y], f"7b. prompt {k} = trigger. sheet. scene{k}", "", "", ". ")
-        sw.add(jx, *chain, trim_k, empty_k, s_empty, s_ref, s_use, p_k)
+    def json_field(key, fallback, x, y):
+        """JSON key -> cleanup + identity regex -> fallback when empty / Qwen failed / use_qwen off. Returns final switch."""
+        jx = node("JsonExtractString", [x, y], [320, 100], [I("json_string", "STRING", True), I("key", "STRING", True)],
+                  [O("STRING", "STRING")], ["", key], f"3. {key} từ JSON")
+        chain = [rx_replace([x, y + 140], f"4a. {key}: bỏ 'negative prompt'", RX_NEG),
+                 rx_replace([x, y + 380], f"4b. {key}: bỏ câu bình luận", RX_META),
+                 rx_replace([x + 400, y], f"5a. {key}: tóc → short", RX_HAIR, RX_HAIR_REPL),
+                 rx_replace([x + 400, y + 240], f"5b. {key}: gộp 'short short'", RX_HAIR_DEDUP),
+                 rx_replace([x + 400, y + 480], f"5c. {key}: bỏ jawline/chin…", RX_FACE),
+                 rx_replace([x + 400, y + 720], f"5d. {key}: dọn dấu phẩy", RX_TIDY),
+                 rx_replace([x + 400, y + 960], f"5e. {key}: dọn khoảng trắng", RX_SPACE, " ")]
+        trim_k = node("StringTrim", [x + 800, y], [320, 82], [I("string", "STRING", True), I("mode", "COMBO", True)],
+                      [O("STRING", "STRING")], ["", "Both"], f"5f. {key}: trim")
+        empty_k = regex_match([x + 800, y + 120], f"6a. {key} rỗng?", r"^\s*$")
+        s_empty = switch([x + 1200, y], f"6b. {key}: rỗng → dự phòng")
+        s_ref = switch([x + 1200, y + 120], f"6c. {key}: Qwen lỗi → dự phòng")
+        s_use = switch([x + 1200, y + 240], f"6d. {key}: use_qwen / dự phòng")
+        sw.add(jx, *chain, trim_k, empty_k, s_empty, s_ref, s_use)
         sw.link(tg, 0, jx, "json_string", "STRING")
         prev = jx
         for r in chain + [trim_k]:
@@ -466,17 +466,48 @@ if MODE == "story4":
             prev = r
         sw.link(trim_k, 0, empty_k, "string", "STRING")
         sw.link(trim_k, 0, s_empty, "on_false", "STRING")
-        sw.link(manual, 0, s_empty, "on_true", "STRING")
+        sw.link(fallback, 0, s_empty, "on_true", "STRING")
         sw.link(empty_k, 0, s_empty, "switch", "BOOLEAN")
         sw.link(s_empty, 0, s_ref, "on_false", "STRING")
-        sw.link(manual, 0, s_ref, "on_true", "STRING")
+        sw.link(fallback, 0, s_ref, "on_true", "STRING")
         sw.link(refused_s, 0, s_ref, "switch", "BOOLEAN")
         sw.link(s_ref, 0, s_use, "on_true", "STRING")
-        sw.link(manual, 0, s_use, "on_false", "STRING")
+        sw.link(fallback, 0, s_use, "on_false", "STRING")
         sw.link(b_qwen, 0, s_use, "switch", "BOOLEAN")
+        return s_use
+
+    # scenes 2-4 -> "trigger. sheet. scene", + SFW cover sentence when nsfw is off (Qwen 4B ignores cover rules)
+    cover_in = concat([2800, 200], "8a. SFW cover (từ ngoài)", "", "", "")  # passthrough node so the input has one target
+    scene_out = {}
+    for k, v2s_id in ((2, 17), (3, 23), (4, 29)):
+        x, y = 800, (k - 2) * 1700
+        manual = sw.add(reuse(v2s_id, [x, y], f"Beat {k} gõ tay (dự phòng)", src=V2S))
+        scene = json_field(f"scene{k}", manual, x + 440, y)
+        p_k = concat([x + 2000, y], f"7b. prompt {k} = trigger. sheet. scene{k}", "", "", ". ")
+        cov_k = concat([x + 2000, y + 220], f"8b. prompt {k} + câu che chắn SFW", "", "", " ")  # scene already ends with "."
+        sw_cov = switch([x + 2000, y + 440], f"8c. prompt {k}: nsfw / SFW có che")
+        sw.add(p_k, cov_k, sw_cov)
         sw.link(ts, 0, p_k, "string_a", "STRING")
-        sw.link(s_use, 0, p_k, "string_b", "STRING")
-        scene_out[k] = p_k
+        sw.link(scene, 0, p_k, "string_b", "STRING")
+        sw.link(p_k, 0, cov_k, "string_a", "STRING")
+        sw.link(cover_in, 0, cov_k, "string_b", "STRING")
+        sw.link(cov_k, 0, sw_cov, "on_false", "STRING")
+        sw.link(p_k, 0, sw_cov, "on_true", "STRING")
+        sw.link(b_ns, 0, sw_cov, "switch", "BOOLEAN")
+        scene_out[k] = sw_cov
+    sw.add(cover_in)
+
+    # motion1-4 for image-to-video -> one text, 4 paragraphs separated by a blank line (TextSplitter-ready)
+    motion_default = sw.add(multiline([800, 5200], "Motion mặc định (dự phòng)",
+                                      "The person keeps the same identity and outfit. Natural breathing, subtle blinking "
+                                      "and a slight relaxed head movement. Slow cinematic push-in."))
+    motions = [json_field(f"motion{k}", motion_default, 1240, 5200 + (k - 1) * 1300) for k in (1, 2, 3, 4)]
+    joined = motions[0]
+    for k, m in enumerate(motions[1:], 2):
+        j = sw.add(concat([2800, 5200 + k * 220], f"9. ghép motion 1–{k}", "", "", "\n\n"))
+        sw.link(joined, 0, j, "string_a", "STRING")
+        sw.link(m, 0, j, "string_b", "STRING")
+        joined = j
 
     SW_IN = [
         ("clip", "CLIP", [(tg, "clip")], None),
@@ -485,6 +516,7 @@ if MODE == "story4":
         ("sheet", "STRING", [(m1, "string_b"), (ts, "string_b")], ""),
         ("beat1", "STRING", [(m3, "string_b")], ""),
         ("direction", "STRING", [(m5, "string_b")], ""),
+        ("sfw_cover", "STRING", [(cover_in, "string_a")], ""),
         ("use_qwen", "BOOLEAN", [(b_qwen, "value")], True),
         ("see_image", "BOOLEAN", [(b_img, "value")], True),
         ("nsfw", "BOOLEAN", [(b_ns, "value")], False),
@@ -495,6 +527,7 @@ if MODE == "story4":
         sw.sg_input(name, typ, tgts)
     for k, p_k in scene_out.items():
         sw.sg_output(f"prompt{k}", "STRING", p_k, 0)
+    sw.sg_output("motion_prompts", "STRING", joined, 0)
     SG_SW = finish_subgraph(sw, "Krea2 Story Writer", -800, 4800)
 
     # ------------------------------------------------ root graph (story4)
@@ -505,6 +538,24 @@ if MODE == "story4":
     sheet = g.add(reuse(6, [500, 60], "Character sheet (ghép vào MỌI ảnh)", src=V2S))
     beat1 = g.add(reuse(10, [500, 420], "Beat 1 – anchor", src=V2S))
     direction = g.add(multiline([500, 700], "Hướng câu chuyện (để trống = Qwen tự nối tiếp)", ""))
+    cover = g.add(multiline([500, 1120], "Câu che chắn SFW (ghép vào cảnh 2–4 khi nsfw tắt)",
+                            "He wears a white towel wrapped firmly around his waist, groin fully covered.", (420, 120)))
+    save_txt = g.add(node("Save_Txt", [1000, 1400], [460, 260],
+                          [I("source", "*"), I("file_name", "STRING", True), I("mode", "COMBO", True),
+                           I("output_dir", "STRING", True), I("filename_prefix", "STRING", True),
+                           I("manual_save_token", "STRING", True)],
+                          [O("text", "STRING"), O("done", "BOOLEAN"), O("saved_path", "STRING")],
+                          ["", "Auto save", "D:\\001_Personal_Proj\\Comfy\\result\\Story4_txt",
+                           "Story4_v3_motion", ""],
+                          "Save motion prompts (.txt, 4 đoạn)",
+                          props={"aux_id": "tony71200/Load_IO_Tony", "Node name for S&R": "Save_Txt"}))
+    motion_preview = g.add(reuse(16, [1500, 1400], "Preview motion prompts"))
+    # the frontend only expands %Title.widget% for image Save nodes, so build the txt name in-graph:
+    # Story4_v3_<Trigger>_<Seed1>_motion (PreviewAny turns the INT seed into a STRING). Same trigger+seed overwrites.
+    seed1_str = g.add(reuse(16, [1000, 1700], "Seed1 → chữ (cho tên file txt)"))
+    txt_a = g.add(concat([1000, 1840], "tên txt: Story4_v3_ + trigger", "Story4_v3_", "", ""))
+    txt_b = g.add(concat([1000, 2040], "tên txt: + _seed1", "", "", "_"))
+    txt_c = g.add(concat([1000, 2240], "tên txt: + _motion", "", "motion", "_"))
     p_ts = g.add(concat([1000, 60], "trigger + sheet", "", "", ". "))
     p1 = g.add(concat([1000, 280], "Prompt 1 = trigger. sheet. beat 1", "", "", ". "))
     inst_sw = g.add(instance(SG_SW, SW_IN, [1000, 560], [420, 480], "Krea2 Story Writer"))
@@ -518,15 +569,27 @@ if MODE == "story4":
     g.add(node("MarkdownNote", [-560, 60], [520, 900], [], [], [README_STORY4], "README – Krea2 LoRA T2I Story4 v3", props={}))
 
     g.link(unet, 0, lora, "model", "MODEL")
+    # sheet usually ends with "." and every join adds ". " -> strip the tail once so prompts don't read "quality.. He"
+    sheet_rx = g.add(rx_replace([500, 980], "Sheet: bỏ dấu chấm cuối", (r"[\s.]+$", False, False, False)))
+    g.link(sheet, 0, sheet_rx, "string", "STRING")
     g.link(trig, 0, p_ts, "string_a", "STRING")
-    g.link(sheet, 0, p_ts, "string_b", "STRING")
+    g.link(sheet_rx, 0, p_ts, "string_b", "STRING")
     g.link(p_ts, 0, p1, "string_a", "STRING")
     g.link(beat1, 0, p1, "string_b", "STRING")
     g.link(clip, 0, inst_sw, "clip", "CLIP")
     g.link(trig, 0, inst_sw, "trigger", "STRING")
-    g.link(sheet, 0, inst_sw, "sheet", "STRING")
+    g.link(sheet_rx, 0, inst_sw, "sheet", "STRING")
     g.link(beat1, 0, inst_sw, "beat1", "STRING")
     g.link(direction, 0, inst_sw, "direction", "STRING")
+    g.link(cover, 0, inst_sw, "sfw_cover", "STRING")
+    g.link(inst_sw, "motion_prompts", save_txt, "source", "STRING")
+    g.link(seeds[1], 0, seed1_str, "source", "INT")
+    g.link(trig, 0, txt_a, "string_b", "STRING")
+    g.link(txt_a, 0, txt_b, "string_a", "STRING")
+    g.link(seed1_str, 0, txt_b, "string_b", "STRING")
+    g.link(txt_b, 0, txt_c, "string_a", "STRING")
+    g.link(txt_c, 0, save_txt, "filename_prefix", "STRING")
+    g.link(inst_sw, "motion_prompts", motion_preview, "source", "STRING")
     g.link(samplers[1], 0, inst_sw, "image1", "IMAGE")
     for k in (1, 2, 3, 4):
         s = samplers[k]

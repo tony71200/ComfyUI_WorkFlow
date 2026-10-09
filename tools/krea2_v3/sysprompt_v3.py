@@ -38,20 +38,21 @@ Follow these rules strictly:
 4. **Camera Variety:** Vary shot size and angle across scenes (wide, medium, close-up, over-the-shoulder, low or high angle). Never repeat scene 1's exact framing.
 5. **People:** Refer to people the same way scene 1 does (same names or pronouns). One or two sentences per scene, 25–60 words.
 """
-STORY_RULE6_SFW = """6. **Respect the Human Form:** Treat people with dignity. Clothing covers genitals and intimate anatomy. If nudity is mentioned, keep intimate areas concealed with a towel, environmental elements (steam, water, foam, foliage, furniture), the subject's own hands or arms, or natural framing and cropping.
+STORY_RULE6_SFW = """6. **Respect the Human Form:** Treat people with dignity. Clothing covers genitals and intimate anatomy. If the setting or action implies nudity (bath, onsen, hot spring, shower, bed, undressing, getting out of water) — even when nudity is not stated — every scene must say exactly what covers the groin: the waterline above the hips, a towel wrapped around the waist, dense steam, or framing that stops at the waist. If nudity is mentioned, conceal intimate areas the same way or with the subject's own hands or arms.
 """
 STORY_RULE6_NSFW = """6. **Bare Skin Only When Asked:** Keep people clothed as in the sheet and scene 1, and never drop clothing on your own. Only when the sheet, scene 1 or the STORY DIRECTION asks for nudity, match the requested level: partial wording (partially nude, revealing, topless, half-undressed) → bare only that part and keep the rest covered; full wording (fully nude, completely naked) → describe the bare body plainly, without euphemism. If it only says "nude" or "naked", keep it partial: the groin stays naturally hidden by pose, shadow or framing.
 """
 STORY_TAIL = """7. **Let the LoRA Define Identity:** Never state hair color or hair length; never describe facial structure (jawline, chin, cheekbones, nose, eye shape, lips, face shape). Describe expression and emotion instead.
-8. **Output Format:** Output exactly one JSON object and nothing else — no markdown, no code fence, no commentary:
-{"scene2": "...", "scene3": "...", "scene4": "..."}
-Do not use double quotes inside the scene text."""
+8. **Motion Prompts:** For each of the four shots (motion1 = the image of scene 1, motion2–motion4 = scenes 2–4) write a short image-to-video motion prompt, 30–60 words: start with "The person keeps the same identity and outfit.", then describe 3–5 seconds of subtle, natural movement that fits the shot (breathing, blinking, a slow head turn, small gestures, water or steam movement), then one slow camera move (slow push-in, gentle orbit, slight tilt). No cuts, no new actions beyond the shot.
+9. **Output Format:** Output exactly one JSON object and nothing else — no markdown, no code fence, no commentary:
+{"scene2": "...", "scene3": "...", "scene4": "...", "motion1": "...", "motion2": "...", "motion3": "...", "motion4": "..."}
+Do not use double quotes inside the text."""
 SYS_STORY_SFW = STORY_HEAD + STORY_RULE6_SFW + STORY_TAIL
 SYS_STORY_NSFW = STORY_HEAD + STORY_RULE6_NSFW + STORY_TAIL
 
 if __name__ == "__main__":
     for s in (SYS_SFW, SYS_NSFW, SYS_STORY_SFW, SYS_STORY_NSFW):
         assert "explicit nudity" not in s.lower()
-    assert '{"scene2"' in SYS_STORY_SFW and SYS_STORY_SFW != SYS_STORY_NSFW
+    assert '{"scene2"' in SYS_STORY_SFW and '"motion4"' in SYS_STORY_SFW and SYS_STORY_SFW != SYS_STORY_NSFW
     assert SYS_STORY_SFW.replace(STORY_RULE6_SFW, "") == SYS_STORY_NSFW.replace(STORY_RULE6_NSFW, "")
     print("ok")

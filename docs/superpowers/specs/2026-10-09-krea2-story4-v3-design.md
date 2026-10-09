@@ -122,6 +122,14 @@ Dùng sheet và beat 1 phòng gym của Story4 hiện tại. Seed1–4 cố đ�
 5. `use_qwen` tắt: kết quả phải giống Story4 cũ.
 6. Mô phỏng lỗi (system prompt yêu cầu trả văn bản thay vì JSON): từng cảnh phải lấy ô gõ tay tương ứng.
 
+## Bổ sung sau test (2026-10-09)
+
+| # | Quyết định | Lý do / kết quả test |
+|---|---|---|
+| Q11 | Viết lại rule 6 SFW: bối cảnh ngụ ý khoả thân (onsen, tắm, giường…) thì mỗi cảnh phải nói rõ vật che. Thêm node regex ở canvas chính để bỏ dấu chấm cuối của sheet. | Test lần 1: SFW vẫn ra ảnh khoả thân. Qwen 4B không làm theo rule mới, nên chỉ sửa rule là chưa đủ. Lỗi dấu chấm đôi sau sheet đã hết. |
+| Q13 | (c): **Câu che chắn SFW** (ô ngoài canvas, mặc định là khăn quấn eo) được ghép cố định vào prompt 2–4 khi `nsfw` tắt. Khi chạy SFW thì tắt LoRA shavedMalePubes. | Test lại R1/R3/R4: cả 9 ảnh cảnh 2–4 đều có khăn quấn eo. Prompt 1 (anchor) không bị thay đổi. |
+| Q12 | (b): JSON có thêm `motion1–4`, mỗi motion ứng với một ảnh. Mỗi motion đi qua cùng chuỗi dọn/dự phòng như cảnh. Bốn motion được ghép thành 4 đoạn, cách nhau một dòng trống, rồi `Save_Txt` lưu ra `Story4_v3_<Trigger>_<Seed1>_motion.txt`. | Frontend không thay token `%…%` cho `Save_Txt`, nên tên file được ghép ngay trong graph; Seed1 được đổi sang chuỗi bằng `PreviewAny`. Kết quả test: R3/R4 có đủ motion; ở R1, Qwen bỏ hẳn các key motion nên cả 4 dùng câu mặc định. |
+
 ## Ngoài phạm vi
 
 Batch .txt (Q6 b/c), chế độ nối chuỗi từng cảnh (Q8 b), tham chiếu ảnh anchor bằng LoRA style reference.

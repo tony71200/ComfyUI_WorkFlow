@@ -34,8 +34,9 @@ for sg in d["definitions"]["subgraphs"]:
         assert len(inst["widgets_values"]) == sum("widget" in i for i in inst["inputs"]), "widgets_values length"
 
 srs = {n["properties"].get("Node name for S&R") for n in d["nodes"]}
-for save in (n for n in d["nodes"] if n["type"] == "SaveImageA1Metadata"):
-    fp = save["widgets_values"][0]
+PREFIX_SLOT = {"SaveImageA1Metadata": 0, "Save_Txt": 3}  # index of filename_prefix in widgets_values
+for save in (n for n in d["nodes"] if n["type"] in PREFIX_SLOT):
+    fp = save["widgets_values"][PREFIX_SLOT[save["type"]]]
     for ref in re.findall(r"%([A-Za-z0-9_]+)\.", fp):
         assert ref in srs, ref
     print("filename refs ok:", fp)
