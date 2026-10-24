@@ -1,0 +1,2554 @@
+{
+ "id": "c4cd03f0-15bf-4a99-b7ba-1070cfefe495",
+ "revision": 3,
+ "last_node_id": 216,
+ "last_link_id": 400,
+ "nodes": [
+  {
+   "id": 92,
+   "type": "SaveVideo",
+   "pos": [
+    832.5455182692908,
+    4819.649509465687
+   ],
+   "size": [
+    790.8528279638824,
+    106
+   ],
+   "flags": {},
+   "order": 38,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "video",
+     "name": "video",
+     "type": "VIDEO",
+     "link": 381
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "format",
+     "name": "format",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "format"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "format.codec",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "format.codec"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "codec",
+     "shape": 7,
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "codec"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "video",
+     "name": "video",
+     "type": "VIDEO",
+     "links": []
+    }
+   ],
+   "title": "SAVE MP4 • MiniMax H3 • BASE RENDER",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0",
+    "Node name for S&R": "SaveVideo"
+   },
+   "widgets_values": [
+    "video/MiniMax_H3",
+    "auto",
+    "auto",
+    "auto"
+   ],
+   "widgets_values_named": {
+    "filename_prefix": "video/MiniMax_H3",
+    "format": "auto",
+    "format.codec": "auto",
+    "codec": "auto"
+   }
+  },
+  {
+   "id": 115,
+   "type": "ResolutionSelector",
+   "pos": [
+    -1478.1414195989623,
+    5776.992880571169
+   ],
+   "size": [
+    270,
+    170
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "showAdvanced": false,
+   "inputs": [
+    {
+     "localized_name": "aspect_ratio",
+     "name": "aspect_ratio",
+     "type": "COMBO",
+     "widget": {
+      "name": "aspect_ratio"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "megapixels",
+     "name": "megapixels",
+     "type": "FLOAT",
+     "widget": {
+      "name": "megapixels"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "multiple",
+     "name": "multiple",
+     "type": "INT",
+     "widget": {
+      "name": "multiple"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "preview",
+     "name": "preview",
+     "shape": 7,
+     "type": "RESOLUTION_PREVIEW",
+     "widget": {
+      "name": "preview"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "links": [
+      276
+     ]
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "links": [
+      277
+     ]
+    }
+   ],
+   "title": "Resolution Selector (Size)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0",
+    "Node name for S&R": "ResolutionSelector"
+   },
+   "widgets_values": [
+    "9:16 (Portrait Widescreen)",
+    0.5,
+    32
+   ],
+   "widgets_values_named": {
+    "aspect_ratio": "9:16 (Portrait Widescreen)",
+    "megapixels": 0.5,
+    "multiple": 32
+   },
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 117,
+   "type": "MarkdownNote",
+   "pos": [
+    -2051.28408760109,
+    4907.438734629821
+   ],
+   "size": [
+    440,
+    740
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "title": "Note: Model Links",
+   "properties": {},
+   "widgets_values": [
+    "## Model Links\n[🤗 Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-Org/MiniMax-H3)\n\n**vae**\n\n- [minimax_h3_video_vae_fp16.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors)\n- [minimax_h3_audio_vae_fp32.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors)\n\n**diffusion_models**\n\n- [minimax_h3_ref2va_pruned_int8_convrot.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors)\n\n**text_encoders**\n\n- [qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors)\n\n**loras**\n\n- [minimax_h3_fl2v_turbo_4step_v1.1_768p_comfyui_bf16.safetensors](https://huggingface.co/lightx2v/Minimax-h3-Turbo/resolve/main/minimax_h3_fl2v_turbo_4step_v1.1_768p_comfyui_bf16.safetensors)\n\n\n## Model Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 vae/\n│   │   ├── minimax_h3_video_vae_fp16.safetensors\n│   │   └── minimax_h3_audio_vae_fp32.safetensors\n│   ├── 📂 diffusion_models/\n│   │   └── minimax_h3_ref2va_pruned_int8_convrot.safetensors\n│   ├── 📂 text_encoders/\n│   │   └── qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors\n│   ├── 📂 loras/\n│   │   └── minimax_h3_fl2v_turbo_4step_v1.1_768p_comfyui_bf16.\nsafetensors\n```\n\n"
+   ],
+   "widgets_values_named": {
+    "text": "## Model Links\n[🤗 Comfy-Org/MiniMax-H3](https://huggingface.co/Comfy-Org/MiniMax-H3)\n\n**vae**\n\n- [minimax_h3_video_vae_fp16.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors)\n- [minimax_h3_audio_vae_fp32.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors)\n\n**diffusion_models**\n\n- [minimax_h3_ref2va_pruned_int8_convrot.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors)\n\n**text_encoders**\n\n- [qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors](https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors)\n\n**loras**\n\n- [minimax_h3_fl2v_turbo_4step_v1.1_768p_comfyui_bf16.safetensors](https://huggingface.co/lightx2v/Minimax-h3-Turbo/resolve/main/minimax_h3_fl2v_turbo_4step_v1.1_768p_comfyui_bf16.safetensors)\n\n\n## Model Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 vae/\n│   │   ├── minimax_h3_video_vae_fp16.safetensors\n│   │   └── minimax_h3_audio_vae_fp32.safetensors\n│   ├── 📂 diffusion_models/\n│   │   └── minimax_h3_ref2va_pruned_int8_convrot.safetensors\n│   ├── 📂 text_encoders/\n│   │   └── qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors\n│   ├── 📂 loras/\n│   │   └── minimax_h3_fl2v_turbo_4step_v1.1_768p_comfyui_bf16.\nsafetensors\n```\n\n"
+   },
+   "color": "#222",
+   "bgcolor": "#000"
+  },
+  {
+   "id": 119,
+   "type": "VAELoader",
+   "pos": [
+    -1479.4185337524411,
+    5292.4795268859925
+   ],
+   "size": [
+    640,
+    70
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "vae_name",
+     "name": "vae_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "vae_name"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "VAE",
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      273,
+      326
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0",
+    "Node name for S&R": "VAELoader",
+    "models": [
+     {
+      "name": "minimax_h3_video_vae_fp16.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors",
+      "directory": "vae"
+     }
+    ]
+   },
+   "widgets_values": [
+    "minimax_h3_video_vae_fp16.safetensors"
+   ],
+   "widgets_values_named": {
+    "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+   }
+  },
+  {
+   "id": 120,
+   "type": "VAELoader",
+   "pos": [
+    -1486.4728175048826,
+    5440.709605834964
+   ],
+   "size": [
+    650,
+    70
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "vae_name",
+     "name": "vae_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "vae_name"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "VAE",
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      274,
+      327
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0",
+    "Node name for S&R": "VAELoader",
+    "models": [
+     {
+      "name": "minimax_h3_audio_vae_fp32.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors",
+      "directory": "vae"
+     }
+    ]
+   },
+   "widgets_values": [
+    "minimax_h3_audio_vae_fp32.safetensors"
+   ],
+   "widgets_values_named": {
+    "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+   }
+  },
+  {
+   "id": 127,
+   "type": "UNETLoader",
+   "pos": [
+    -1481.5231023574827,
+    4953.887301990052
+   ],
+   "size": [
+    640,
+    90
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "unet_name",
+     "name": "unet_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "unet_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "weight_dtype",
+     "name": "weight_dtype",
+     "type": "COMBO",
+     "widget": {
+      "name": "weight_dtype"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "MODEL",
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      285
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0",
+    "Node name for S&R": "UNETLoader",
+    "models": [
+     {
+      "name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+      "directory": "diffusion_models"
+     }
+    ]
+   },
+   "widgets_values": [
+    "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+    "default"
+   ],
+   "widgets_values_named": {
+    "unet_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+    "weight_dtype": "default"
+   }
+  },
+  {
+   "id": 128,
+   "type": "CLIPLoader",
+   "pos": [
+    -1478.2428604125976,
+    5108.358218536368
+   ],
+   "size": [
+    640,
+    120
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "clip_name",
+     "name": "clip_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "clip_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "type",
+     "name": "type",
+     "type": "COMBO",
+     "widget": {
+      "name": "type"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "device",
+     "name": "device",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "device"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "CLIP",
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      272
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0",
+    "Node name for S&R": "CLIPLoader",
+    "models": [
+     {
+      "name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "directory": "text_encoders"
+     }
+    ]
+   },
+   "widgets_values": [
+    "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+    "minimax",
+    "default"
+   ],
+   "widgets_values_named": {
+    "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+    "type": "minimax",
+    "device": "default"
+   }
+  },
+  {
+   "id": 130,
+   "type": "CreateVideo",
+   "pos": [
+    514.2344541635249,
+    5265.860457373011
+   ],
+   "size": [
+    270,
+    150
+   ],
+   "flags": {},
+   "order": 37,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 324
+    },
+    {
+     "localized_name": "audio",
+     "name": "audio",
+     "shape": 7,
+     "type": "AUDIO",
+     "link": 325
+    },
+    {
+     "localized_name": "fps",
+     "name": "fps",
+     "type": "FLOAT",
+     "widget": {
+      "name": "fps"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "bit_depth",
+     "name": "bit_depth",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "bit_depth"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "color_space",
+     "name": "color_space",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "color_space"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "codec",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "codec"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "VIDEO",
+     "name": "VIDEO",
+     "type": "VIDEO",
+     "links": [
+      381
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0",
+    "Node name for S&R": "CreateVideo"
+   },
+   "widgets_values": [
+    24,
+    8,
+    "sRGB",
+    "none"
+   ],
+   "widgets_values_named": {
+    "fps": 24,
+    "bit_depth": 8,
+    "color_space": "sRGB",
+    "codec": "none"
+   }
+  },
+  {
+   "id": 131,
+   "type": "ComfyMathExpression",
+   "pos": [
+    -1421.2366852727891,
+    6131.127128798089
+   ],
+   "size": [
+    225,
+    74
+   ],
+   "flags": {
+    "collapsed": true
+   },
+   "order": 20,
+   "mode": 0,
+   "inputs": [
+    {
+     "label": "a",
+     "localized_name": "a",
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 261
+    },
+    {
+     "localized_name": "b",
+     "name": "values.b",
+     "shape": 7,
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": null
+    },
+    {
+     "localized_name": "expression",
+     "name": "expression",
+     "type": "STRING",
+     "widget": {
+      "name": "expression"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "INT",
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      275
+     ]
+    },
+    {
+     "localized_name": "BOOL",
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0",
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "widgets_values": [
+    "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17"
+   ],
+   "widgets_values_named": {
+    "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17"
+   }
+  },
+  {
+   "id": 132,
+   "type": "PrimitiveFloat",
+   "pos": [
+    -1472.9681888189336,
+    6009.233213124273
+   ],
+   "size": [
+    270,
+    70
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "FLOAT",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "FLOAT",
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      261
+     ]
+    }
+   ],
+   "title": "Float (Duration)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0",
+    "Node name for S&R": "PrimitiveFloat"
+   },
+   "widgets_values": [
+    5
+   ],
+   "widgets_values_named": {
+    "value": 5
+   },
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 136,
+   "type": "MiniMaxH3ReferenceToVideo",
+   "pos": [
+    -419.1535224414756,
+    5011.612411047288
+   ],
+   "size": [
+    418.10599496459963,
+    484
+   ],
+   "flags": {},
+   "order": 31,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "clip",
+     "name": "clip",
+     "type": "CLIP",
+     "link": 272
+    },
+    {
+     "localized_name": "vae",
+     "name": "vae",
+     "shape": 7,
+     "type": "VAE",
+     "link": 273
+    },
+    {
+     "localized_name": "audio_vae",
+     "name": "audio_vae",
+     "shape": 7,
+     "type": "VAE",
+     "link": 274
+    },
+    {
+     "label": "ref_image_0",
+     "localized_name": "ref_image_0",
+     "name": "ref_images.ref_image_0",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": 354
+    },
+    {
+     "localized_name": "ref_image_1",
+     "name": "ref_images.ref_image_1",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": 386
+    },
+    {
+     "localized_name": "ref_image_2",
+     "name": "ref_images.ref_image_2",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": 389
+    },
+    {
+     "localized_name": "ref_image_3",
+     "name": "ref_images.ref_image_3",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": 390
+    },
+    {
+     "localized_name": "ref_image_4",
+     "name": "ref_images.ref_image_4",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "label": "ref_video_0",
+     "localized_name": "ref_video_0",
+     "name": "ref_videos.ref_video_0",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": 384
+    },
+    {
+     "localized_name": "ref_video_1",
+     "name": "ref_videos.ref_video_1",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "localized_name": "ref_video_2",
+     "name": "ref_videos.ref_video_2",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "label": "ref_video_audio_0",
+     "localized_name": "ref_video_audio_0",
+     "name": "ref_video_audios.ref_video_audio_0",
+     "shape": 7,
+     "type": "AUDIO",
+     "link": 385
+    },
+    {
+     "localized_name": "ref_video_audio_1",
+     "name": "ref_video_audios.ref_video_audio_1",
+     "shape": 7,
+     "type": "AUDIO",
+     "link": null
+    },
+    {
+     "localized_name": "ref_video_audio_2",
+     "name": "ref_video_audios.ref_video_audio_2",
+     "shape": 7,
+     "type": "AUDIO",
+     "link": null
+    },
+    {
+     "label": "ref_audio_0",
+     "localized_name": "ref_audio_0",
+     "name": "ref_audios.ref_audio_0",
+     "shape": 7,
+     "type": "AUDIO",
+     "link": null
+    },
+    {
+     "localized_name": "ref_audio_1",
+     "name": "ref_audios.ref_audio_1",
+     "shape": 7,
+     "type": "AUDIO",
+     "link": null
+    },
+    {
+     "localized_name": "prompt",
+     "name": "prompt",
+     "type": "STRING",
+     "widget": {
+      "name": "prompt"
+     },
+     "link": 279
+    },
+    {
+     "localized_name": "width",
+     "name": "width",
+     "type": "INT",
+     "widget": {
+      "name": "width"
+     },
+     "link": 276
+    },
+    {
+     "localized_name": "height",
+     "name": "height",
+     "type": "INT",
+     "widget": {
+      "name": "height"
+     },
+     "link": 277
+    },
+    {
+     "localized_name": "length",
+     "name": "length",
+     "type": "INT",
+     "widget": {
+      "name": "length"
+     },
+     "link": 275
+    },
+    {
+     "localized_name": "ref_image_size",
+     "name": "ref_image_size",
+     "type": "COMBO",
+     "widget": {
+      "name": "ref_image_size"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "positive",
+     "name": "positive",
+     "type": "CONDITIONING",
+     "links": [
+      317,
+      320
+     ]
+    },
+    {
+     "localized_name": "LATENT",
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      318
+     ]
+    }
+   ],
+   "title": "MINIMAX H3 • CHARACTER REFERENCE → VIDEO",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0",
+    "Node name for S&R": "MiniMaxH3ReferenceToVideo"
+   },
+   "widgets_values": [
+    "",
+    1344,
+    768,
+    124,
+    "match"
+   ],
+   "widgets_values_named": {
+    "prompt": "",
+    "width": 1344,
+    "height": 768,
+    "length": 124,
+    "ref_image_size": "match"
+   }
+  },
+  {
+   "id": 138,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    -1501.42055598202,
+    6204.660702025027
+   ],
+   "size": [
+    407.4751953125,
+    510.2757613830572
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "value",
+     "name": "value",
+     "type": "STRING",
+     "widget": {
+      "name": "value"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "STRING",
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      279
+     ]
+    }
+   ],
+   "title": "Input Text (#138) = GLOBAL cho moi shot (co the trong)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0",
+    "Node name for S&R": "PrimitiveStringMultiline"
+   },
+   "widgets_values": [
+    ""
+   ],
+   "widgets_values_named": {
+    "value": ""
+   },
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 140,
+   "type": "MarkdownNote",
+   "pos": [
+    -1880,
+    6070
+   ],
+   "size": [
+    300,
+    520
+   ],
+   "flags": {},
+   "order": 8,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "title": "Note: Size Settings Reference",
+   "properties": {},
+   "widgets_values": [
+    "| megapixels | Aspect | Output (multiple=32) |\n|---|---|---|\n| 0.2 | 16:9 | 608 x 352 |\n| 0.3 | 16:9 | 736 x 416 |\n| 0.4 | 16:9 | 864 x 480 |\n| 0.5 | 16:9 | 960 x 544 |\n| 0.6 | 16:9 | 1056 x 608 |\n| 0.7 | 16:9 | 1152 x 640 |\n| 0.8 | 16:9 | 1216 x 672 |\n| 0.9 | 16:9 | 1280 x 736 |\n| 0.98 | 16:9 | 1344 x 768 (official 768p) |"
+   ],
+   "widgets_values_named": {
+    "text": "| megapixels | Aspect | Output (multiple=32) |\n|---|---|---|\n| 0.2 | 16:9 | 608 x 352 |\n| 0.3 | 16:9 | 736 x 416 |\n| 0.4 | 16:9 | 864 x 480 |\n| 0.5 | 16:9 | 960 x 544 |\n| 0.6 | 16:9 | 1056 x 608 |\n| 0.7 | 16:9 | 1152 x 640 |\n| 0.8 | 16:9 | 1216 x 672 |\n| 0.9 | 16:9 | 1280 x 736 |\n| 0.98 | 16:9 | 1344 x 768 (official 768p) |"
+   },
+   "color": "#222",
+   "bgcolor": "#000"
+  },
+  {
+   "id": 145,
+   "type": "LoraLoaderModelOnly",
+   "pos": [
+    -1050.4112266915904,
+    4716.94691003205
+   ],
+   "size": [
+    433.5536285089112,
+    82
+   ],
+   "flags": {},
+   "order": 19,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 285
+    },
+    {
+     "localized_name": "lora_name",
+     "name": "lora_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "lora_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "strength_model",
+     "name": "strength_model",
+     "type": "FLOAT",
+     "widget": {
+      "name": "strength_model"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "MODEL",
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      387
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.33.0",
+    "Node name for S&R": "LoraLoaderModelOnly",
+    "models": [
+     {
+      "name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/loras/minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+      "directory": "loras"
+     }
+    ]
+   },
+   "widgets_values": [
+    "minimax_h3_fl2v_turbo_4step_v1.1_768p_comfyui_bf16.safetensors",
+    1
+   ],
+   "widgets_values_named": {
+    "lora_name": "minimax_h3_fl2v_turbo_4step_v1.1_768p_comfyui_bf16.safetensors",
+    "strength_model": 1
+   }
+  },
+  {
+   "id": 154,
+   "type": "MiniMaxH3SigmaShift",
+   "pos": [
+    -577.1045204376378,
+    4717.235934994616
+   ],
+   "size": [
+    272.23402873514397,
+    82
+   ],
+   "flags": {},
+   "order": 30,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 388
+    },
+    {
+     "localized_name": "shift_video",
+     "name": "shift_video",
+     "type": "FLOAT",
+     "widget": {
+      "name": "shift_video"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "shift_audio",
+     "name": "shift_audio",
+     "type": "FLOAT",
+     "widget": {
+      "name": "shift_audio"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "MODEL",
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      297
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.30.0",
+    "Node name for S&R": "MiniMaxH3SigmaShift",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    6,
+    3
+   ],
+   "widgets_values_named": {
+    "shift_video": 6,
+    "shift_audio": 3
+   }
+  },
+  {
+   "id": 155,
+   "type": "ModelAttentionBackend",
+   "pos": [
+    -251.46295564246623,
+    4724.214453883759
+   ],
+   "size": [
+    470.5708984375,
+    62
+   ],
+   "flags": {},
+   "order": 32,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 297
+    },
+    {
+     "localized_name": "backend",
+     "name": "attention",
+     "type": "COMBO",
+     "widget": {
+      "name": "attention"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "links": [
+      319
+     ]
+    }
+   ],
+   "title": "ATTENTION BACKEND → KSampler (no KJ preview dependency)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.33.2",
+    "Node name for S&R": "ModelAttentionBackend",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "version": "7.8",
+     "input_ue_unconnectable": {}
+    }
+   },
+   "widgets_values": [
+    "comfy kitchen attention"
+   ],
+   "widgets_values_named": {
+    "attention": "comfy kitchen attention"
+   }
+  },
+  {
+   "id": 157,
+   "type": "VAEDecode",
+   "pos": [
+    211.3272880702364,
+    5258.793586274418
+   ],
+   "size": [
+    204.134765625,
+    46
+   ],
+   "flags": {},
+   "order": 35,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "samples",
+     "name": "samples",
+     "type": "LATENT",
+     "link": 322
+    },
+    {
+     "localized_name": "vae",
+     "name": "vae",
+     "type": "VAE",
+     "link": 326
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      324
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.30.1",
+    "Node name for S&R": "VAEDecode"
+   }
+  },
+  {
+   "id": 158,
+   "type": "VAEDecodeAudio",
+   "pos": [
+    209.56361133044643,
+    5364.736760290355
+   ],
+   "size": [
+    204.134765625,
+    46
+   ],
+   "flags": {},
+   "order": 36,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "samples",
+     "name": "samples",
+     "type": "LATENT",
+     "link": 323
+    },
+    {
+     "localized_name": "vae",
+     "name": "vae",
+     "type": "VAE",
+     "link": 327
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "AUDIO",
+     "name": "AUDIO",
+     "type": "AUDIO",
+     "links": [
+      325
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.30.1",
+    "Node name for S&R": "VAEDecodeAudio"
+   }
+  },
+  {
+   "id": 159,
+   "type": "ConditioningZeroOut",
+   "pos": [
+    213.1445040953953,
+    5459.621464638243
+   ],
+   "size": [
+    204.6792449951172,
+    26
+   ],
+   "flags": {},
+   "order": 33,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "conditioning",
+     "name": "conditioning",
+     "type": "CONDITIONING",
+     "link": 320
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "CONDITIONING",
+     "name": "CONDITIONING",
+     "type": "CONDITIONING",
+     "links": [
+      321
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.30.1",
+    "Node name for S&R": "ConditioningZeroOut"
+   }
+  },
+  {
+   "id": 161,
+   "type": "KSampler",
+   "pos": [
+    192.24014177583837,
+    4915.797110811663
+   ],
+   "size": [
+    366.4185546875,
+    290.1783355712887
+   ],
+   "flags": {},
+   "order": 34,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 319
+    },
+    {
+     "localized_name": "positive",
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 317
+    },
+    {
+     "localized_name": "negative",
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 321
+    },
+    {
+     "localized_name": "latent_image",
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 318
+    },
+    {
+     "localized_name": "seed",
+     "name": "seed",
+     "type": "INT",
+     "widget": {
+      "name": "seed"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "steps",
+     "name": "steps",
+     "type": "INT",
+     "widget": {
+      "name": "steps"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "cfg",
+     "name": "cfg",
+     "type": "FLOAT",
+     "widget": {
+      "name": "cfg"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sampler_name",
+     "name": "sampler_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "sampler_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "scheduler",
+     "name": "scheduler",
+     "type": "COMBO",
+     "widget": {
+      "name": "scheduler"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "denoise",
+     "name": "denoise",
+     "type": "FLOAT",
+     "widget": {
+      "name": "denoise"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "LATENT",
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      322,
+      323
+     ]
+    }
+   ],
+   "title": "MAIN GENERATE • MiniMax H3 • 8 steps • CFG 1",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.30.1",
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    415260801563208,
+    "randomize",
+    8,
+    1,
+    "euler",
+    "simple",
+    1
+   ],
+   "widgets_values_named": {
+    "seed": 415260801563208,
+    "control_after_generate": "randomize",
+    "steps": 8,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "denoise": 1
+   },
+   "color": "#1d1d1d",
+   "bgcolor": "#2a2a2a"
+  },
+  {
+   "id": 187,
+   "type": "LoadImage",
+   "pos": [
+    -982.0764106230206,
+    5773.565783830632
+   ],
+   "size": [
+    283.18868255615234,
+    314.0000000000001
+   ],
+   "flags": {},
+   "order": 9,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      354
+     ]
+    },
+    {
+     "localized_name": "MASK",
+     "name": "MASK",
+     "type": "MASK",
+     "links": []
+    }
+   ],
+   "title": "Picture 1 · nhan dien + trang phuc shot 1 (ao gradient, jean)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.34.2",
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "Krea2_I2I_v3_261024_Ivan_Ryo_63_60_00002.png",
+    "image"
+   ],
+   "widgets_values_named": {
+    "image": "Krea2_I2I_v3_261024_Ivan_Ryo_63_60_00002.png",
+    "upload": "image"
+   }
+  },
+  {
+   "id": 188,
+   "type": "LoadImage",
+   "pos": [
+    -983.8639189038512,
+    6138.147097975283
+   ],
+   "size": [
+    284.066015625,
+    314
+   ],
+   "flags": {},
+   "order": 10,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      386
+     ]
+    },
+    {
+     "localized_name": "MASK",
+     "name": "MASK",
+     "type": "MASK",
+     "links": []
+    }
+   ],
+   "title": "Picture 2 · nhan dien coi tran (dung lam anh dau cho shot 2, 3)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "Krea2_I2I_v3_261024_Ivan_Ryo_63_60_00003.png",
+    "image"
+   ],
+   "widgets_values_named": {
+    "image": "Krea2_I2I_v3_261024_Ivan_Ryo_63_60_00003.png",
+    "upload": "image"
+   }
+  },
+  {
+   "id": 189,
+   "type": "MiniMaxAutoShotRunner",
+   "pos": [
+    -1522.4844496111787,
+    6860.7407780979
+   ],
+   "size": [
+    630,
+    1150
+   ],
+   "flags": {},
+   "order": 11,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "master_prompt",
+     "name": "master_prompt",
+     "type": "STRING",
+     "widget": {
+      "name": "master_prompt"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "project_name",
+     "name": "project_name",
+     "type": "STRING",
+     "widget": {
+      "name": "project_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "split_mode",
+     "name": "split_mode",
+     "type": "COMBO",
+     "widget": {
+      "name": "split_mode"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "default_seconds",
+     "name": "default_seconds",
+     "type": "FLOAT",
+     "widget": {
+      "name": "default_seconds"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "max_shots",
+     "name": "max_shots",
+     "type": "INT",
+     "widget": {
+      "name": "max_shots"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "resume_finished_mp4",
+     "name": "resume_finished_mp4",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "resume_finished_mp4"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "minimax_prompt_node_id",
+     "name": "minimax_prompt_node_id",
+     "type": "INT",
+     "widget": {
+      "name": "minimax_prompt_node_id"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "minimax_duration_node_id",
+     "name": "minimax_duration_node_id",
+     "type": "INT",
+     "widget": {
+      "name": "minimax_duration_node_id"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "base_savevideo_node_id",
+     "name": "base_savevideo_node_id",
+     "type": "INT",
+     "widget": {
+      "name": "base_savevideo_node_id"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "auto_silent_reaction_guard",
+     "name": "auto_silent_reaction_guard",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "auto_silent_reaction_guard"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "finish_alarm_60_seconds",
+     "name": "finish_alarm_60_seconds",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "finish_alarm_60_seconds"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "hibernate_after_success",
+     "name": "hibernate_after_success",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "hibernate_after_success"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "continuity_guide",
+     "name": "continuity_guide",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "continuity_guide"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "loadvideo_node_id",
+     "name": "loadvideo_node_id",
+     "type": "INT",
+     "widget": {
+      "name": "loadvideo_node_id"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "info_only",
+     "name": "info_only",
+     "type": "STRING",
+     "links": []
+    }
+   ],
+   "title": "AUTO SHOT RUNNER V5.3 | REF_IMAGES | REF_VIDEO | final_audio",
+   "properties": {
+    "Node name for S&R": "MiniMaxAutoShotRunner"
+   },
+   "widgets_values": [
+    "subject_definitions:\n<Subject 1> Ivan_Ryo, an adult East Asian man: the exact same face, oval facial structure, warm light-medium skin tone, short tousled black hair, dark eyes behind round black-rimmed glasses, clean-shaven, broad shoulders, defined chest and abdomen, athletic build and natural body proportions in every shot. Use only the person from the pictures; nobody else appears.\n<Picture 1> is the identity, room, lighting and framing reference and the first outfit: a fitted pink-to-lavender-to-blue gradient T-shirt and faded light-blue jeans with a white drawstring.\n<Picture 2> is the same man shirtless in the same room: use it for his face, glasses, hair, body and the room; his faded jeans are worn only in SHOT 01.\n<Picture 3> is a cropped garment reference only: turquoise low-rise briefs with a matching pale-turquoise waistband. Copy only the briefs, not the body, skin sheen, pose, lighting or background of <Picture 3>.\n<Picture 4> is a cropped garment reference only: ivory low-rise briefs with a black waistband and a small white wordmark. Copy only the briefs, not the body, skin sheen, pose, lighting or background of <Picture 4>.\n\nscene_reference:\nThe warm vintage apartment room of the identity picture is the only location: dark green accent wall, cream walls and ceiling, dark wooden floor, wooden desks with stacked books, framed artwork, open doorways and warm table-lamp light. The room, furniture, perspective and light stay unchanged in every shot and after every cut.\n\nstyle:\nPhotorealistic vertical smartphone dance video on a fixed phone at chest height, medium-full frontal framing from head to mid-thigh with <Subject 1> centered, warm indoor contrast, quick beat-synced jump cuts that keep the same framing. No captions, emojis, stickers, censor bars, signs, logos, subtitles or watermarks.\n\nretention_analysis:\nKeep the face, glasses, hair, skin tone, body proportions and the room identical across every shot and every jump cut. The briefs always stay fully on and in place; hands never pull them down. Camera distance, height and exposure never change: always head to mid-thigh at chest height in the evenly lit room of the identity picture; never a close-up, a low angle or a dark lamp-lit look. Dry matte skin with no oil or sheen in every shot. Natural anatomy, five fingers per hand. Each shot shows only the outfit named for that shot, from its first frame to its last; a jump cut never changes the outfit.\n\n[SHOT 01 | DURATION: 5s | REF_VIDEO: none | REF_IMAGES: 1,2]\nOutfit in this shot: the gradient T-shirt and faded jeans from <Picture 1>, then shirtless in the same jeans like <Picture 2>. No briefs appear in this shot.\nCamera: fixed phone at chest height, medium-full frontal framing, same distance throughout; jump cuts keep the framing and only change his pose.\n00:00–00:01.0 — Wearing the gradient T-shirt and faded jeans from <Picture 1>, he smiles at the lens, bounces lightly and waves his right hand beside his face.\nAt 00:01.0, jump cut: he is pulling the T-shirt up over his head with both arms in one quick motion.\nAt 00:01.35, jump cut: now shirtless in the jeans exactly like <Picture 2>, the shirt gone; he swings his right arm out to camera-left and bounces on the beat, then rests both hands at his hips while bouncing.\nAt 00:03.1, jump cut: hands loose at his sides, still in the jeans, he bounces, then opens both forearms outward with palms up and a playful grin.\n00:04.3–00:05 — In the same continuous take and still in the jeans, his right forearm sweeps up high across his chest on the final beat and he holds that pose, smiling.\n\n[SHOT 02 | DURATION: 4.4s | REF_VIDEO: none | REF_IMAGES: 2,3]\nOutfit in this shot: only the turquoise briefs from <Picture 3>, from the first frame; the T-shirt, the jeans and the ivory briefs never appear.\nCamera: the same fixed phone framing as before, medium-full frontal; jump cuts keep the framing.\n00:00–00:00.35 — Shirtless and wearing only the turquoise briefs from <Picture 3>, his right arm comes down from the sweep as he lands on the beat.\n00:00.35–00:01.2 — In the same take, he stands with feet apart, bouncing, his left arm swinging out, smiling at the lens.\nAt 00:01.2, jump cut: his thumbs rest at the sides of the waistband without pulling it, shoulders rolling to the beat.\nAt 00:02.0, jump cut: arms relaxed at his sides, he shifts his weight from one leg to the other.\nAt 00:03.25, jump cut: he swings his arms loosely, then sweeps his right forearm up across his chest and holds it until 00:04.4.\n\n[SHOT 03 | DURATION: 4.4s | REF_VIDEO: none | REF_IMAGES: 2,4]\nOutfit in this shot: only the ivory briefs with the black waistband from <Picture 4>, from the first frame; the T-shirt, the jeans and the turquoise briefs never appear.\nCamera: the same fixed phone framing, medium-full frontal; one continuous take, no cuts.\n00:00–00:00.5 — Shirtless and wearing only the ivory briefs with the black waistband from <Picture 4>, he lands from the sweep with his left arm out.\n00:00.5–00:02.0 — Both hands settle on his hips; he bounces gently and smiles into the lens.\n00:02.0–00:03.0 — He opens both arms wide, palms up, with a playful questioning look, then lowers them.\n00:03.0–00:04.0 — He raises his right hand into a clear thumbs-up and nods once with a broad smile.\n00:04.0–00:04.4 — He relaxes and holds a warm smile to the last frame.\n\noverall_soundscape:\nSoft indoor room tone and light footsteps on the wooden floor. No dialogue.\n\nnon_diegetic_music:\nNONE\n",
+    "ivan_ryo_newvideo",
+    "SHOT TAGS / AUTO PARAGRAPHS",
+    5,
+    40,
+    false,
+    138,
+    132,
+    92,
+    true,
+    false,
+    false,
+    false,
+    0,
+    "huynguyenaus_1792049666_4008323762277353854_34805446.mp4",
+    "V5.3 READY | REF_IMAGES | REF_VIDEO | final_audio",
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "widgets_values_named": {
+    "master_prompt": "subject_definitions:\n<Subject 1> Ivan_Ryo, an adult East Asian man based on <Picture 1> and <Picture 2>: preserve the exact same face, oval facial structure, warm light-medium skin tone, short tousled black hair, dark eyes behind round black-rimmed glasses, clean-shaven appearance, broad shoulders, defined chest and abdomen, athletic muscular build, and natural body proportions in every shot. Use the same adult character throughout.\n\nreference_roles:\n<Picture 1> is the master identity, room, lighting, body-proportion, and SHOT 01 outfit reference: a fitted pink-to-lavender-to-blue gradient T-shirt and faded light-blue jeans with a white drawstring.\n<Picture 2> is the identity, room, lighting, body-proportion, and shirtless appearance reference for SHOT 02: the same man, the same glasses and hairstyle, shirtless while retaining the faded light-blue jeans.\n<Picture 3> is garment reference only for SHOT 03: ivory low-rise contour briefs with a narrow black waistband, thin white piping, and a small centered ORLVS wordmark. Copy only the briefs. Do not copy its exaggerated body mass, wet skin, facial hair, pose, lighting, or background.\n<Picture 4> is garment reference only for SHOT 04: turquoise low-rise contour briefs with a matching pale-turquoise waistband. Copy only the briefs. Do not copy its exaggerated body mass, wet skin, facial hair, pose, lighting, or background.\n\nscene_reference:\nUse the warm vintage apartment room from <Picture 1> as the only location: dark green accent wall, cream walls and ceiling, dark wooden floor, wooden desks, stacked books, framed artwork, open doorways, and warm table-lamp light. Keep the room layout, furniture, perspective, and illumination unchanged in all four shots. Nobody other than <Subject 1> appears.\n\nstyle:\nPhotorealistic vertical smartphone video, natural 28 mm lens feel, eye-level framing, warm indoor contrast, subtle handheld sway, realistic anatomy and cloth physics. No captions, censor bars, emojis, shoe stickers, signs copied from the reference video, interface graphics, subtitles, duplicated limbs, extra fingers, or watermarks.\n\nretention_analysis:\nKeep <Subject 1>'s exact face, glasses, hair, skin tone, body proportions, and the room from <Picture 1> identical in every shot. Picture 3 and Picture 4 control garments only. Preserve hand identity, left-right orientation, camera distance, body scale, and background geometry. Each shot is a separate render and begins cleanly from its assigned picture state.\n\n[SHOT 01 | DURATION: 5s | REF_VIDEO: ivan_ryo_new_shot01_22f.mp4]\nCamera: vertical medium-full frontal shot at eye level, nearly static with slight phone-camera sway; <Subject 1> remains centered; one continuous take, no cuts.\n<Video 1> is only a camera, framing, rhythm, pose, and movement reference; the person, face, black outfit, tiled room, overhead sign, and graphics in <Video 1> must not appear. The only person is <Subject 1>.\n00:00–00:00.35 — Wearing the gradient T-shirt and faded jeans from <Picture 1>, he stands relaxed, smiles directly at the lens, and begins a small rhythmic bounce.\n00:00.35–00:01.05 — He raises his right hand beside his face and gives one friendly side-to-side wave while his left arm hangs naturally.\n00:01.05–00:01.33 — His right hand lowers toward the front hem of his T-shirt as his shoulders turn slightly camera-left.\n00:01.33–00:05.00 — He holds the final preparation pose with a soft smile and subtle breathing, ready for the next shot.\n\n[SHOT 02 | DURATION: 5s | REF_VIDEO: ivan_ryo_new_shot02_22f.mp4]\nCamera: the same vertical medium-full frontal shot at eye level and the same distance, nearly static with slight phone-camera sway; one continuous take, no cuts.\n<Video 1> is only a camera, framing, rhythm, pose, and movement reference; the person, face, black outfit, tiled room, overhead sign, and graphics in <Video 1> must not appear. The only person is <Subject 1>.\n00:00–00:00.75 — Beginning in the gradient T-shirt and faded jeans from <Picture 1>, he grips the shirt hem with his right hand, sweeps the right elbow upward, and pulls the shirt over his torso and head in one brisk fluid motion.\n00:00–00:01.10 — The shirt clears his head and leaves the frame; his glasses and hair remain intact and his face does not change.\n00:01.10–00:02.70 — Now matching the shirtless appearance and jeans from <Picture 2>, he settles both feet, smiles, and lightly bounces while both hands move near the waistband without opening or lowering the jeans.\n00:02.70–00:03.45 — He opens both forearms outward with palms up in a playful presentation gesture, chest facing the camera.\n00:03.45–00:04.04 — His right forearm sweeps upward across his chest while his left hand returns toward his hip, matching the final accent of the reference movement.\n00:04.04–00:05.00 — He holds the shirtless final pose with relaxed breathing and a confident smile.\n\n[SHOT 03 | DURATION: 5s | REF_VIDEO: ivan_ryo_new_shot03_22f.mp4]\nCamera: the same vertical medium-full frontal shot at eye level and the same distance, nearly static with slight phone-camera sway; one continuous take, no cuts.\n<Video 1> is only a camera, framing, rhythm, pose, and movement reference; the person, face, underwear, tiled room, overhead sign, censor bar, emojis, and graphics in <Video 1> must not appear. The only person is <Subject 1>.\n00:00–00:00.85 — Shirtless and wearing only the ivory low-rise briefs from <Picture 3>, he stands with feet slightly apart, arms relaxed, and makes a small bounce on the beat.\n00:00–00:02.10 — His right hand brushes lightly across the front waistband without pulling it down while his left hand floats outward; he keeps looking toward the lens.\n00:02.10–00:03.20 — He shifts his weight from camera-left leg to camera-right leg, rolls his shoulders once, and opens both palms in a playful gesture.\n00:03.20–00:04.23 — He raises his right hand into a clear thumbs-up, keeps his left hand close to his hip, and smiles broadly.\n00:04.23–00:05.00 — He holds the thumbs-up and smile with subtle breathing.\n\n[SHOT 04 | DURATION: 5s | REF_VIDEO: None]\nCamera: the same vertical medium-full frontal shot at eye level and the same distance, nearly static with slight phone-camera sway; one continuous take, no cuts.\n<Video 1> is only a camera, framing, rhythm, pose, and movement reference; the person, face, underwear, tiled room, overhead sign, censor bar, shoe stickers, and graphics in <Video 1> must not appear. The only person is <Subject 1>.\n00:00–00:00.80 — Shirtless and wearing only the turquoise low-rise briefs from <Picture 4>, he enters the beat with his right forearm finishing a smooth upward sweep and his torso centered.\n00:00–00:01.65 — Both hands settle briefly at his hips as he smiles into the lens and makes a gentle hip-and-shoulder bounce.\n00:01.65–00:02.80 — He releases his hips and opens both hands outward, palms up, with a playful questioning expression.\n00:02.80–00:03.55 — His arms return inward; the left hand settles on his hip while the right hand rises beside his chest.\n00:03.55–00:04.23 — He forms a clear right-hand thumbs-up, gives one subtle nod, and smiles broadly.\n00:04.23–00:05.00 — He holds the final thumbs-up pose, face, glasses, briefs, anatomy, and room completely stable through the last frame.\n\noverall_soundscape:\nVery soft indoor room tone, light fabric movement, and quiet footsteps. No dialogue.\n\nnon_diegetic_music:\nNONE",
+    "project_name": "20261024_1",
+    "split_mode": "SHOT TAGS / AUTO PARAGRAPHS",
+    "default_seconds": 5,
+    "max_shots": 40,
+    "resume_finished_mp4": false,
+    "minimax_prompt_node_id": 138,
+    "minimax_duration_node_id": 132,
+    "base_savevideo_node_id": 92,
+    "auto_silent_reaction_guard": true,
+    "finish_alarm_60_seconds": false,
+    "hibernate_after_success": false,
+    "continuity_guide": false,
+    "loadvideo_node_id": 0,
+    "AUTO STATUS": "Status: ValueError: Shot 1: co REF_VIDEO nhung graph khong co (hoac co nhieu) node LoadVideo; dat loadvideo_node_id.",
+    "PREVIEW SHOTS": null,
+    "COPY FULL SHOT PROMPTS (DEBUG)": null,
+    "START AUTO SHOTS (1 CLICK)": null,
+    "STOP AFTER CURRENT SHOT": null,
+    "CANCEL HIBERNATE / STOP ALARM": null,
+    "CHECK LAST JOB": null
+   },
+   "color": "#174938",
+   "bgcolor": "#205740"
+  },
+  {
+   "id": 201,
+   "type": "LoadVideo",
+   "pos": [
+    -547.1351778105497,
+    5788.218435975286
+   ],
+   "size": [
+    424,
+    654.8888888888889
+   ],
+   "flags": {},
+   "order": 12,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "file",
+     "name": "file",
+     "type": "COMBO",
+     "widget": {
+      "name": "file"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "VIDEO",
+     "name": "VIDEO",
+     "type": "VIDEO",
+     "links": [
+      382
+     ]
+    }
+   ],
+   "title": "VIDEO MAU (1 node duy nhat) -> ref_video_0; REF_VIDEO: <file> doi theo shot",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "LoadVideo"
+   },
+   "widgets_values": [
+    "ivan_ryo_new_shot01_22f.mp4",
+    "image"
+   ],
+   "widgets_values_named": {
+    "file": "ivan_ryo_new_shot01_22f.mp4",
+    "upload": "image"
+   },
+   "color": "#223"
+  },
+  {
+   "id": 202,
+   "type": "Video Slice",
+   "pos": [
+    -97.82886699374622,
+    5789.9546102806535
+   ],
+   "size": [
+    280,
+    130
+   ],
+   "flags": {},
+   "order": 21,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "video",
+     "name": "video",
+     "type": "VIDEO",
+     "link": 382
+    },
+    {
+     "localized_name": "start_time",
+     "name": "start_time",
+     "type": "FLOAT",
+     "widget": {
+      "name": "start_time"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "duration",
+     "name": "duration",
+     "type": "FLOAT",
+     "widget": {
+      "name": "duration"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "strict_duration",
+     "name": "strict_duration",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "strict_duration"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "VIDEO",
+     "name": "VIDEO",
+     "type": "VIDEO",
+     "links": [
+      383
+     ]
+    }
+   ],
+   "title": "Cat 5 s dau cua video mau",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "Video Slice"
+   },
+   "widgets_values": [
+    0,
+    5,
+    false
+   ],
+   "widgets_values_named": {
+    "start_time": 0,
+    "duration": 5,
+    "strict_duration": false
+   }
+  },
+  {
+   "id": 203,
+   "type": "GetVideoComponents",
+   "pos": [
+    241.51248003375864,
+    5786.318730469386
+   ],
+   "size": [
+    260,
+    120
+   ],
+   "flags": {},
+   "order": 26,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "video",
+     "name": "video",
+     "type": "VIDEO",
+     "link": 383
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": [
+      384
+     ]
+    },
+    {
+     "localized_name": "audio",
+     "name": "audio",
+     "type": "AUDIO",
+     "links": [
+      385
+     ]
+    },
+    {
+     "localized_name": "fps",
+     "name": "fps",
+     "type": "FLOAT",
+     "links": []
+    },
+    {
+     "localized_name": "bit_depth",
+     "name": "bit_depth",
+     "type": "COMBO",
+     "links": []
+    },
+    {
+     "localized_name": "color_space",
+     "name": "color_space",
+     "type": "COMBO",
+     "links": []
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "GetVideoComponents"
+   }
+  },
+  {
+   "id": 204,
+   "type": "LoraLoaderModelOnly",
+   "pos": [
+    -1050,
+    4850
+   ],
+   "size": [
+    357.6685546875,
+    100
+   ],
+   "flags": {},
+   "order": 25,
+   "mode": 4,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 387
+    },
+    {
+     "localized_name": "lora_name",
+     "name": "lora_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "lora_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "strength_model",
+     "name": "strength_model",
+     "type": "FLOAT",
+     "widget": {
+      "name": "strength_model"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "MODEL",
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      388
+     ]
+    }
+   ],
+   "title": "LoRA PHU / NSFW (dang bypass: Ctrl+B de bat)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "LoraLoaderModelOnly"
+   },
+   "widgets_values": [
+    "minimax_h3_fl2v_turbo_4step_v1.1_768p_comfyui_bf16.safetensors",
+    0
+   ],
+   "widgets_values_named": {
+    "lora_name": "minimax_h3_fl2v_turbo_4step_v1.1_768p_comfyui_bf16.safetensors",
+    "strength_model": 0
+   },
+   "color": "#432"
+  },
+  {
+   "id": 205,
+   "type": "MarkdownNote",
+   "pos": [
+    -2060,
+    5460
+   ],
+   "size": [
+    520,
+    420
+   ],
+   "flags": {},
+   "order": 13,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "title": "Note: LoRA cho MiniMax H3",
+   "properties": {
+    "Node name for S&R": "MarkdownNote"
+   },
+   "widgets_values": [
+    "## LoRA cho MiniMax H3 (tóm tắt)\n\nNguồn: Space **wank3r/minimax-h3** (`NSFW_LORA_CONFIGS`, 97 mục). Bảng đầy đủ tên / file / trigger / scale / nhóm xung đột: `docs/MINIMAX_H3_LORA_LIST.md` trong thư mục custom node Runner.\n\n**Repo**\n- `InstantX/MiniMax-H3-Turbo-Lora-Diffusers` — turbo 4-step (đang dùng ở node LoRA turbo, strength 1.0, 8 bước)\n- `Hearmeman/minimax-h3-loras` — HMInnie v1 (trigger `inniepussy`, scale 1.0), HMPussy\n- `observantdistressed/plora-h3` — Penis LoRA H3 v1.1 (trigger `PENISLORA`, scale 0.7, định dạng kohya)\n- `EllaPriest45/MinimaxH3_Actions` — 94 LoRA hành động / cơ thể / âm thanh / phong cách (scale thường 0.7)\n\n**Dùng**\n1. Tải `.safetensors` vào `ComfyUI/models/loras/`.\n2. Node **LoRA PHU / NSFW** (dưới LoRA turbo) đang **bypass**: chọn node, Ctrl+B để bật, chọn `lora_name`, đặt `strength_model` = scale.\n3. Thêm trigger của LoRA vào cuối shot (Space ghép `, <trigger>` vào prompt).\n4. Không chồng hai LoRA cùng nhóm xung đột (breast size/shape, breast motion, blowjob act, moans, general NSFW enhancer, visual style, dildo, audio…). Mỗi lần chỉ bật thêm một LoRA ngoài turbo.\n5. Máy 4 GB: LoRA phụ bf16 ~1–2 GB thêm vào luồng weight; giữ 0,2 MP, shot ≤ 6 s.\n\n**Rào chắn**: chỉ nhân vật hư cấu, trưởng thành rõ ràng, có đồng thuận; không người thật; ảnh tham chiếu trông như vị thành niên thì không dùng các LoRA này.\n"
+   ],
+   "widgets_values_named": {
+    "text": "## LoRA cho MiniMax H3 (tóm tắt)\n\nNguồn: Space **wank3r/minimax-h3** (`NSFW_LORA_CONFIGS`, 97 mục). Bảng đầy đủ tên / file / trigger / scale / nhóm xung đột: `docs/MINIMAX_H3_LORA_LIST.md` trong thư mục custom node Runner.\n\n**Repo**\n- `InstantX/MiniMax-H3-Turbo-Lora-Diffusers` — turbo 4-step (đang dùng ở node LoRA turbo, strength 1.0, 8 bước)\n- `Hearmeman/minimax-h3-loras` — HMInnie v1 (trigger `inniepussy`, scale 1.0), HMPussy\n- `observantdistressed/plora-h3` — Penis LoRA H3 v1.1 (trigger `PENISLORA`, scale 0.7, định dạng kohya)\n- `EllaPriest45/MinimaxH3_Actions` — 94 LoRA hành động / cơ thể / âm thanh / phong cách (scale thường 0.7)\n\n**Dùng**\n1. Tải `.safetensors` vào `ComfyUI/models/loras/`.\n2. Node **LoRA PHU / NSFW** (dưới LoRA turbo) đang **bypass**: chọn node, Ctrl+B để bật, chọn `lora_name`, đặt `strength_model` = scale.\n3. Thêm trigger của LoRA vào cuối shot (Space ghép `, <trigger>` vào prompt).\n4. Không chồng hai LoRA cùng nhóm xung đột (breast size/shape, breast motion, blowjob act, moans, general NSFW enhancer, visual style, dildo, audio…). Mỗi lần chỉ bật thêm một LoRA ngoài turbo.\n5. Máy 4 GB: LoRA phụ bf16 ~1–2 GB thêm vào luồng weight; giữ 0,2 MP, shot ≤ 6 s.\n\n**Rào chắn**: chỉ nhân vật hư cấu, trưởng thành rõ ràng, có đồng thuận; không người thật; ảnh tham chiếu trông như vị thành niên thì không dùng các LoRA này.\n"
+   },
+   "color": "#222",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 206,
+   "type": "LoadImage",
+   "pos": [
+    -982.5916747076716,
+    6507.360419406596
+   ],
+   "size": [
+    284.066015625,
+    314
+   ],
+   "flags": {},
+   "order": 14,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      389
+     ]
+    },
+    {
+     "localized_name": "MASK",
+     "name": "MASK",
+     "type": "MASK",
+     "links": []
+    }
+   ],
+   "title": "Picture 3 · quan lot xanh ngoc (anh cat sat, chi mau quan)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "Krea2_I2I_v3_261024_Ivan_Ryo_63_60_00008_garment.png",
+    "image"
+   ],
+   "widgets_values_named": {
+    "image": "Krea2_I2I_v3_261024_Ivan_Ryo_63_60_00008.png",
+    "upload": "image"
+   }
+  },
+  {
+   "id": 207,
+   "type": "LoadImage",
+   "pos": [
+    -646.4076831150035,
+    6525.076132995602
+   ],
+   "size": [
+    284.066015625,
+    314
+   ],
+   "flags": {},
+   "order": 15,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      390
+     ]
+    },
+    {
+     "localized_name": "MASK",
+     "name": "MASK",
+     "type": "MASK",
+     "links": []
+    }
+   ],
+   "title": "Picture 4 · quan lot nga vien den (anh cat sat, chi mau quan)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.39.0",
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "Krea2_I2I_v3_261024_Ivan_Ryo_63_60_00009_garment.png",
+    "image"
+   ],
+   "widgets_values_named": {
+    "image": "Krea2_I2I_v3_261024_Ivan_Ryo_63_60_00009.png",
+    "upload": "image"
+   }
+  },
+  {
+   "id": 208,
+   "type": "MarkdownNote",
+   "pos": [
+    -2222.4844496111787,
+    6860.7407780979
+   ],
+   "size": [
+    660,
+    760
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {},
+   "widgets_values": [
+    "## MiniMax H3 Auto Shots V4 (Runner V5.3)\n\n**Chay:** sua anh / prompt -> **PREVIEW SHOTS** -> **START AUTO SHOTS** tren node xanh. Khong bam Queue.\n\n**Header moi shot**\n`[SHOT 02 | DURATION: 4.4s | REF_VIDEO: none | REF_IMAGES: 2,3]`\n- `DURATION`: 5s = 124 frame, 4.4s = 107 frame (luoi 17k+5; 4.5s van ra 124).\n- `REF_IMAGES: 2,3`: shot chi nhan Picture 2 va 3 tren canvas, theo thu tu do (anh dau = frame mo dau). Runner tu doi `<Picture k>` trong prompt. Dong bat dau bang `<Picture k>` cua anh vang bi bo; nhac anh vang o cho khac -> loi o PREVIEW.\n- `REF_VIDEO: file.mp4 | none`: doi file cua LoadVideo #201 cho rieng shot. Chi giu **1** LoadVideo.\n- `CAMERA:` / `PRIMARY CAMERA SETUP:` trong header thanh dong `Camera:`.\n\n**Prompt**\n- Phan truoc `[SHOT 01]` duoc chep vao moi shot: chi ghi ai, o dau. Khong `summary`, khong am thanh o day.\n- Moi anh mot dong vai tro `<Picture k> is ...`; `subject_definitions` khong gan the anh.\n- Shot doi trang phuc: dong `Outfit in this shot: only ... from <Picture k>, from the first frame`.\n- Anh trang phuc phai cat sat chi con mau quan (nen toi / ban / sach se ro sang video).\n\n**Node xanh**\n- `final_audio`: ten file trong `ComfyUI/input` (vd video goc). Xong moi shot -> `<project>_final.mp4` voi am thanh do. De trong = khong ghep.\n- `resume_finished_mp4` OFF + project da co MP4 -> ghi vao `<project>_1`, `_2`...; ON -> tiep tuc thu muc moi nhat (ghep lai khong render).\n- `continuity_guide` ON chi khi moi cho noi la mot cu may lien.\n- `hibernate_after_success` dang OFF; bat neu muon may ngu dong sau khi xong.\n\nTai lieu: `custom_nodes/ComfyUI-MiniMax-AutoShot-Runner/README_VI.txt`, `README_VI_vidref.md`."
+   ],
+   "title": "Huong dan V4 / Runner V5.3",
+   "color": "#232",
+   "bgcolor": "#353"
+  }
+ ],
+ "links": [
+  [
+   285,
+   127,
+   0,
+   145,
+   0,
+   "MODEL"
+  ],
+  [
+   297,
+   154,
+   0,
+   155,
+   0,
+   "MODEL"
+  ],
+  [
+   317,
+   136,
+   0,
+   161,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   318,
+   136,
+   1,
+   161,
+   3,
+   "LATENT"
+  ],
+  [
+   319,
+   155,
+   0,
+   161,
+   0,
+   "MODEL"
+  ],
+  [
+   320,
+   136,
+   0,
+   159,
+   0,
+   "CONDITIONING"
+  ],
+  [
+   321,
+   159,
+   0,
+   161,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   322,
+   161,
+   0,
+   157,
+   0,
+   "LATENT"
+  ],
+  [
+   323,
+   161,
+   0,
+   158,
+   0,
+   "LATENT"
+  ],
+  [
+   324,
+   157,
+   0,
+   130,
+   0,
+   "IMAGE"
+  ],
+  [
+   325,
+   158,
+   0,
+   130,
+   1,
+   "AUDIO"
+  ],
+  [
+   326,
+   119,
+   0,
+   157,
+   1,
+   "VAE"
+  ],
+  [
+   327,
+   120,
+   0,
+   158,
+   1,
+   "VAE"
+  ],
+  [
+   382,
+   201,
+   0,
+   202,
+   0,
+   "VIDEO"
+  ],
+  [
+   383,
+   202,
+   0,
+   203,
+   0,
+   "VIDEO"
+  ],
+  [
+   387,
+   145,
+   0,
+   204,
+   0,
+   "MODEL"
+  ],
+  [
+   388,
+   204,
+   0,
+   154,
+   0,
+   "MODEL"
+  ],
+  [
+   381,
+   130,
+   0,
+   92,
+   0,
+   "VIDEO"
+  ],
+  [
+   261,
+   132,
+   0,
+   131,
+   0,
+   "FLOAT"
+  ],
+  [
+   272,
+   128,
+   0,
+   136,
+   0,
+   "CLIP"
+  ],
+  [
+   273,
+   119,
+   0,
+   136,
+   1,
+   "VAE"
+  ],
+  [
+   274,
+   120,
+   0,
+   136,
+   2,
+   "VAE"
+  ],
+  [
+   354,
+   187,
+   0,
+   136,
+   3,
+   "IMAGE"
+  ],
+  [
+   386,
+   188,
+   0,
+   136,
+   4,
+   "IMAGE"
+  ],
+  [
+   389,
+   206,
+   0,
+   136,
+   5,
+   "IMAGE"
+  ],
+  [
+   390,
+   207,
+   0,
+   136,
+   6,
+   "IMAGE"
+  ],
+  [
+   384,
+   203,
+   0,
+   136,
+   8,
+   "IMAGE"
+  ],
+  [
+   385,
+   203,
+   1,
+   136,
+   11,
+   "AUDIO"
+  ],
+  [
+   279,
+   138,
+   0,
+   136,
+   16,
+   "STRING"
+  ],
+  [
+   276,
+   115,
+   0,
+   136,
+   17,
+   "INT"
+  ],
+  [
+   277,
+   115,
+   1,
+   136,
+   18,
+   "INT"
+  ],
+  [
+   275,
+   131,
+   1,
+   136,
+   19,
+   "INT"
+  ]
+ ],
+ "groups": [
+  {
+   "id": 1,
+   "title": "Models",
+   "bounding": [
+    -1520,
+    4840,
+    699.7269556981668,
+    799.7589947162069
+   ],
+   "color": "#3f789e",
+   "flags": {}
+  },
+  {
+   "id": 2,
+   "title": "Sampling and Decoding",
+   "bounding": [
+    160.11298333833074,
+    4840.268806286573,
+    640.8503058921658,
+    799.8810715280288
+   ],
+   "color": "#3f789e",
+   "flags": {}
+  },
+  {
+   "id": 5,
+   "title": "User Inputs",
+   "bounding": [
+    -1519.780943109705,
+    5680.455932344244,
+    2488.24458919912,
+    1023.2204242173557
+   ],
+   "color": "#3f789e",
+   "flags": {}
+  },
+  {
+   "id": 6,
+   "title": "Conditioning",
+   "bounding": [
+    -471.8327710860689,
+    4852.740919504729,
+    500.6540502518552,
+    799.516628062247
+   ],
+   "color": "#3f789e",
+   "flags": {}
+  },
+  {
+   "id": 9,
+   "title": "AUTO SHOTS - CLICK START IN GREEN NODE",
+   "bounding": [
+    -1525,
+    6790,
+    665,
+    1070
+   ],
+   "color": "#3b8f65",
+   "flags": {}
+  }
+ ],
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.6934334949441431,
+   "offset": [
+    1993.315997075676,
+    -7037.439663478056
+   ]
+  },
+  "frontendVersion": "1.51.10",
+  "VHS_latentpreview": false,
+  "VHS_latentpreviewrate": 0,
+  "VHS_MetadataImage": true,
+  "VHS_KeepIntermediate": true
+ },
+ "version": 0.4
+}
