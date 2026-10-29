@@ -55,7 +55,7 @@ print("filename refs ok:", fp)
 # subgraph "Krea2 Prompt Builder v4": columns 1-6 + S and the system prompts inside, column 7 outside
 PB = next(sg for sg in d["definitions"]["subgraphs"] if sg["name"] == "Krea2 Prompt Builder v4")
 INST = next(n for n in d["nodes"] if n["type"] == PB["id"])
-assert INST.get("title") == PB["name"]
+assert INST.get("title") in (None, PB["name"])  # the frontend saves null when the node shows the subgraph name
 assert [i["name"] for i in INST["inputs"]] == [i["name"] for i in PB["inputs"]], "instance inputs != subgraph inputs"
 assert [o["name"] for o in INST["outputs"]] == [o["name"] for o in PB["outputs"]] == ["prompt"]
 assert all(i["link"] is not None for i in INST["inputs"]), "unwired Prompt Builder input"
