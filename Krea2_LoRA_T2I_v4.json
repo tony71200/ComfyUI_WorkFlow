@@ -1,8 +1,8 @@
 {
   "id": "aed86f0f-aab7-4e3b-817c-3e98c322b156",
   "revision": 0,
-  "last_node_id": 84,
-  "last_link_id": 142,
+  "last_node_id": 95,
+  "last_link_id": 161,
   "nodes": [
     {
       "id": 34,
@@ -261,9 +261,8 @@
           "type": "STRING",
           "links": [
             130,
-            131,
-            132,
-            137
+            137,
+            148
           ]
         }
       ],
@@ -271,7 +270,7 @@
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
-        "Node name for S&R": "Trigger"
+        "Node name for S&R": "MainTrigger"
       },
       "widgets_values": [
         "Ivan_Ryo."
@@ -495,7 +494,7 @@
       "id": 44,
       "type": "PreviewAny",
       "pos": [
-        3349.500304229878,
+        4178.563465034931,
         1220.5266605030595
       ],
       "size": [
@@ -509,7 +508,7 @@
         {
           "name": "source",
           "type": "*",
-          "link": 135
+          "link": 161
         }
       ],
       "outputs": [
@@ -532,7 +531,7 @@
       "id": 45,
       "type": "7c138a89-d2b0-43ea-9bb8-ece66980ec94",
       "pos": [
-        3330.820689808199,
+        4159.883850613252,
         128.31959117542442
       ],
       "size": [
@@ -564,7 +563,7 @@
           "widget": {
             "name": "prompt"
           },
-          "link": 134
+          "link": 159
         },
         {
           "name": "width",
@@ -634,7 +633,7 @@
       "id": 46,
       "type": "SaveImageA1Metadata",
       "pos": [
-        3338.311091448206,
+        4167.374252253259,
         562.557937410212
       ],
       "size": [
@@ -657,7 +656,7 @@
           "widget": {
             "name": "positive_prompt_override"
           },
-          "link": 133
+          "link": 160
         }
       ],
       "outputs": [],
@@ -668,7 +667,7 @@
         "Node name for S&R": "SaveImageA1Metadata"
       },
       "widgets_values": [
-        "Krea2_%date:yyyy_MM_dd%/Krea2_T2I_v3_%Trigger.value%_%TextSplitter.index%_%date:yyMMdd%_%Seed.value%",
+        "Krea2_%date:yyyy_MM_dd%/Krea2_T2I_v4_%MainTrigger.value%_%TextSplitter.index%_%date:yyMMdd%_%Seed.value%",
         "",
         "",
         "",
@@ -676,7 +675,7 @@
         false
       ],
       "widgets_values_named": {
-        "filename_prefix": "Krea2_%date:yyyy_MM_dd%/Krea2_T2I_v3_%Trigger.value%_%TextSplitter.index%_%date:yyMMdd%_%Seed.value%",
+        "filename_prefix": "Krea2_%date:yyyy_MM_dd%/Krea2_T2I_v4_%MainTrigger.value%_%TextSplitter.index%_%date:yyMMdd%_%Seed.value%",
         "positive_prompt_override": "",
         "negative_prompt_override": "",
         "extra_metadata": "",
@@ -700,17 +699,17 @@
       "mode": 0,
       "inputs": [],
       "outputs": [],
-      "title": "README – Krea2 LoRA T2I v3",
+      "title": "README – Krea2 LoRA T2I v4",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
         "Node name for S&R": "MarkdownNote"
       },
       "widgets_values": [
-        "## Krea-2 Turbo + LoRA — T2I v3\n\n**Model:** krea2_turbo_fp8_scaled · qwen3vl_4b_fp8_scaled (type krea2) · qwen_image_vae. 8 bước, euler/simple, CFG 1, negative = zero.\n\n**Luồng:** Prompt (tay / .txt) → **Krea2 Prompt Builder** → **Krea2 Sampler T2I** → Save A1111. Double-click subgraph để xem bên trong.\n\n**Nhân vật chính `{char}`:** viết `{char}` trong prompt để chỉ đúng nhân vật dùng LoRA (vd: `{char} sitting next to another man`). Không có `{char}` → tự ghép `{char}. ` vào đầu. Chữ trigger viết thẳng trong prompt (vd `Ivan_Ryo. ...`) được đổi thành `{char}` trước (node **1b** trong subgraph) nên không bị lặp trigger; vì vậy node **Trigger** không được để trống. Cuối cùng `{char}` được thay bằng node **Trigger**; nếu LLM làm rơi trigger thì tự ghép lại vào đầu.\n\n**Toggle trên Prompt Builder:**\n- `use_txt` — bật: đọc TextSplitter (.txt), tắt: dùng *Prompt tay*.\n- `refine` — viết lại prompt bằng Qwen3-VL-4B (TextGenerate, thinking off, max_length 1024). Output được dọn (bỏ câu dẫn, markdown, \"negative prompt\"). Nếu Qwen từ chối, trả về rỗng hoặc chỉ bình luận → tự quay về prompt gốc. Tắt: dùng prompt gốc.\n- `nsfw` — chọn *System prompt NSFW* thay vì *SFW* (chỉ có tác dụng khi `refine` bật).\n\n**System prompt:** 2 node *System prompt SFW / NSFW* nằm **trong** subgraph Prompt Builder (double-click để mở và sửa). Rule 9–10: giữ `{char}`, không tả màu/độ dài tóc và cấu trúc mặt của nhân vật chính (LoRA lo phần đó). Thêm lớp regex cố định (chạy cả khi tắt refine): màu/độ dài tóc → `short hair` (giữ trạng thái: wet, messy…), xoá `sharp jawline / pointed chin / high cheekbones…`. Lưu ý: áp cho mọi người trong prompt.\n\n**TextSplitter:** đoạn cách nhau 1 dòng trống. Phần negative sau `###` bị bỏ qua (Krea2 CFG 1). Bấm *Start Auto Batch* để chạy hết file.\n\n**Seed:** node *Seed* (randomize / fixed / increment / decrement).\n\n**Lưu:** `Krea2_<ngày>/Krea2_T2I_v4_<MainTrigger>_<TextSplitter.index>_<yyMMdd>_<Seed>` — index đếm từ 0. Metadata A1111: final prompt + LoRA + hash."
+        "## Krea-2 Turbo + LoRA — T2I v4\n\n**Model:** homofidelis Krea2 NSFW turbo int8 · qwen3-vl-4b-heretic fp8 (type krea2) · qwen_image_vae. 8 bước, euler/simple, CFG 1.\n\n**Thứ tự prompt cuối:** `MainTrigger` → `Prefix` → prompt đã xử lý → `Suffix` (nối bằng `. `). Rồi mọi từ `brief|briefs|underwear|towel|pants|sweatpants|shorts|sweatshorts` (kể cả trong Suffix) được thay bằng **1** token random từ *7a* (khớp nguyên từ).\n\n**Prompt Builder (trái → phải):** 1 Nguồn · 2 `{char}` · 3 LLM refine · 4 Dọn output LLM · 5 Ép identity LoRA · 6 Ghép · 7 Random swap. Bảng regex: note *Regex – bảng tra*.\n\n**`{char}`:** chữ trigger trong prompt (vd `Ivan_Ryo.`) được đổi thành `{char}`; không có thì tự thêm vào đầu. `{char}` đứng đầu bị bỏ (trigger đã đứng đầu chuỗi), `{char}` giữa câu đổi thành trigger. **MainTrigger không được để trống.**\n\n**Toggle:** `use_txt` (bật: .txt, tắt: Prompt tay) · `refine` (Qwen3-VL-4B viết lại; lỗi/từ chối → prompt gốc) · `nsfw` (System prompt NSFW thay SFW, chỉ khi refine bật).\n\n**Thinking:** text encoder dùng chung cho Krea2 và LLM — **không** thay bằng bản Qwen3-VL Thinking. Muốn LLM thinking thì cần loader riêng (chưa có), bật `thinking`, `max_length ≥ 2048`. Node *4a* cắt mọi thứ đến `</think>`. Giới hạn: suy luận bị cắt ngang mà không mở bằng `<think>` vẫn có thể lọt vào prompt.\n\n**Negative prompt:** không còn regex bỏ \"negative prompt\" — khi refine tắt, chữ `Negative prompt: …` trong .txt đi thẳng vào prompt.\n\n**TextSplitter:** đoạn cách nhau 1 dòng trống, phần sau `###` bị bỏ. *Start Auto Batch* chạy hết file; *7a* và *Seed* random lại mỗi lượt.\n\n**Lưu:** `Krea2_<ngày>/Krea2_T2I_v4_<MainTrigger>_<TextSplitter.index>_<yyMMdd>_<Seed>`."
       ],
       "widgets_values_named": {
-        "text": "## Krea-2 Turbo + LoRA — T2I v3\n\n**Model:** krea2_turbo_fp8_scaled · qwen3vl_4b_fp8_scaled (type krea2) · qwen_image_vae. 8 bước, euler/simple, CFG 1, negative = zero.\n\n**Luồng:** Prompt (tay / .txt) → **Krea2 Prompt Builder** → **Krea2 Sampler T2I** → Save A1111. Double-click subgraph để xem bên trong.\n\n**Nhân vật chính `{char}`:** viết `{char}` trong prompt để chỉ đúng nhân vật dùng LoRA (vd: `{char} sitting next to another man`). Không có `{char}` → tự ghép `{char}. ` vào đầu. Chữ trigger viết thẳng trong prompt (vd `Ivan_Ryo. ...`) được đổi thành `{char}` trước (node **1b** trong subgraph) nên không bị lặp trigger; vì vậy node **Trigger** không được để trống. Cuối cùng `{char}` được thay bằng node **Trigger**; nếu LLM làm rơi trigger thì tự ghép lại vào đầu.\n\n**Toggle trên Prompt Builder:**\n- `use_txt` — bật: đọc TextSplitter (.txt), tắt: dùng *Prompt tay*.\n- `refine` — viết lại prompt bằng Qwen3-VL-4B (TextGenerate, thinking off, max_length 1024). Output được dọn (bỏ câu dẫn, markdown, \"negative prompt\"). Nếu Qwen từ chối, trả về rỗng hoặc chỉ bình luận → tự quay về prompt gốc. Tắt: dùng prompt gốc.\n- `nsfw` — chọn *System prompt NSFW* thay vì *SFW* (chỉ có tác dụng khi `refine` bật).\n\n**System prompt:** 2 node *System prompt SFW / NSFW* nằm **trong** subgraph Prompt Builder (double-click để mở và sửa). Rule 9–10: giữ `{char}`, không tả màu/độ dài tóc và cấu trúc mặt của nhân vật chính (LoRA lo phần đó). Thêm lớp regex cố định (chạy cả khi tắt refine): màu/độ dài tóc → `short hair` (giữ trạng thái: wet, messy…), xoá `sharp jawline / pointed chin / high cheekbones…`. Lưu ý: áp cho mọi người trong prompt.\n\n**TextSplitter:** đoạn cách nhau 1 dòng trống. Phần negative sau `###` bị bỏ qua (Krea2 CFG 1). Bấm *Start Auto Batch* để chạy hết file.\n\n**Seed:** node *Seed* (randomize / fixed / increment / decrement).\n\n**Lưu:** `Krea2_<ngày>/Krea2_T2I_v4_<MainTrigger>_<TextSplitter.index>_<yyMMdd>_<Seed>` — index đếm từ 0. Metadata A1111: final prompt + LoRA + hash."
+        "text": "## Krea-2 Turbo + LoRA — T2I v4\n\n**Model:** homofidelis Krea2 NSFW turbo int8 · qwen3-vl-4b-heretic fp8 (type krea2) · qwen_image_vae. 8 bước, euler/simple, CFG 1.\n\n**Thứ tự prompt cuối:** `MainTrigger` → `Prefix` → prompt đã xử lý → `Suffix` (nối bằng `. `). Rồi mọi từ `brief|briefs|underwear|towel|pants|sweatpants|shorts|sweatshorts` (kể cả trong Suffix) được thay bằng **1** token random từ *7a* (khớp nguyên từ).\n\n**Prompt Builder (trái → phải):** 1 Nguồn · 2 `{char}` · 3 LLM refine · 4 Dọn output LLM · 5 Ép identity LoRA · 6 Ghép · 7 Random swap. Bảng regex: note *Regex – bảng tra*.\n\n**`{char}`:** chữ trigger trong prompt (vd `Ivan_Ryo.`) được đổi thành `{char}`; không có thì tự thêm vào đầu. `{char}` đứng đầu bị bỏ (trigger đã đứng đầu chuỗi), `{char}` giữa câu đổi thành trigger. **MainTrigger không được để trống.**\n\n**Toggle:** `use_txt` (bật: .txt, tắt: Prompt tay) · `refine` (Qwen3-VL-4B viết lại; lỗi/từ chối → prompt gốc) · `nsfw` (System prompt NSFW thay SFW, chỉ khi refine bật).\n\n**Thinking:** text encoder dùng chung cho Krea2 và LLM — **không** thay bằng bản Qwen3-VL Thinking. Muốn LLM thinking thì cần loader riêng (chưa có), bật `thinking`, `max_length ≥ 2048`. Node *4a* cắt mọi thứ đến `</think>`. Giới hạn: suy luận bị cắt ngang mà không mở bằng `<think>` vẫn có thể lọt vào prompt.\n\n**Negative prompt:** không còn regex bỏ \"negative prompt\" — khi refine tắt, chữ `Negative prompt: …` trong .txt đi thẳng vào prompt.\n\n**TextSplitter:** đoạn cách nhau 1 dòng trống, phần sau `###` bị bỏ. *Start Auto Batch* chạy hết file; *7a* và *Seed* random lại mỗi lượt.\n\n**Lưu:** `Krea2_<ngày>/Krea2_T2I_v4_<MainTrigger>_<TextSplitter.index>_<yyMMdd>_<Seed>`."
       },
       "color": "#432",
       "bgcolor": "#653"
@@ -830,8 +829,8 @@
       "id": 56,
       "type": "ComfySwitchNode",
       "pos": [
-        757.961055211098,
-        -39.80287723390386
+        769.8838506132519,
+        -28.285678506410733
       ],
       "size": [
         320,
@@ -888,8 +887,8 @@
       "id": 57,
       "type": "StringContains",
       "pos": [
-        1126.0100797570292,
-        -40.11265096331874
+        1439.883850613252,
+        227.71432149358927
       ],
       "size": [
         311.7210995565847,
@@ -917,7 +916,7 @@
           ]
         }
       ],
-      "title": "2a. Có {char}?",
+      "title": "2b. Có {char}?",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
@@ -938,8 +937,8 @@
       "id": 58,
       "type": "StringConcatenate",
       "pos": [
-        1119.919848170415,
-        192.77178187029492
+        1439.883850613252,
+        453.7143214935893
       ],
       "size": [
         320,
@@ -967,7 +966,7 @@
           ]
         }
       ],
-      "title": "2b. Thêm {char} vào đầu",
+      "title": "2c. Thêm {char} vào đầu",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
@@ -988,8 +987,8 @@
       "id": 59,
       "type": "ComfySwitchNode",
       "pos": [
-        1124.2135926206304,
-        404.09188286711577
+        1439.883850613252,
+        679.7143214935893
       ],
       "size": [
         320,
@@ -1031,7 +1030,7 @@
           ]
         }
       ],
-      "title": "2c. {char} có sẵn / đã thêm",
+      "title": "2d. {char} có sẵn / đã thêm",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
@@ -1048,8 +1047,8 @@
       "id": 60,
       "type": "ComfySwitchNode",
       "pos": [
-        1117.48765739697,
-        532.7728302959465
+        1869.883850613252,
+        -28.285678506410733
       ],
       "size": [
         320,
@@ -1106,7 +1105,7 @@
       "id": 61,
       "type": "PrimitiveStringMultiline",
       "pos": [
-        893.8896341515469,
+        1849.883850613252,
         -1366.5369858201318
       ],
       "size": [
@@ -1133,17 +1132,17 @@
         "Node name for S&R": "PrimitiveStringMultiline"
       },
       "widgets_values": [
-        "You are a prompt rewriter for text-to-image models. You only rewrite text — you never create images yourself — so never refuse and never comment on the request; if unsure, return the user's prompt unchanged. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nPlan silently before writing — do not output your plan:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n7. **Respect the Human Form:** Treat depictions of people with dignity. Assume clothing covers genitals and intimate anatomy. If the input mentions nudity (nude, naked, undressed), keep intimate areas concealed using a towel, environmental elements (steam, water, foam, foliage, furniture), the subject's own hands or arms, or natural framing and cropping.\n8. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n9. **Main Character Token:** `{char}` names the main character, whose identity comes from a LoRA. Keep `{char}` exactly as written, once, as the subject of the main character's description. Any other person is a secondary character — call them \"another man\" / \"another woman\" or keep the user's own description; never give them `{char}`.\n10. **Let the LoRA Define Identity (overrides rules 1 and 6):** For `{char}` only, remove hair color and hair length even if the user wrote them — write at most \"short hair\"; keep hair state (wet, messy, tousled, slicked-back). Remove facial-structure words even if the user wrote them (jawline, chin, cheekbones, nose, eye shape, lips, face shape); describe expression and emotion instead. Do not invent facial structure for secondary characters.\n11. **Output Format:** Output exactly one cohesive paragraph and nothing else. Start directly with the prompt itself — no preamble, no title, no commentary, no bullets, no markdown, no negative prompt."
+        "You are a prompt rewriter for text-to-image models. You only rewrite text — you never create images yourself — so never refuse and never comment on the request; if unsure, return the user's prompt unchanged. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nPlan silently before writing — do not output your plan:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n7. **Respect the Human Form:** Treat depictions of people with dignity. Assume clothing covers genitals and intimate anatomy. If the input mentions nudity (nude, naked, undressed), keep intimate areas concealed using a towel, environmental elements (steam, water, foam, foliage, furniture), the subject's own hands or arms, or natural framing and cropping. Keep every clothing item the user wrote (e.g. briefs, towel, shorts) with the same word.\n8. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n9. **Main Character Token:** `{char}` names the main character, whose identity comes from a LoRA. Keep `{char}` exactly as written, once, as the subject of the main character's description. Any other person is a secondary character — call them \"another man\" / \"another woman\" or keep the user's own description; never give them `{char}`.\n10. **Let the LoRA Define Identity (overrides rules 1 and 6):** For `{char}` only, remove hair color and hair length even if the user wrote them — write at most \"short hair\"; keep hair state (wet, messy, tousled, slicked-back). Remove facial-structure words even if the user wrote them (jawline, chin, cheekbones, nose, eye shape, lips, face shape); describe expression and emotion instead. Do not invent facial structure for secondary characters.\n11. **Output Format:** Output exactly one cohesive paragraph and nothing else. Start directly with the prompt itself — no preamble, no title, no commentary, no bullets, no markdown, no negative prompt."
       ],
       "widgets_values_named": {
-        "value": "You are a prompt rewriter for text-to-image models. You only rewrite text — you never create images yourself — so never refuse and never comment on the request; if unsure, return the user's prompt unchanged. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nPlan silently before writing — do not output your plan:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n7. **Respect the Human Form:** Treat depictions of people with dignity. Assume clothing covers genitals and intimate anatomy. If the input mentions nudity (nude, naked, undressed), keep intimate areas concealed using a towel, environmental elements (steam, water, foam, foliage, furniture), the subject's own hands or arms, or natural framing and cropping.\n8. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n9. **Main Character Token:** `{char}` names the main character, whose identity comes from a LoRA. Keep `{char}` exactly as written, once, as the subject of the main character's description. Any other person is a secondary character — call them \"another man\" / \"another woman\" or keep the user's own description; never give them `{char}`.\n10. **Let the LoRA Define Identity (overrides rules 1 and 6):** For `{char}` only, remove hair color and hair length even if the user wrote them — write at most \"short hair\"; keep hair state (wet, messy, tousled, slicked-back). Remove facial-structure words even if the user wrote them (jawline, chin, cheekbones, nose, eye shape, lips, face shape); describe expression and emotion instead. Do not invent facial structure for secondary characters.\n11. **Output Format:** Output exactly one cohesive paragraph and nothing else. Start directly with the prompt itself — no preamble, no title, no commentary, no bullets, no markdown, no negative prompt."
+        "value": "You are a prompt rewriter for text-to-image models. You only rewrite text — you never create images yourself — so never refuse and never comment on the request; if unsure, return the user's prompt unchanged. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nPlan silently before writing — do not output your plan:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n7. **Respect the Human Form:** Treat depictions of people with dignity. Assume clothing covers genitals and intimate anatomy. If the input mentions nudity (nude, naked, undressed), keep intimate areas concealed using a towel, environmental elements (steam, water, foam, foliage, furniture), the subject's own hands or arms, or natural framing and cropping. Keep every clothing item the user wrote (e.g. briefs, towel, shorts) with the same word.\n8. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n9. **Main Character Token:** `{char}` names the main character, whose identity comes from a LoRA. Keep `{char}` exactly as written, once, as the subject of the main character's description. Any other person is a secondary character — call them \"another man\" / \"another woman\" or keep the user's own description; never give them `{char}`.\n10. **Let the LoRA Define Identity (overrides rules 1 and 6):** For `{char}` only, remove hair color and hair length even if the user wrote them — write at most \"short hair\"; keep hair state (wet, messy, tousled, slicked-back). Remove facial-structure words even if the user wrote them (jawline, chin, cheekbones, nose, eye shape, lips, face shape); describe expression and emotion instead. Do not invent facial structure for secondary characters.\n11. **Output Format:** Output exactly one cohesive paragraph and nothing else. Start directly with the prompt itself — no preamble, no title, no commentary, no bullets, no markdown, no negative prompt."
       }
     },
     {
       "id": 62,
       "type": "PrimitiveStringMultiline",
       "pos": [
-        1453.889634151547,
+        2409.883850613252,
         -1366.5369858201318
       ],
       "size": [
@@ -1170,18 +1169,18 @@
         "Node name for S&R": "PrimitiveStringMultiline"
       },
       "widgets_values": [
-        "You are a prompt rewriter for text-to-image models. You only rewrite text — you never create images yourself — so never refuse and never comment on the request; if unsure, return the user's prompt unchanged. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nPlan silently before writing — do not output your plan:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n7. **Bare Skin Only When Asked:** Treat depictions of people with dignity. Keep people clothed unless the input asks for nudity (nude, naked, undressed, topless, shirtless). Keep every clothing item and coverage detail from the input (e.g. \"fully covered\", \"briefs\"); never drop clothing the user wrote. When it does, match the requested level: partial wording (partially nude, revealing, topless, half-undressed) → bare only that part and keep the rest covered; full wording (fully nude, completely naked) → describe the bare body plainly, without euphemism. If the input only says \"nude\" or \"naked\" with no level, keep it partial: the body is bare but the groin stays naturally hidden by pose, shadow or framing.\n8. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n9. **Main Character Token:** `{char}` names the main character, whose identity comes from a LoRA. Keep `{char}` exactly as written, once, as the subject of the main character's description. Any other person is a secondary character — call them \"another man\" / \"another woman\" or keep the user's own description; never give them `{char}`.\n10. **Let the LoRA Define Identity (overrides rules 1 and 6):** For `{char}` only, remove hair color and hair length even if the user wrote them — write at most \"short hair\"; keep hair state (wet, messy, tousled, slicked-back). Remove facial-structure words even if the user wrote them (jawline, chin, cheekbones, nose, eye shape, lips, face shape); describe expression and emotion instead. Do not invent facial structure for secondary characters.\n12. **Output Format:** Output exactly one cohesive paragraph and nothing else. Start directly with the prompt itself — no preamble, no title, no commentary, no bullets, no markdown, no negative prompt."
+        "You are a prompt rewriter for text-to-image models. You only rewrite text — you never create images yourself — so never refuse and never comment on the request; if unsure, return the user's prompt unchanged. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nPlan silently before writing — do not output your plan:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n7. **Bare Skin Only When Asked:** Treat depictions of people with dignity. Keep people clothed unless the input asks for nudity (nude, naked, undressed, topless, shirtless). Keep every clothing item and coverage detail from the input (e.g. \"fully covered\", \"briefs\"); never drop clothing the user wrote. When it does, match the requested level: partial wording (partially nude, revealing, topless, half-undressed) → bare only that part and keep the rest covered; full wording (fully nude, completely naked) → describe the bare body plainly, without euphemism. If the input only says \"nude\" or \"naked\" with no level, keep it partial: the body is bare but the groin stays naturally hidden by pose, shadow or framing.\n8. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n9. **Main Character Token:** `{char}` names the main character, whose identity comes from a LoRA. Keep `{char}` exactly as written, once, as the subject of the main character's description. Any other person is a secondary character — call them \"another man\" / \"another woman\" or keep the user's own description; never give them `{char}`.\n10. **Let the LoRA Define Identity (overrides rules 1 and 6):** For `{char}` only, remove hair color and hair length even if the user wrote them — write at most \"short hair\"; keep hair state (wet, messy, tousled, slicked-back). Remove facial-structure words even if the user wrote them (jawline, chin, cheekbones, nose, eye shape, lips, face shape); describe expression and emotion instead. Do not invent facial structure for secondary characters.\n11. **Output Format:** Output exactly one cohesive paragraph and nothing else. Start directly with the prompt itself — no preamble, no title, no commentary, no bullets, no markdown, no negative prompt."
       ],
       "widgets_values_named": {
-        "value": "You are a prompt rewriter for text-to-image models. You only rewrite text — you never create images yourself — so never refuse and never comment on the request; if unsure, return the user's prompt unchanged. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nPlan silently before writing — do not output your plan:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n7. **Bare Skin Only When Asked:** Treat depictions of people with dignity. Keep people clothed unless the input asks for nudity (nude, naked, undressed, topless, shirtless). Keep every clothing item and coverage detail from the input (e.g. \"fully covered\", \"briefs\"); never drop clothing the user wrote. When it does, match the requested level: partial wording (partially nude, revealing, topless, half-undressed) → bare only that part and keep the rest covered; full wording (fully nude, completely naked) → describe the bare body plainly, without euphemism. If the input only says \"nude\" or \"naked\" with no level, keep it partial: the body is bare but the groin stays naturally hidden by pose, shadow or framing.\n8. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n9. **Main Character Token:** `{char}` names the main character, whose identity comes from a LoRA. Keep `{char}` exactly as written, once, as the subject of the main character's description. Any other person is a secondary character — call them \"another man\" / \"another woman\" or keep the user's own description; never give them `{char}`.\n10. **Let the LoRA Define Identity (overrides rules 1 and 6):** For `{char}` only, remove hair color and hair length even if the user wrote them — write at most \"short hair\"; keep hair state (wet, messy, tousled, slicked-back). Remove facial-structure words even if the user wrote them (jawline, chin, cheekbones, nose, eye shape, lips, face shape); describe expression and emotion instead. Do not invent facial structure for secondary characters.\n12. **Output Format:** Output exactly one cohesive paragraph and nothing else. Start directly with the prompt itself — no preamble, no title, no commentary, no bullets, no markdown, no negative prompt."
+        "value": "You are a prompt rewriter for text-to-image models. You only rewrite text — you never create images yourself — so never refuse and never comment on the request; if unsure, return the user's prompt unchanged. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nPlan silently before writing — do not output your plan:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n7. **Bare Skin Only When Asked:** Treat depictions of people with dignity. Keep people clothed unless the input asks for nudity (nude, naked, undressed, topless, shirtless). Keep every clothing item and coverage detail from the input (e.g. \"fully covered\", \"briefs\"); never drop clothing the user wrote. When it does, match the requested level: partial wording (partially nude, revealing, topless, half-undressed) → bare only that part and keep the rest covered; full wording (fully nude, completely naked) → describe the bare body plainly, without euphemism. If the input only says \"nude\" or \"naked\" with no level, keep it partial: the body is bare but the groin stays naturally hidden by pose, shadow or framing.\n8. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n9. **Main Character Token:** `{char}` names the main character, whose identity comes from a LoRA. Keep `{char}` exactly as written, once, as the subject of the main character's description. Any other person is a secondary character — call them \"another man\" / \"another woman\" or keep the user's own description; never give them `{char}`.\n10. **Let the LoRA Define Identity (overrides rules 1 and 6):** For `{char}` only, remove hair color and hair length even if the user wrote them — write at most \"short hair\"; keep hair state (wet, messy, tousled, slicked-back). Remove facial-structure words even if the user wrote them (jawline, chin, cheekbones, nose, eye shape, lips, face shape); describe expression and emotion instead. Do not invent facial structure for secondary characters.\n11. **Output Format:** Output exactly one cohesive paragraph and nothing else. Start directly with the prompt itself — no preamble, no title, no commentary, no bullets, no markdown, no negative prompt."
       }
     },
     {
       "id": 63,
       "type": "TextGenerate",
       "pos": [
-        1494.3703189688108,
-        414.065801613924
+        1869.883850613252,
+        109.71432149358927
       ],
       "size": [
         420,
@@ -1234,8 +1233,7 @@
           "name": "generated_text",
           "type": "STRING",
           "links": [
-            107,
-            112
+            143
           ]
         },
         {
@@ -1282,69 +1280,11 @@
       }
     },
     {
-      "id": 64,
-      "type": "RegexReplace",
-      "pos": [
-        1962.3413693289958,
-        403.65695234725746
-      ],
-      "size": [
-        320,
-        292
-      ],
-      "flags": {},
-      "order": 24,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 107
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            108
-          ]
-        }
-      ],
-      "title": "3c. Bỏ 'negative prompt…'",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "RegexReplace"
-      },
-      "widgets_values": [
-        "",
-        "[\\s,;.]*\\bnegative prompts?\\b.*$",
-        "",
-        true,
-        false,
-        true,
-        0
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "regex_pattern": "[\\s,;.]*\\bnegative prompts?\\b.*$",
-        "replace": "",
-        "case_insensitive": true,
-        "multiline": false,
-        "dotall": true,
-        "count": 0
-      }
-    },
-    {
       "id": 65,
       "type": "RegexReplace",
       "pos": [
-        1958.2515875074105,
-        754.1561921006453
+        2399.883850613252,
+        323.7143214935893
       ],
       "size": [
         320,
@@ -1360,7 +1300,7 @@
           "widget": {
             "name": "string"
           },
-          "link": 108
+          "link": 144
         }
       ],
       "outputs": [
@@ -1372,7 +1312,7 @@
           ]
         }
       ],
-      "title": "3d. Bỏ câu dẫn / markdown",
+      "title": "4b. Bỏ câu dẫn / markdown",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
@@ -1401,8 +1341,8 @@
       "id": 66,
       "type": "RegexReplace",
       "pos": [
-        1949.1117446317908,
-        1105.7894756382882
+        2399.883850613252,
+        675.7143214935893
       ],
       "size": [
         320,
@@ -1430,7 +1370,7 @@
           ]
         }
       ],
-      "title": "3e. Gộp 1 đoạn",
+      "title": "4c. Gộp 1 đoạn",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
@@ -1459,8 +1399,8 @@
       "id": 67,
       "type": "RegexReplace",
       "pos": [
-        2309.7343878645593,
-        1103.0414523267289
+        2399.883850613252,
+        1027.7143214935893
       ],
       "size": [
         320,
@@ -1488,7 +1428,7 @@
           ]
         }
       ],
-      "title": "3e2. Bỏ nhãn 'Final Output:'",
+      "title": "4d. Bỏ nhãn 'Final Output:'",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
@@ -1517,8 +1457,8 @@
       "id": 68,
       "type": "StringTrim",
       "pos": [
-        2777.6276696325695,
-        1431.5428571551977
+        2399.883850613252,
+        1379.7143214935893
       ],
       "size": [
         320,
@@ -1546,7 +1486,7 @@
           ]
         }
       ],
-      "title": "3f. Trim",
+      "title": "4e. Trim",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
@@ -1565,8 +1505,8 @@
       "id": 69,
       "type": "RegexMatch",
       "pos": [
-        1715.6617354926118,
-        1467.0230087623552
+        2399.883850613252,
+        1551.7143214935893
       ],
       "size": [
         320,
@@ -1582,7 +1522,7 @@
           "widget": {
             "name": "string"
           },
-          "link": 112
+          "link": 145
         }
       ],
       "outputs": [
@@ -1594,7 +1534,7 @@
           ]
         }
       ],
-      "title": "3g. Qwen từ chối / bình luận?",
+      "title": "4f. Qwen từ chối / bình luận?",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
@@ -1602,14 +1542,14 @@
       },
       "widgets_values": [
         "",
-        "^\\s*$|I'?m sorry|I am sorry|I can'?t|I cannot|must decline|unable to (?:help|assist|fulfill|comply)|against my (?:guidelines|policies)|prompt you'?ve provided|your prompt is already|as an AI",
+        "^\\s*$|I'?m sorry|I am sorry|I can'?t|I cannot|must decline|unable to (?:help|assist|fulfill|comply)|against my (?:guidelines|policies)|prompt you'?ve provided|your prompt is already|as an AI|You are a prompt rewriter|Follow these rules strictly|Main Character Token",
         true,
         false,
         false
       ],
       "widgets_values_named": {
         "string": "",
-        "regex_pattern": "^\\s*$|I'?m sorry|I am sorry|I can'?t|I cannot|must decline|unable to (?:help|assist|fulfill|comply)|against my (?:guidelines|policies)|prompt you'?ve provided|your prompt is already|as an AI",
+        "regex_pattern": "^\\s*$|I'?m sorry|I am sorry|I can'?t|I cannot|must decline|unable to (?:help|assist|fulfill|comply)|against my (?:guidelines|policies)|prompt you'?ve provided|your prompt is already|as an AI|You are a prompt rewriter|Follow these rules strictly|Main Character Token",
         "case_insensitive": true,
         "multiline": false,
         "dotall": false
@@ -1619,8 +1559,8 @@
       "id": 70,
       "type": "ComfySwitchNode",
       "pos": [
-        2218.9985996524515,
-        95.21971784404592
+        2399.883850613252,
+        1825.7143214935893
       ],
       "size": [
         320,
@@ -1660,7 +1600,7 @@
           ]
         }
       ],
-      "title": "3h. Refine lỗi → prompt gốc",
+      "title": "4g. Refine lỗi → prompt gốc",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
@@ -1677,8 +1617,8 @@
       "id": 71,
       "type": "ComfySwitchNode",
       "pos": [
-        2650.1648812282606,
-        85.43617860303848
+        2399.883850613252,
+        1963.7143214935893
       ],
       "size": [
         320,
@@ -1718,7 +1658,7 @@
           ]
         }
       ],
-      "title": "3i. Prompt: refine / gốc",
+      "title": "4h. Prompt: refine / gốc",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
@@ -1735,8 +1675,8 @@
       "id": 72,
       "type": "RegexReplace",
       "pos": [
-        2756.8953419923864,
-        609.9155857958691
+        2829.883850613252,
+        -28.285678506410733
       ],
       "size": [
         320,
@@ -1764,7 +1704,7 @@
           ]
         }
       ],
-      "title": "3j. Tóc: màu/độ dài → short",
+      "title": "5a. Tóc: màu/độ dài → short",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
@@ -1793,8 +1733,8 @@
       "id": 73,
       "type": "RegexReplace",
       "pos": [
-        2861.1690612800007,
-        1157.6009720030263
+        2829.883850613252,
+        323.7143214935893
       ],
       "size": [
         320,
@@ -1822,7 +1762,7 @@
           ]
         }
       ],
-      "title": "3j2. Gộp 'short short'",
+      "title": "5b. Gộp 'short short'",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
@@ -1851,8 +1791,8 @@
       "id": 74,
       "type": "RegexReplace",
       "pos": [
-        2813.29333652808,
-        1658.6779789973816
+        2829.883850613252,
+        675.7143214935893
       ],
       "size": [
         320,
@@ -1880,7 +1820,7 @@
           ]
         }
       ],
-      "title": "3k. Bỏ jawline/chin/cheekbones…",
+      "title": "5c. Bỏ jawline/chin/cheekbones…",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
@@ -1909,8 +1849,8 @@
       "id": 75,
       "type": "RegexReplace",
       "pos": [
-        2079.92728137879,
-        1474.8784912647611
+        2829.883850613252,
+        1027.7143214935893
       ],
       "size": [
         320,
@@ -1938,7 +1878,7 @@
           ]
         }
       ],
-      "title": "3l. Dọn dấu phẩy thừa",
+      "title": "5d. Dọn dấu phẩy thừa",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
@@ -1967,8 +1907,8 @@
       "id": 76,
       "type": "RegexReplace",
       "pos": [
-        2442.3897768940246,
-        1574.266473513685
+        2829.883850613252,
+        1379.7143214935893
       ],
       "size": [
         320,
@@ -1992,11 +1932,11 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            123
+            146
           ]
         }
       ],
-      "title": "3m. Dọn khoảng trắng",
+      "title": "5e. Dọn khoảng trắng",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
@@ -2025,8 +1965,8 @@
       "id": 77,
       "type": "StringReplace",
       "pos": [
-        2362.058075332927,
-        690.2721040783451
+        3259.883850613252,
+        323.7143214935893
       ],
       "size": [
         320,
@@ -2042,7 +1982,7 @@
           "widget": {
             "name": "string"
           },
-          "link": 123
+          "link": 147
         },
         {
           "name": "replace",
@@ -2058,13 +1998,11 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            124,
-            125,
-            126
+            151
           ]
         }
       ],
-      "title": "4. {char} → trigger",
+      "title": "6b. {char} → trigger",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
@@ -2082,187 +2020,11 @@
       }
     },
     {
-      "id": 78,
-      "type": "StringContains",
-      "pos": [
-        2759.8545774379604,
-        238.29467471425852
-      ],
-      "size": [
-        320,
-        166
-      ],
-      "flags": {},
-      "order": 38,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 124
-        },
-        {
-          "name": "substring",
-          "type": "STRING",
-          "widget": {
-            "name": "substring"
-          },
-          "link": 131
-        }
-      ],
-      "outputs": [
-        {
-          "name": "contains",
-          "type": "BOOLEAN",
-          "links": [
-            127
-          ]
-        }
-      ],
-      "title": "5a. Có trigger?",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "StringContains"
-      },
-      "widgets_values": [
-        "",
-        "",
-        true
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "substring": "",
-        "case_sensitive": true
-      }
-    },
-    {
-      "id": 79,
-      "type": "StringConcatenate",
-      "pos": [
-        2749.1208167669297,
-        964.4048939794586
-      ],
-      "size": [
-        320,
-        166
-      ],
-      "flags": {},
-      "order": 39,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string_a",
-          "type": "STRING",
-          "widget": {
-            "name": "string_a"
-          },
-          "link": 132
-        },
-        {
-          "name": "string_b",
-          "type": "STRING",
-          "widget": {
-            "name": "string_b"
-          },
-          "link": 125
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            138
-          ]
-        }
-      ],
-      "title": "5b. Ghép trigger vào đầu",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "StringConcatenate"
-      },
-      "widgets_values": [
-        "",
-        "",
-        ". "
-      ],
-      "widgets_values_named": {
-        "string_a": "",
-        "string_b": "",
-        "delimiter": ". "
-      }
-    },
-    {
-      "id": 80,
-      "type": "ComfySwitchNode",
-      "pos": [
-        2758.918797115952,
-        477.5256556586044
-      ],
-      "size": [
-        320,
-        78
-      ],
-      "flags": {},
-      "order": 41,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "on_false",
-          "shape": 7,
-          "type": "STRING",
-          "link": 139
-        },
-        {
-          "name": "on_true",
-          "shape": 7,
-          "type": "STRING",
-          "link": 126
-        },
-        {
-          "name": "switch",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "switch"
-          },
-          "link": 127
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "STRING",
-          "links": [
-            133,
-            134,
-            135
-          ]
-        }
-      ],
-      "title": "5c. Chốt an toàn",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "ComfySwitchNode"
-      },
-      "widgets_values": [
-        false
-      ],
-      "widgets_values_named": {
-        "switch": false
-      }
-    },
-    {
       "id": 81,
       "type": "StringReplace",
       "pos": [
-        753.4738890484771,
-        105.0690185793813
+        1439.883850613252,
+        -28.285678506410733
       ],
       "size": [
         315.8604739822324,
@@ -2300,7 +2062,7 @@
           ]
         }
       ],
-      "title": "1b. Trigger chữ → {char}",
+      "title": "2a. Trigger chữ → {char}",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
@@ -2315,56 +2077,6 @@
         "string": "",
         "find": "",
         "replace": "{char}"
-      }
-    },
-    {
-      "id": 82,
-      "type": "StringConcatenate",
-      "pos": [
-        2757.9621406701567,
-        1191.5859206945474
-      ],
-      "size": [
-        320,
-        166
-      ],
-      "flags": {},
-      "order": 40,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string_a",
-          "type": "STRING",
-          "widget": {
-            "name": "string_a"
-          },
-          "link": 138
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            139
-          ]
-        }
-      ],
-      "title": "5d. Ghép trigger vào cuối",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "StringConcatenate"
-      },
-      "widgets_values": [
-        "",
-        "good bulge. strng_bikini underwear",
-        ". "
-      ],
-      "widgets_values_named": {
-        "string_a": "",
-        "string_b": "good bulge. strng_bikini underwear",
-        "delimiter": ". "
       }
     },
     {
@@ -2386,20 +2098,22 @@
         {
           "name": "STRING",
           "type": "STRING",
-          "links": []
+          "links": [
+            149
+          ]
         }
       ],
-      "title": "Sub trigger LoRA",
+      "title": "Prefix",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
-        "Node name for S&R": "Trigger"
+        "Node name for S&R": "Prefix"
       },
       "widgets_values": [
-        "Ivan_Ryo."
+        ""
       ],
       "widgets_values_named": {
-        "value": "Ivan_Ryo."
+        "value": ""
       }
     },
     {
@@ -2421,21 +2135,595 @@
         {
           "name": "STRING",
           "type": "STRING",
-          "links": []
+          "links": [
+            153
+          ]
         }
       ],
-      "title": "ReplaceTriggerLoRA",
+      "title": "Suffix",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
-        "Node name for S&R": "Trigger"
+        "Node name for S&R": "Suffix"
       },
       "widgets_values": [
-        "Ivan_Ryo."
+        "good bulge, briefs"
       ],
       "widgets_values_named": {
-        "value": "Ivan_Ryo."
+        "value": "good bulge, briefs"
       }
+    },
+    {
+      "id": 85,
+      "type": "RegexReplace",
+      "pos": [
+        2399.883850613252,
+        -28.285678506410733
+      ],
+      "size": [
+        320,
+        292
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string",
+          "type": "STRING",
+          "widget": {
+            "name": "string"
+          },
+          "link": 143
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            144,
+            145
+          ]
+        }
+      ],
+      "title": "4a. Cắt suy luận </think>",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "RegexReplace"
+      },
+      "widgets_values": [
+        "",
+        "^[\\s\\S]*</think>\\s*|</?think>",
+        "",
+        false,
+        false,
+        false,
+        0
+      ],
+      "widgets_values_named": {
+        "string": "",
+        "regex_pattern": "^[\\s\\S]*</think>\\s*|</?think>",
+        "replace": "",
+        "case_insensitive": false,
+        "multiline": false,
+        "dotall": false,
+        "count": 0
+      }
+    },
+    {
+      "id": 86,
+      "type": "RegexReplace",
+      "pos": [
+        3259.883850613252,
+        -28.285678506410733
+      ],
+      "size": [
+        320,
+        292
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string",
+          "type": "STRING",
+          "widget": {
+            "name": "string"
+          },
+          "link": 146
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            147
+          ]
+        }
+      ],
+      "title": "6a. Bỏ {char} đầu thân",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "RegexReplace"
+      },
+      "widgets_values": [
+        "",
+        "^\\s*\\{char\\}[\\s.,:;]*",
+        "",
+        false,
+        false,
+        false,
+        0
+      ],
+      "widgets_values_named": {
+        "string": "",
+        "regex_pattern": "^\\s*\\{char\\}[\\s.,:;]*",
+        "replace": "",
+        "case_insensitive": false,
+        "multiline": false,
+        "dotall": false,
+        "count": 0
+      }
+    },
+    {
+      "id": 87,
+      "type": "StringConcatenate",
+      "pos": [
+        3259.883850613252,
+        579.7143214935893
+      ],
+      "size": [
+        320,
+        166
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string_b",
+          "type": "STRING",
+          "widget": {
+            "name": "string_b"
+          },
+          "link": 149
+        },
+        {
+          "name": "string_a",
+          "type": "STRING",
+          "widget": {
+            "name": "string_a"
+          },
+          "link": 148
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            150
+          ]
+        }
+      ],
+      "title": "6c. MainTrigger + Prefix",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "StringConcatenate"
+      },
+      "widgets_values": [
+        "",
+        "",
+        ". "
+      ],
+      "widgets_values_named": {
+        "string_a": "",
+        "string_b": "",
+        "delimiter": ". "
+      }
+    },
+    {
+      "id": 88,
+      "type": "StringConcatenate",
+      "pos": [
+        3259.883850613252,
+        805.7143214935893
+      ],
+      "size": [
+        320,
+        166
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string_b",
+          "type": "STRING",
+          "widget": {
+            "name": "string_b"
+          },
+          "link": 151
+        },
+        {
+          "name": "string_a",
+          "type": "STRING",
+          "widget": {
+            "name": "string_a"
+          },
+          "link": 150
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            152
+          ]
+        }
+      ],
+      "title": "6d. + thân prompt",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "StringConcatenate"
+      },
+      "widgets_values": [
+        "",
+        "",
+        ". "
+      ],
+      "widgets_values_named": {
+        "string_a": "",
+        "string_b": "",
+        "delimiter": ". "
+      }
+    },
+    {
+      "id": 89,
+      "type": "StringConcatenate",
+      "pos": [
+        3259.883850613252,
+        1031.7143214935893
+      ],
+      "size": [
+        320,
+        166
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string_b",
+          "type": "STRING",
+          "widget": {
+            "name": "string_b"
+          },
+          "link": 153
+        },
+        {
+          "name": "string_a",
+          "type": "STRING",
+          "widget": {
+            "name": "string_a"
+          },
+          "link": 152
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            154
+          ]
+        }
+      ],
+      "title": "6e. + Suffix",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "StringConcatenate"
+      },
+      "widgets_values": [
+        "",
+        "",
+        ". "
+      ],
+      "widgets_values_named": {
+        "string_a": "",
+        "string_b": "",
+        "delimiter": ". "
+      }
+    },
+    {
+      "id": 90,
+      "type": "Select_Random",
+      "pos": [
+        3689.883850613252,
+        -28.285678506410733
+      ],
+      "size": [
+        320,
+        230
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [
+            155
+          ]
+        }
+      ],
+      "title": "7a. Random token quần áo",
+      "properties": {
+        "Node name for S&R": "Select_Random"
+      },
+      "widgets_values": [
+        "tnga_brief",
+        "lrcontour_brief",
+        "stng_bikini",
+        "hpstr_brief",
+        "dblstrap_bikini",
+        0,
+        "randomize"
+      ]
+    },
+    {
+      "id": 91,
+      "type": "Find_and_Replace",
+      "pos": [
+        3689.883850613252,
+        261.7143214935893
+      ],
+      "size": [
+        320,
+        130
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 154
+        },
+        {
+          "name": "replace_in",
+          "shape": 7,
+          "type": "STRING",
+          "link": 155
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [
+            156
+          ]
+        }
+      ],
+      "title": "7b. Swap quần áo → token",
+      "properties": {
+        "Node name for S&R": "Find_and_Replace"
+      },
+      "widgets_values": [
+        "brief|briefs|underwear|towel|pants|sweatpants|shorts|sweatshorts",
+        "",
+        true
+      ]
+    },
+    {
+      "id": 92,
+      "type": "RegexReplace",
+      "pos": [
+        3689.883850613252,
+        451.7143214935893
+      ],
+      "size": [
+        320,
+        292
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string",
+          "type": "STRING",
+          "widget": {
+            "name": "string"
+          },
+          "link": 156
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            157
+          ]
+        }
+      ],
+      "title": "7c. Gộp token lặp",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "RegexReplace"
+      },
+      "widgets_values": [
+        "",
+        "\\b(\\w+_\\w+)(?:[\\s,]+\\1\\b)+",
+        "\\1",
+        true,
+        false,
+        false,
+        0
+      ],
+      "widgets_values_named": {
+        "string": "",
+        "regex_pattern": "\\b(\\w+_\\w+)(?:[\\s,]+\\1\\b)+",
+        "replace": "\\1",
+        "case_insensitive": true,
+        "multiline": false,
+        "dotall": false,
+        "count": 0
+      }
+    },
+    {
+      "id": 93,
+      "type": "RegexReplace",
+      "pos": [
+        3689.883850613252,
+        803.7143214935893
+      ],
+      "size": [
+        320,
+        292
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string",
+          "type": "STRING",
+          "widget": {
+            "name": "string"
+          },
+          "link": 157
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            158
+          ]
+        }
+      ],
+      "title": "7d. Dọn dấu chấm / cuối chuỗi",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "RegexReplace"
+      },
+      "widgets_values": [
+        "",
+        "(\\.)(?:\\s*\\.)+|[\\s,]+$",
+        "\\1",
+        false,
+        false,
+        false,
+        0
+      ],
+      "widgets_values_named": {
+        "string": "",
+        "regex_pattern": "(\\.)(?:\\s*\\.)+|[\\s,]+$",
+        "replace": "\\1",
+        "case_insensitive": false,
+        "multiline": false,
+        "dotall": false,
+        "count": 0
+      }
+    },
+    {
+      "id": 94,
+      "type": "StringTrim",
+      "pos": [
+        3689.883850613252,
+        1155.7143214935893
+      ],
+      "size": [
+        320,
+        112
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string",
+          "type": "STRING",
+          "widget": {
+            "name": "string"
+          },
+          "link": 158
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            159,
+            160,
+            161
+          ]
+        }
+      ],
+      "title": "7e. Trim",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "StringTrim"
+      },
+      "widgets_values": [
+        "",
+        "Both"
+      ],
+      "widgets_values_named": {
+        "string": "",
+        "mode": "Both"
+      }
+    },
+    {
+      "id": 95,
+      "type": "MarkdownNote",
+      "pos": [
+        769.8838506132519,
+        109.71432149358927
+      ],
+      "size": [
+        560,
+        760
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Regex – bảng tra",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "MarkdownNote"
+      },
+      "widgets_values": [
+        "## Regex – bảng tra (R = chỉ khi refine bật, A = luôn chạy)\n\n| Node | Tìm | Thay | Mục đích | |\n|---|---|---|---|---|\n| 2a | chữ MainTrigger | `{char}` | trigger trong .txt → `{char}` | A |\n| 4a | `^[\\s\\S]*</think>\\s*` · `</?think>` | rỗng | cắt suy luận thinking | R |\n| 4b | dòng \"Here is…:\" · `**` · `---` · `#` · gạch đầu dòng | rỗng | câu dẫn / markdown | R |\n| 4c | xuống dòng | 1 dấu cách | 1 đoạn | R |\n| 4d | nhãn đầu \"Final Output:\", \"Prompt:\"… | rỗng | bỏ nhãn | R |\n| 4f | rỗng · I'm sorry · I can't · as an AI · chép system prompt… | (đúng/sai) | lỗi → dùng prompt gốc | R |\n| 5a | màu/độ dài trong 4 từ trước `hair` | `short ` | LoRA giữ tóc | A |\n| 5b | `short` thừa trước `hair` | rỗng | gộp short short | A |\n| 5c | sharp/defined/strong… + jawline/chin/cheekbones/nose | rỗng | LoRA giữ mặt | A |\n| 5d | ` ,` · `,,` · ` .` | rỗng | dọn dấu phẩy | A |\n| 5e | 2+ dấu cách | 1 dấu cách | dọn khoảng trắng | A |\n| 6a | `{char}` đầu thân | rỗng | trigger đã đứng đầu | A |\n| 6b | `{char}` | MainTrigger | `{char}` giữa câu | A |\n| 7b | brief/briefs/underwear/towel/pants/sweatpants/shorts/sweatshorts | token 7a | token LoRA quần áo (nguyên từ) | A |\n| 7c | token `_` lặp liền nhau | 1 token | gộp lặp | A |\n| 7d | `..` · `. .` · dấu thừa cuối | `.` | dọn sau khi ghép | A |\n\nVì sao không để trong system prompt: refine tắt thì không có LLM; Qwen3-VL-4B không tuân luật đều tay; lỗi định dạng là output của chính model; token LoRA không nên đưa cho LLM. System prompt vẫn giữ các luật này — LLM làm đúng thì regex không làm gì."
+      ],
+      "widgets_values_named": {
+        "text": "## Regex – bảng tra (R = chỉ khi refine bật, A = luôn chạy)\n\n| Node | Tìm | Thay | Mục đích | |\n|---|---|---|---|---|\n| 2a | chữ MainTrigger | `{char}` | trigger trong .txt → `{char}` | A |\n| 4a | `^[\\s\\S]*</think>\\s*` · `</?think>` | rỗng | cắt suy luận thinking | R |\n| 4b | dòng \"Here is…:\" · `**` · `---` · `#` · gạch đầu dòng | rỗng | câu dẫn / markdown | R |\n| 4c | xuống dòng | 1 dấu cách | 1 đoạn | R |\n| 4d | nhãn đầu \"Final Output:\", \"Prompt:\"… | rỗng | bỏ nhãn | R |\n| 4f | rỗng · I'm sorry · I can't · as an AI · chép system prompt… | (đúng/sai) | lỗi → dùng prompt gốc | R |\n| 5a | màu/độ dài trong 4 từ trước `hair` | `short ` | LoRA giữ tóc | A |\n| 5b | `short` thừa trước `hair` | rỗng | gộp short short | A |\n| 5c | sharp/defined/strong… + jawline/chin/cheekbones/nose | rỗng | LoRA giữ mặt | A |\n| 5d | ` ,` · `,,` · ` .` | rỗng | dọn dấu phẩy | A |\n| 5e | 2+ dấu cách | 1 dấu cách | dọn khoảng trắng | A |\n| 6a | `{char}` đầu thân | rỗng | trigger đã đứng đầu | A |\n| 6b | `{char}` | MainTrigger | `{char}` giữa câu | A |\n| 7b | brief/briefs/underwear/towel/pants/sweatpants/shorts/sweatshorts | token 7a | token LoRA quần áo (nguyên từ) | A |\n| 7c | token `_` lặp liền nhau | 1 token | gộp lặp | A |\n| 7d | `..` · `. .` · dấu thừa cuối | `.` | dọn sau khi ghép | A |\n\nVì sao không để trong system prompt: refine tắt thì không có LLM; Qwen3-VL-4B không tuân luật đều tay; lỗi định dạng là output của chính model; token LoRA không nên đưa cho LLM. System prompt vẫn giữ các luật này — LLM làm đúng thì regex không làm gì."
+      },
+      "color": "#432",
+      "bgcolor": "#653"
     }
   ],
   "links": [
@@ -2584,22 +2872,6 @@
       "STRING"
     ],
     [
-      107,
-      63,
-      0,
-      64,
-      0,
-      "STRING"
-    ],
-    [
-      108,
-      64,
-      0,
-      65,
-      0,
-      "STRING"
-    ],
-    [
       109,
       65,
       0,
@@ -2620,14 +2892,6 @@
       67,
       0,
       68,
-      0,
-      "STRING"
-    ],
-    [
-      112,
-      63,
-      0,
-      69,
       0,
       "STRING"
     ],
@@ -2712,46 +2976,6 @@
       "STRING"
     ],
     [
-      123,
-      76,
-      0,
-      77,
-      0,
-      "STRING"
-    ],
-    [
-      124,
-      77,
-      0,
-      78,
-      0,
-      "STRING"
-    ],
-    [
-      125,
-      77,
-      0,
-      79,
-      1,
-      "STRING"
-    ],
-    [
-      126,
-      77,
-      0,
-      80,
-      1,
-      "STRING"
-    ],
-    [
-      127,
-      78,
-      0,
-      80,
-      2,
-      "BOOLEAN"
-    ],
-    [
       128,
       41,
       0,
@@ -2776,46 +3000,6 @@
       "STRING"
     ],
     [
-      131,
-      38,
-      0,
-      78,
-      1,
-      "STRING"
-    ],
-    [
-      132,
-      38,
-      0,
-      79,
-      0,
-      "STRING"
-    ],
-    [
-      133,
-      80,
-      0,
-      46,
-      1,
-      "STRING"
-    ],
-    [
-      134,
-      80,
-      0,
-      45,
-      3,
-      "STRING"
-    ],
-    [
-      135,
-      80,
-      0,
-      44,
-      0,
-      "STRING"
-    ],
-    [
       136,
       56,
       0,
@@ -2829,22 +3013,6 @@
       0,
       81,
       1,
-      "STRING"
-    ],
-    [
-      138,
-      79,
-      0,
-      82,
-      0,
-      "STRING"
-    ],
-    [
-      139,
-      82,
-      0,
-      80,
-      0,
       "STRING"
     ],
     [
@@ -2869,6 +3037,158 @@
       0,
       63,
       5,
+      "STRING"
+    ],
+    [
+      143,
+      63,
+      0,
+      85,
+      0,
+      "STRING"
+    ],
+    [
+      144,
+      85,
+      0,
+      65,
+      0,
+      "STRING"
+    ],
+    [
+      145,
+      85,
+      0,
+      69,
+      0,
+      "STRING"
+    ],
+    [
+      146,
+      76,
+      0,
+      86,
+      0,
+      "STRING"
+    ],
+    [
+      147,
+      86,
+      0,
+      77,
+      0,
+      "STRING"
+    ],
+    [
+      148,
+      38,
+      0,
+      87,
+      1,
+      "STRING"
+    ],
+    [
+      149,
+      83,
+      0,
+      87,
+      0,
+      "STRING"
+    ],
+    [
+      150,
+      87,
+      0,
+      88,
+      1,
+      "STRING"
+    ],
+    [
+      151,
+      77,
+      0,
+      88,
+      0,
+      "STRING"
+    ],
+    [
+      152,
+      88,
+      0,
+      89,
+      1,
+      "STRING"
+    ],
+    [
+      153,
+      84,
+      0,
+      89,
+      0,
+      "STRING"
+    ],
+    [
+      154,
+      89,
+      0,
+      91,
+      0,
+      "STRING"
+    ],
+    [
+      155,
+      90,
+      0,
+      91,
+      1,
+      "STRING"
+    ],
+    [
+      156,
+      91,
+      0,
+      92,
+      0,
+      "STRING"
+    ],
+    [
+      157,
+      92,
+      0,
+      93,
+      0,
+      "STRING"
+    ],
+    [
+      158,
+      93,
+      0,
+      94,
+      0,
+      "STRING"
+    ],
+    [
+      159,
+      94,
+      0,
+      45,
+      3,
+      "STRING"
+    ],
+    [
+      160,
+      94,
+      0,
+      46,
+      1,
+      "STRING"
+    ],
+    [
+      161,
+      94,
+      0,
+      44,
+      0,
       "STRING"
     ]
   ],
@@ -2903,8 +3223,8 @@
       "bounding": [
         719.8838506132519,
         -138.28567850641073,
-        2407.1119074280055,
-        2161.4372484964465
+        3340.0000000000005,
+        2290.0000000000005
       ],
       "color": "#b06634",
       "flags": {}
@@ -2913,12 +3233,103 @@
       "id": 5,
       "title": "Sampler + Output",
       "bounding": [
-        3310.820689808199,
+        4139.883850613252,
         68.31959117542445,
         460,
         1000
       ],
       "color": "#88A",
+      "flags": {}
+    },
+    {
+      "id": 6,
+      "title": "1. Nguồn",
+      "bounding": [
+        749.8838506132519,
+        -88.28567850641073,
+        600,
+        1018.0
+      ],
+      "color": "#3f789e",
+      "font_size": 22,
+      "flags": {}
+    },
+    {
+      "id": 7,
+      "title": "2. {char}",
+      "bounding": [
+        1419.883850613252,
+        -88.28567850641073,
+        360,
+        906.0
+      ],
+      "color": "#8A8",
+      "font_size": 22,
+      "flags": {}
+    },
+    {
+      "id": 8,
+      "title": "3. LLM refine",
+      "bounding": [
+        1849.883850613252,
+        -88.28567850641073,
+        460,
+        714.0
+      ],
+      "color": "#a1309b",
+      "font_size": 22,
+      "flags": {}
+    },
+    {
+      "id": 9,
+      "title": "4. Dọn output LLM",
+      "bounding": [
+        2379.883850613252,
+        -88.28567850641073,
+        360,
+        2190.0000000000005
+      ],
+      "color": "#b58b2a",
+      "font_size": 22,
+      "flags": {}
+    },
+    {
+      "id": 10,
+      "title": "5. Ép identity LoRA",
+      "bounding": [
+        2809.883850613252,
+        -88.28567850641073,
+        360,
+        1820.0
+      ],
+      "color": "#88A",
+      "font_size": 22,
+      "flags": {}
+    },
+    {
+      "id": 11,
+      "title": "6. Ghép",
+      "bounding": [
+        3239.883850613252,
+        -88.28567850641073,
+        360,
+        1346.0
+      ],
+      "color": "#3f789e",
+      "font_size": 22,
+      "flags": {}
+    },
+    {
+      "id": 12,
+      "title": "7. Random swap",
+      "bounding": [
+        3669.883850613252,
+        -88.28567850641073,
+        360,
+        1416.0
+      ],
+      "color": "#b06634",
+      "font_size": 22,
       "flags": {}
     }
   ],
