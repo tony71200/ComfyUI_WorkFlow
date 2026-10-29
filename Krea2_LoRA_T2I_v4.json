@@ -1,8 +1,8 @@
 {
   "id": "aed86f0f-aab7-4e3b-817c-3e98c322b156",
   "revision": 0,
-  "last_node_id": 104,
-  "last_link_id": 175,
+  "last_node_id": 105,
+  "last_link_id": 185,
   "nodes": [
     {
       "id": 34,
@@ -64,7 +64,7 @@
           "type": "CLIP",
           "links": [
             66,
-            140
+            182
           ]
         }
       ],
@@ -260,9 +260,7 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            130,
-            137,
-            162
+            181
           ]
         }
       ],
@@ -386,7 +384,7 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            128
+            179
           ]
         }
       ],
@@ -423,7 +421,7 @@
           "name": "positive_prompt",
           "type": "STRING",
           "links": [
-            129
+            180
           ]
         },
         {
@@ -494,7 +492,7 @@
       "id": 44,
       "type": "PreviewAny",
       "pos": [
-        4608.563465034931,
+        1928.5634650349311,
         1220.5266605030595
       ],
       "size": [
@@ -531,7 +529,7 @@
       "id": 45,
       "type": "7c138a89-d2b0-43ea-9bb8-ece66980ec94",
       "pos": [
-        4589.883850613252,
+        1909.883850613252,
         128.31959117542442
       ],
       "size": [
@@ -633,7 +631,7 @@
       "id": 46,
       "type": "SaveImageA1Metadata",
       "pos": [
-        4597.374252253259,
+        1917.3742522532589,
         562.557937410212
       ],
       "size": [
@@ -706,10 +704,10 @@
         "Node name for S&R": "MarkdownNote"
       },
       "widgets_values": [
-        "## Krea-2 Turbo + LoRA — T2I v4\n\n**Model:** homofidelis Krea2 NSFW turbo int8 · qwen3-vl-4b-heretic fp8 (type krea2) · qwen_image_vae. 8 bước, euler/simple, CFG 1.\n\n**Thứ tự prompt cuối:** `MainTrigger` → `Prefix` → prompt đã xử lý → `Suffix` (nối bằng `. `). Rồi mọi từ `brief|briefs|underwear|towel|pants|sweatpants|shorts|sweatshorts` (kể cả trong Suffix) được thay bằng **1** token random từ *7a* (khớp nguyên từ).\n\n**Prompt Builder (trái → phải):** 1 Nguồn · 2 `{char}` · 3 LLM refine · 4 Dọn output LLM · 5 Ép identity LoRA · 6 Ghép · 7 Random swap. Bảng regex: note *Regex – bảng tra*.\n\n**`{char}`:** chữ trigger trong prompt (vd `Ivan_Ryo.`) được đổi thành `{char}`; không có thì tự thêm vào đầu. `{char}` đứng riêng ở đầu (`{char}. …`, `{char} A 25yo…`) bị bỏ vì trigger đã đứng đầu chuỗi; `{char}` làm chủ ngữ đầu câu thành `He` / `His` (`{char} lies…` → `He lies…`); `{char}` giữa câu đổi thành trigger. **MainTrigger không được để trống.**\n\n**Camera mặc định (rule 11 của cả 2 system prompt, chỉ khi refine bật):** prompt chưa có white balance / lens / khẩu độ thì LLM thêm `White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft.`; đã có thì giữ nguyên.\n\n**Toggle:** `use_txt` (bật: .txt, tắt: Prompt tay) · `refine` (Qwen3-VL-4B viết lại; lỗi/từ chối → prompt gốc) · `nsfw` (System prompt NSFW thay SFW, chỉ khi refine bật).\n\n**SFW (rule 7):** LLM phải ghi rõ vùng kín được che — nude/naked → mặc briefs hoặc chọn góc máy giấu hông (waist-up, từ sau lưng, vật che). UNet là bản NSFW nên chỗ nào không ghi \"che\" thì dễ bị lộ.\n\n**Lớp chặn SFW (cột S, chỉ khi `nsfw` tắt — chạy cả khi refine tắt/lỗi):** S1 xoá chữ khoả thân/bộ phận (nude, naked, penis, testicles, pubic hair, erection, buttocks…, kèm tính từ đi theo); S3–S5 ghép `He wears briefs that fully cover the groin.` nếu prompt chưa có câu che hông (`briefs` sau đó thành token random). Không đụng Trigger/Prefix/Suffix — `good bulge` trong Suffix và LoRA `krea_good_bulge` vẫn đẩy ảnh về phía hở; muốn SFW chắc hơn thì giảm LoRA đó.\n\n**Thinking:** text encoder dùng chung cho Krea2 và LLM — **không** thay bằng bản Qwen3-VL Thinking. Muốn LLM thinking thì cần loader riêng (chưa có), bật `thinking`, `max_length ≥ 2048`. Node *4a* cắt mọi thứ đến `</think>`. Giới hạn: suy luận bị cắt ngang mà không mở bằng `<think>` vẫn có thể lọt vào prompt.\n\n**Negative prompt:** không còn regex bỏ \"negative prompt\" — khi refine tắt, chữ `Negative prompt: …` trong .txt đi thẳng vào prompt.\n\n**TextSplitter:** đoạn cách nhau 1 dòng trống, phần sau `###` bị bỏ. *Start Auto Batch* chạy hết file; *7a* và *Seed* random lại mỗi lượt.\n\n**Lưu:** `Krea2_<ngày>/Krea2_T2I_v4_<MainTrigger>_<TextSplitter.index>_<yyMMdd>_<Seed>`."
+        "## Krea-2 Turbo + LoRA — T2I v4\n\n**Model:** homofidelis Krea2 NSFW turbo int8 · qwen3-vl-4b-heretic fp8 (type krea2) · qwen_image_vae. 8 bước, euler/simple, CFG 1.\n\n**Thứ tự prompt cuối:** `MainTrigger` → `Prefix` → prompt đã xử lý → `Suffix` (nối bằng `. `). Rồi mọi từ `brief|briefs|underwear|towel|pants|sweatpants|shorts|sweatshorts` (kể cả trong Suffix) được thay bằng **1** token random từ *7a* (khớp nguyên từ).\n\n**Prompt Builder (trái → phải):** 1 Nguồn · 2 `{char}` · 3 LLM refine · 4 Dọn output LLM · 5 Ép identity LoRA · S Chặn SFW · 6 Ghép — nằm **trong** subgraph *Krea2 Prompt Builder v4* (double-click để mở; 2 system prompt SFW/NSFW ở trong, trên cột 3). Output `prompt` → **7 Random swap** để ngoài: sửa danh sách token ở *7a*, danh sách từ cần thay ở *7b*. Bảng regex: note *Regex – bảng tra*.\n\n**`{char}`:** chữ trigger trong prompt (vd `Ivan_Ryo.`) được đổi thành `{char}`; không có thì tự thêm vào đầu. `{char}` đứng riêng ở đầu (`{char}. …`, `{char} A 25yo…`) bị bỏ vì trigger đã đứng đầu chuỗi; `{char}` làm chủ ngữ đầu câu thành `He` / `His` (`{char} lies…` → `He lies…`); `{char}` giữa câu đổi thành trigger. **MainTrigger không được để trống.**\n\n**Camera mặc định (rule 11 của cả 2 system prompt, chỉ khi refine bật):** prompt chưa có white balance / lens / khẩu độ thì LLM thêm `White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft.`; đã có thì giữ nguyên.\n\n**Toggle:** `use_txt` (bật: .txt, tắt: Prompt tay) · `refine` (Qwen3-VL-4B viết lại; lỗi/từ chối → prompt gốc) · `nsfw` (System prompt NSFW thay SFW, chỉ khi refine bật).\n\n**SFW (rule 7):** LLM phải ghi rõ vùng kín được che — nude/naked → mặc briefs hoặc chọn góc máy giấu hông (waist-up, từ sau lưng, vật che). UNet là bản NSFW nên chỗ nào không ghi \"che\" thì dễ bị lộ.\n\n**Lớp chặn SFW (cột S, chỉ khi `nsfw` tắt — chạy cả khi refine tắt/lỗi):** S1 xoá chữ khoả thân/bộ phận (nude, naked, penis, testicles, pubic hair, erection, buttocks…, kèm tính từ đi theo); S3–S5 ghép `He wears briefs that fully cover the groin.` nếu prompt chưa có câu che hông (`briefs` sau đó thành token random). Không đụng Trigger/Prefix/Suffix — `good bulge` trong Suffix và LoRA `krea_good_bulge` vẫn đẩy ảnh về phía hở; muốn SFW chắc hơn thì giảm LoRA đó.\n\n**Thinking:** text encoder dùng chung cho Krea2 và LLM — **không** thay bằng bản Qwen3-VL Thinking. Muốn LLM thinking thì cần loader riêng (chưa có), bật `thinking`, `max_length ≥ 2048`. Node *4a* cắt mọi thứ đến `</think>`. Giới hạn: suy luận bị cắt ngang mà không mở bằng `<think>` vẫn có thể lọt vào prompt.\n\n**Negative prompt:** không còn regex bỏ \"negative prompt\" — khi refine tắt, chữ `Negative prompt: …` trong .txt đi thẳng vào prompt.\n\n**TextSplitter:** đoạn cách nhau 1 dòng trống, phần sau `###` bị bỏ. *Start Auto Batch* chạy hết file; *7a* và *Seed* random lại mỗi lượt.\n\n**Lưu:** `Krea2_<ngày>/Krea2_T2I_v4_<MainTrigger>_<TextSplitter.index>_<yyMMdd>_<Seed>`."
       ],
       "widgets_values_named": {
-        "text": "## Krea-2 Turbo + LoRA — T2I v4\n\n**Model:** homofidelis Krea2 NSFW turbo int8 · qwen3-vl-4b-heretic fp8 (type krea2) · qwen_image_vae. 8 bước, euler/simple, CFG 1.\n\n**Thứ tự prompt cuối:** `MainTrigger` → `Prefix` → prompt đã xử lý → `Suffix` (nối bằng `. `). Rồi mọi từ `brief|briefs|underwear|towel|pants|sweatpants|shorts|sweatshorts` (kể cả trong Suffix) được thay bằng **1** token random từ *7a* (khớp nguyên từ).\n\n**Prompt Builder (trái → phải):** 1 Nguồn · 2 `{char}` · 3 LLM refine · 4 Dọn output LLM · 5 Ép identity LoRA · 6 Ghép · 7 Random swap. Bảng regex: note *Regex – bảng tra*.\n\n**`{char}`:** chữ trigger trong prompt (vd `Ivan_Ryo.`) được đổi thành `{char}`; không có thì tự thêm vào đầu. `{char}` đứng riêng ở đầu (`{char}. …`, `{char} A 25yo…`) bị bỏ vì trigger đã đứng đầu chuỗi; `{char}` làm chủ ngữ đầu câu thành `He` / `His` (`{char} lies…` → `He lies…`); `{char}` giữa câu đổi thành trigger. **MainTrigger không được để trống.**\n\n**Camera mặc định (rule 11 của cả 2 system prompt, chỉ khi refine bật):** prompt chưa có white balance / lens / khẩu độ thì LLM thêm `White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft.`; đã có thì giữ nguyên.\n\n**Toggle:** `use_txt` (bật: .txt, tắt: Prompt tay) · `refine` (Qwen3-VL-4B viết lại; lỗi/từ chối → prompt gốc) · `nsfw` (System prompt NSFW thay SFW, chỉ khi refine bật).\n\n**SFW (rule 7):** LLM phải ghi rõ vùng kín được che — nude/naked → mặc briefs hoặc chọn góc máy giấu hông (waist-up, từ sau lưng, vật che). UNet là bản NSFW nên chỗ nào không ghi \"che\" thì dễ bị lộ.\n\n**Lớp chặn SFW (cột S, chỉ khi `nsfw` tắt — chạy cả khi refine tắt/lỗi):** S1 xoá chữ khoả thân/bộ phận (nude, naked, penis, testicles, pubic hair, erection, buttocks…, kèm tính từ đi theo); S3–S5 ghép `He wears briefs that fully cover the groin.` nếu prompt chưa có câu che hông (`briefs` sau đó thành token random). Không đụng Trigger/Prefix/Suffix — `good bulge` trong Suffix và LoRA `krea_good_bulge` vẫn đẩy ảnh về phía hở; muốn SFW chắc hơn thì giảm LoRA đó.\n\n**Thinking:** text encoder dùng chung cho Krea2 và LLM — **không** thay bằng bản Qwen3-VL Thinking. Muốn LLM thinking thì cần loader riêng (chưa có), bật `thinking`, `max_length ≥ 2048`. Node *4a* cắt mọi thứ đến `</think>`. Giới hạn: suy luận bị cắt ngang mà không mở bằng `<think>` vẫn có thể lọt vào prompt.\n\n**Negative prompt:** không còn regex bỏ \"negative prompt\" — khi refine tắt, chữ `Negative prompt: …` trong .txt đi thẳng vào prompt.\n\n**TextSplitter:** đoạn cách nhau 1 dòng trống, phần sau `###` bị bỏ. *Start Auto Batch* chạy hết file; *7a* và *Seed* random lại mỗi lượt.\n\n**Lưu:** `Krea2_<ngày>/Krea2_T2I_v4_<MainTrigger>_<TextSplitter.index>_<yyMMdd>_<Seed>`."
+        "text": "## Krea-2 Turbo + LoRA — T2I v4\n\n**Model:** homofidelis Krea2 NSFW turbo int8 · qwen3-vl-4b-heretic fp8 (type krea2) · qwen_image_vae. 8 bước, euler/simple, CFG 1.\n\n**Thứ tự prompt cuối:** `MainTrigger` → `Prefix` → prompt đã xử lý → `Suffix` (nối bằng `. `). Rồi mọi từ `brief|briefs|underwear|towel|pants|sweatpants|shorts|sweatshorts` (kể cả trong Suffix) được thay bằng **1** token random từ *7a* (khớp nguyên từ).\n\n**Prompt Builder (trái → phải):** 1 Nguồn · 2 `{char}` · 3 LLM refine · 4 Dọn output LLM · 5 Ép identity LoRA · S Chặn SFW · 6 Ghép — nằm **trong** subgraph *Krea2 Prompt Builder v4* (double-click để mở; 2 system prompt SFW/NSFW ở trong, trên cột 3). Output `prompt` → **7 Random swap** để ngoài: sửa danh sách token ở *7a*, danh sách từ cần thay ở *7b*. Bảng regex: note *Regex – bảng tra*.\n\n**`{char}`:** chữ trigger trong prompt (vd `Ivan_Ryo.`) được đổi thành `{char}`; không có thì tự thêm vào đầu. `{char}` đứng riêng ở đầu (`{char}. …`, `{char} A 25yo…`) bị bỏ vì trigger đã đứng đầu chuỗi; `{char}` làm chủ ngữ đầu câu thành `He` / `His` (`{char} lies…` → `He lies…`); `{char}` giữa câu đổi thành trigger. **MainTrigger không được để trống.**\n\n**Camera mặc định (rule 11 của cả 2 system prompt, chỉ khi refine bật):** prompt chưa có white balance / lens / khẩu độ thì LLM thêm `White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft.`; đã có thì giữ nguyên.\n\n**Toggle:** `use_txt` (bật: .txt, tắt: Prompt tay) · `refine` (Qwen3-VL-4B viết lại; lỗi/từ chối → prompt gốc) · `nsfw` (System prompt NSFW thay SFW, chỉ khi refine bật).\n\n**SFW (rule 7):** LLM phải ghi rõ vùng kín được che — nude/naked → mặc briefs hoặc chọn góc máy giấu hông (waist-up, từ sau lưng, vật che). UNet là bản NSFW nên chỗ nào không ghi \"che\" thì dễ bị lộ.\n\n**Lớp chặn SFW (cột S, chỉ khi `nsfw` tắt — chạy cả khi refine tắt/lỗi):** S1 xoá chữ khoả thân/bộ phận (nude, naked, penis, testicles, pubic hair, erection, buttocks…, kèm tính từ đi theo); S3–S5 ghép `He wears briefs that fully cover the groin.` nếu prompt chưa có câu che hông (`briefs` sau đó thành token random). Không đụng Trigger/Prefix/Suffix — `good bulge` trong Suffix và LoRA `krea_good_bulge` vẫn đẩy ảnh về phía hở; muốn SFW chắc hơn thì giảm LoRA đó.\n\n**Thinking:** text encoder dùng chung cho Krea2 và LLM — **không** thay bằng bản Qwen3-VL Thinking. Muốn LLM thinking thì cần loader riêng (chưa có), bật `thinking`, `max_length ≥ 2048`. Node *4a* cắt mọi thứ đến `</think>`. Giới hạn: suy luận bị cắt ngang mà không mở bằng `<think>` vẫn có thể lọt vào prompt.\n\n**Negative prompt:** không còn regex bỏ \"negative prompt\" — khi refine tắt, chữ `Negative prompt: …` trong .txt đi thẳng vào prompt.\n\n**TextSplitter:** đoạn cách nhau 1 dòng trống, phần sau `###` bị bỏ. *Start Auto Batch* chạy hết file; *7a* và *Seed* random lại mỗi lượt.\n\n**Lưu:** `Krea2_<ngày>/Krea2_T2I_v4_<MainTrigger>_<TextSplitter.index>_<yyMMdd>_<Seed>`."
       },
       "color": "#432",
       "bgcolor": "#653"
@@ -734,7 +732,7 @@
           "name": "BOOLEAN",
           "type": "BOOLEAN",
           "links": [
-            104
+            176
           ]
         }
       ],
@@ -771,7 +769,7 @@
           "name": "BOOLEAN",
           "type": "BOOLEAN",
           "links": [
-            117
+            178
           ]
         }
       ],
@@ -808,8 +806,7 @@
           "name": "BOOLEAN",
           "type": "BOOLEAN",
           "links": [
-            105,
-            155
+            177
           ]
         }
       ],
@@ -824,1261 +821,6 @@
       ],
       "widgets_values_named": {
         "value": false
-      }
-    },
-    {
-      "id": 56,
-      "type": "ComfySwitchNode",
-      "pos": [
-        769.8838506132519,
-        -28.285678506410733
-      ],
-      "size": [
-        320,
-        78
-      ],
-      "flags": {},
-      "order": 17,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "on_false",
-          "shape": 7,
-          "type": "STRING",
-          "link": 128
-        },
-        {
-          "name": "on_true",
-          "shape": 7,
-          "type": "STRING",
-          "link": 129
-        },
-        {
-          "name": "switch",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "switch"
-          },
-          "link": 104
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "STRING",
-          "links": [
-            136
-          ]
-        }
-      ],
-      "title": "1. Nguồn: TXT / tay",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "ComfySwitchNode"
-      },
-      "widgets_values": [
-        false
-      ],
-      "widgets_values_named": {
-        "switch": false
-      }
-    },
-    {
-      "id": 57,
-      "type": "StringContains",
-      "pos": [
-        1439.883850613252,
-        227.71432149358927
-      ],
-      "size": [
-        311.7210995565847,
-        166
-      ],
-      "flags": {},
-      "order": 20,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 99
-        }
-      ],
-      "outputs": [
-        {
-          "name": "contains",
-          "type": "BOOLEAN",
-          "links": [
-            103
-          ]
-        }
-      ],
-      "title": "2b. Có {char}?",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "StringContains"
-      },
-      "widgets_values": [
-        "",
-        "{char}",
-        true
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "substring": "{char}",
-        "case_sensitive": true
-      }
-    },
-    {
-      "id": 58,
-      "type": "StringConcatenate",
-      "pos": [
-        1439.883850613252,
-        453.7143214935893
-      ],
-      "size": [
-        320,
-        166
-      ],
-      "flags": {},
-      "order": 21,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string_b",
-          "type": "STRING",
-          "widget": {
-            "name": "string_b"
-          },
-          "link": 100
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            102
-          ]
-        }
-      ],
-      "title": "2c. Thêm {char} vào đầu",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "StringConcatenate"
-      },
-      "widgets_values": [
-        "{char}",
-        "",
-        ". "
-      ],
-      "widgets_values_named": {
-        "string_a": "{char}",
-        "string_b": "",
-        "delimiter": ". "
-      }
-    },
-    {
-      "id": 59,
-      "type": "ComfySwitchNode",
-      "pos": [
-        1439.883850613252,
-        679.7143214935893
-      ],
-      "size": [
-        320,
-        78
-      ],
-      "flags": {},
-      "order": 22,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "on_false",
-          "shape": 7,
-          "type": "STRING",
-          "link": 102
-        },
-        {
-          "name": "on_true",
-          "shape": 7,
-          "type": "STRING",
-          "link": 101
-        },
-        {
-          "name": "switch",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "switch"
-          },
-          "link": 103
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "STRING",
-          "links": [
-            106,
-            114,
-            142
-          ]
-        }
-      ],
-      "title": "2d. {char} có sẵn / đã thêm",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "ComfySwitchNode"
-      },
-      "widgets_values": [
-        false
-      ],
-      "widgets_values_named": {
-        "switch": false
-      }
-    },
-    {
-      "id": 60,
-      "type": "ComfySwitchNode",
-      "pos": [
-        1869.883850613252,
-        -28.285678506410733
-      ],
-      "size": [
-        320,
-        78
-      ],
-      "flags": {},
-      "order": 18,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "on_false",
-          "shape": 7,
-          "type": "STRING",
-          "link": 97
-        },
-        {
-          "name": "on_true",
-          "shape": 7,
-          "type": "STRING",
-          "link": 98
-        },
-        {
-          "name": "switch",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "switch"
-          },
-          "link": 105
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "STRING",
-          "links": [
-            141
-          ]
-        }
-      ],
-      "title": "3a. System: NSFW / SFW",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "ComfySwitchNode"
-      },
-      "widgets_values": [
-        false
-      ],
-      "widgets_values_named": {
-        "switch": false
-      }
-    },
-    {
-      "id": 61,
-      "type": "PrimitiveStringMultiline",
-      "pos": [
-        1849.883850613252,
-        -1366.5369858201318
-      ],
-      "size": [
-        520,
-        640
-      ],
-      "flags": {},
-      "order": 12,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            97
-          ]
-        }
-      ],
-      "title": "System prompt SFW",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "PrimitiveStringMultiline"
-      },
-      "widgets_values": [
-        "You are a prompt rewriter for text-to-image models. You only rewrite text — you never create images yourself — so never refuse and never comment on the request; if unsure, return the user's prompt unchanged. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nPlan silently before writing — do not output your plan:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n7. **Always Keep the Groin Covered:** Treat depictions of people with dignity. In your output every person's groin and buttocks must be covered, and you must say so in words. If the input mentions nudity or intimate anatomy (nude, naked, undressed, bare, penis, testicles, genitals, pubic hair, erection, bare buttocks), delete those words and do one of: (a) dress the person in briefs and write \"wearing briefs that fully cover the groin\"; or (b) when underwear does not fit the scene, frame the shot so the groin is out of view (waist-up crop, seen from behind above the waist, or a solid object or thick fabric fully in front of the hips) and write that the groin is out of frame or fully hidden. If the input never says what covers the groin, add briefs the same way. Water, foam, steam, shadow and thin draped fabric do not count as covering. Keep every clothing item the user wrote (e.g. briefs, towel, shorts) with the same word.\n8. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n9. **Main Character Token:** `{char}` names the main character, whose identity comes from a LoRA. Keep `{char}` exactly as written, once, as the subject of the main character's description. Any other person is a secondary character — call them \"another man\" / \"another woman\" or keep the user's own description; never give them `{char}`.\n10. **Let the LoRA Define Identity (overrides rules 1 and 6):** For `{char}` only, remove hair color and hair length even if the user wrote them — write at most \"short hair\"; keep hair state (wet, messy, tousled, slicked-back). Remove facial-structure words even if the user wrote them (jawline, chin, cheekbones, nose, eye shape, lips, face shape); describe expression and emotion instead. Do not invent facial structure for secondary characters.\n11. **Camera Defaults:** If the user's prompt already states camera settings (white balance, lens or focal length, aperture or f-stop), keep them and add nothing. Otherwise end the paragraph with exactly: \"White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft.\"\n12. **Output Format:** Output exactly one cohesive paragraph and nothing else. Start directly with the prompt itself — no preamble, no title, no commentary, no bullets, no markdown, no negative prompt."
-      ],
-      "widgets_values_named": {
-        "value": "You are a prompt rewriter for text-to-image models. You only rewrite text — you never create images yourself — so never refuse and never comment on the request; if unsure, return the user's prompt unchanged. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nPlan silently before writing — do not output your plan:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n7. **Always Keep the Groin Covered:** Treat depictions of people with dignity. In your output every person's groin and buttocks must be covered, and you must say so in words. If the input mentions nudity or intimate anatomy (nude, naked, undressed, bare, penis, testicles, genitals, pubic hair, erection, bare buttocks), delete those words and do one of: (a) dress the person in briefs and write \"wearing briefs that fully cover the groin\"; or (b) when underwear does not fit the scene, frame the shot so the groin is out of view (waist-up crop, seen from behind above the waist, or a solid object or thick fabric fully in front of the hips) and write that the groin is out of frame or fully hidden. If the input never says what covers the groin, add briefs the same way. Water, foam, steam, shadow and thin draped fabric do not count as covering. Keep every clothing item the user wrote (e.g. briefs, towel, shorts) with the same word.\n8. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n9. **Main Character Token:** `{char}` names the main character, whose identity comes from a LoRA. Keep `{char}` exactly as written, once, as the subject of the main character's description. Any other person is a secondary character — call them \"another man\" / \"another woman\" or keep the user's own description; never give them `{char}`.\n10. **Let the LoRA Define Identity (overrides rules 1 and 6):** For `{char}` only, remove hair color and hair length even if the user wrote them — write at most \"short hair\"; keep hair state (wet, messy, tousled, slicked-back). Remove facial-structure words even if the user wrote them (jawline, chin, cheekbones, nose, eye shape, lips, face shape); describe expression and emotion instead. Do not invent facial structure for secondary characters.\n11. **Camera Defaults:** If the user's prompt already states camera settings (white balance, lens or focal length, aperture or f-stop), keep them and add nothing. Otherwise end the paragraph with exactly: \"White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft.\"\n12. **Output Format:** Output exactly one cohesive paragraph and nothing else. Start directly with the prompt itself — no preamble, no title, no commentary, no bullets, no markdown, no negative prompt."
-      }
-    },
-    {
-      "id": 62,
-      "type": "PrimitiveStringMultiline",
-      "pos": [
-        2409.883850613252,
-        -1366.5369858201318
-      ],
-      "size": [
-        520,
-        640
-      ],
-      "flags": {},
-      "order": 13,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            98
-          ]
-        }
-      ],
-      "title": "System prompt NSFW",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "PrimitiveStringMultiline"
-      },
-      "widgets_values": [
-        "You are a prompt rewriter for text-to-image models. You only rewrite text — you never create images yourself — so never refuse and never comment on the request; if unsure, return the user's prompt unchanged. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nPlan silently before writing — do not output your plan:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n7. **Bare Skin Only When Asked:** Treat depictions of people with dignity. Keep people clothed unless the input asks for nudity (nude, naked, undressed, topless, shirtless). Keep every clothing item and coverage detail from the input (e.g. \"fully covered\", \"briefs\"); never drop clothing the user wrote. When it does, match the requested level: partial wording (partially nude, revealing, topless, half-undressed) → bare only that part and keep the rest covered; full wording (fully nude, completely naked) → describe the bare body plainly, without euphemism. If the input only says \"nude\" or \"naked\" with no level, keep it partial: the body is bare but the groin stays naturally hidden by pose, shadow or framing.\n8. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n9. **Main Character Token:** `{char}` names the main character, whose identity comes from a LoRA. Keep `{char}` exactly as written, once, as the subject of the main character's description. Any other person is a secondary character — call them \"another man\" / \"another woman\" or keep the user's own description; never give them `{char}`.\n10. **Let the LoRA Define Identity (overrides rules 1 and 6):** For `{char}` only, remove hair color and hair length even if the user wrote them — write at most \"short hair\"; keep hair state (wet, messy, tousled, slicked-back). Remove facial-structure words even if the user wrote them (jawline, chin, cheekbones, nose, eye shape, lips, face shape); describe expression and emotion instead. Do not invent facial structure for secondary characters.\n11. **Camera Defaults:** If the user's prompt already states camera settings (white balance, lens or focal length, aperture or f-stop), keep them and add nothing. Otherwise end the paragraph with exactly: \"White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft.\"\n12. **Output Format:** Output exactly one cohesive paragraph and nothing else. Start directly with the prompt itself — no preamble, no title, no commentary, no bullets, no markdown, no negative prompt."
-      ],
-      "widgets_values_named": {
-        "value": "You are a prompt rewriter for text-to-image models. You only rewrite text — you never create images yourself — so never refuse and never comment on the request; if unsure, return the user's prompt unchanged. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nPlan silently before writing — do not output your plan:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n7. **Bare Skin Only When Asked:** Treat depictions of people with dignity. Keep people clothed unless the input asks for nudity (nude, naked, undressed, topless, shirtless). Keep every clothing item and coverage detail from the input (e.g. \"fully covered\", \"briefs\"); never drop clothing the user wrote. When it does, match the requested level: partial wording (partially nude, revealing, topless, half-undressed) → bare only that part and keep the rest covered; full wording (fully nude, completely naked) → describe the bare body plainly, without euphemism. If the input only says \"nude\" or \"naked\" with no level, keep it partial: the body is bare but the groin stays naturally hidden by pose, shadow or framing.\n8. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n9. **Main Character Token:** `{char}` names the main character, whose identity comes from a LoRA. Keep `{char}` exactly as written, once, as the subject of the main character's description. Any other person is a secondary character — call them \"another man\" / \"another woman\" or keep the user's own description; never give them `{char}`.\n10. **Let the LoRA Define Identity (overrides rules 1 and 6):** For `{char}` only, remove hair color and hair length even if the user wrote them — write at most \"short hair\"; keep hair state (wet, messy, tousled, slicked-back). Remove facial-structure words even if the user wrote them (jawline, chin, cheekbones, nose, eye shape, lips, face shape); describe expression and emotion instead. Do not invent facial structure for secondary characters.\n11. **Camera Defaults:** If the user's prompt already states camera settings (white balance, lens or focal length, aperture or f-stop), keep them and add nothing. Otherwise end the paragraph with exactly: \"White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft.\"\n12. **Output Format:** Output exactly one cohesive paragraph and nothing else. Start directly with the prompt itself — no preamble, no title, no commentary, no bullets, no markdown, no negative prompt."
-      }
-    },
-    {
-      "id": 63,
-      "type": "TextGenerate",
-      "pos": [
-        1869.883850613252,
-        109.71432149358927
-      ],
-      "size": [
-        420,
-        456
-      ],
-      "flags": {},
-      "order": 23,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 140
-        },
-        {
-          "name": "image",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        },
-        {
-          "name": "video",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        },
-        {
-          "name": "audio",
-          "shape": 7,
-          "type": "AUDIO",
-          "link": null
-        },
-        {
-          "name": "system_prompt",
-          "shape": 7,
-          "type": "STRING",
-          "link": 141
-        },
-        {
-          "name": "prompt",
-          "type": "STRING",
-          "widget": {
-            "name": "prompt"
-          },
-          "link": 142
-        }
-      ],
-      "outputs": [
-        {
-          "name": "generated_text",
-          "type": "STRING",
-          "links": [
-            143
-          ]
-        },
-        {
-          "name": "thinking",
-          "type": "STRING",
-          "links": []
-        }
-      ],
-      "title": "3b. LLM refine (Qwen3-VL-4B)",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "TextGenerate"
-      },
-      "widgets_values": [
-        "",
-        1024,
-        "on",
-        0.7,
-        64,
-        0.95,
-        0.05,
-        1.05,
-        0,
-        0,
-        false,
-        true,
-        "auto"
-      ],
-      "widgets_values_named": {
-        "prompt": "",
-        "max_length": 1024,
-        "sampling_mode": "on",
-        "sampling_mode.temperature": 0.7,
-        "sampling_mode.top_k": 64,
-        "sampling_mode.top_p": 0.95,
-        "sampling_mode.min_p": 0.05,
-        "sampling_mode.repetition_penalty": 1.05,
-        "sampling_mode.seed": 0,
-        "sampling_mode.presence_penalty": 0,
-        "thinking": false,
-        "use_default_template": true,
-        "mtp": "auto"
-      }
-    },
-    {
-      "id": 65,
-      "type": "RegexReplace",
-      "pos": [
-        2399.883850613252,
-        323.7143214935893
-      ],
-      "size": [
-        320,
-        292
-      ],
-      "flags": {},
-      "order": 26,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 144
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            109
-          ]
-        }
-      ],
-      "title": "4b. Bỏ câu dẫn / markdown",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "RegexReplace"
-      },
-      "widgets_values": [
-        "",
-        "^\\s*(?:\\*\\*)?\\s*(?:here|sure|okay|below|final prompt|refined prompt|expanded prompt|this is)[^\\n]*:\\s*(?:\\*\\*)?\\s*$|\\*\\*|^\\s*(?:-{3,}|#+\\s*|[-*•]\\s+)|\\s*\\b(?:let me know|feel free to|hope this helps|would you like)\\b[^\\n]*",
-        "",
-        true,
-        true,
-        false,
-        0
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "regex_pattern": "^\\s*(?:\\*\\*)?\\s*(?:here|sure|okay|below|final prompt|refined prompt|expanded prompt|this is)[^\\n]*:\\s*(?:\\*\\*)?\\s*$|\\*\\*|^\\s*(?:-{3,}|#+\\s*|[-*•]\\s+)|\\s*\\b(?:let me know|feel free to|hope this helps|would you like)\\b[^\\n]*",
-        "replace": "",
-        "case_insensitive": true,
-        "multiline": true,
-        "dotall": false,
-        "count": 0
-      }
-    },
-    {
-      "id": 66,
-      "type": "RegexReplace",
-      "pos": [
-        2399.883850613252,
-        675.7143214935893
-      ],
-      "size": [
-        320,
-        292
-      ],
-      "flags": {},
-      "order": 27,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 109
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            110
-          ]
-        }
-      ],
-      "title": "4c. Gộp 1 đoạn",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "RegexReplace"
-      },
-      "widgets_values": [
-        "",
-        "(?:\\s*\\n\\s*)+",
-        " ",
-        true,
-        false,
-        false,
-        0
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "regex_pattern": "(?:\\s*\\n\\s*)+",
-        "replace": " ",
-        "case_insensitive": true,
-        "multiline": false,
-        "dotall": false,
-        "count": 0
-      }
-    },
-    {
-      "id": 67,
-      "type": "RegexReplace",
-      "pos": [
-        2399.883850613252,
-        1027.7143214935893
-      ],
-      "size": [
-        320,
-        292
-      ],
-      "flags": {},
-      "order": 28,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 110
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            111
-          ]
-        }
-      ],
-      "title": "4d. Bỏ nhãn 'Final Output:'",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "RegexReplace"
-      },
-      "widgets_values": [
-        "",
-        "^\\s*(?:(?:final|refined|expanded|improved|polished)\\s+(?:output|answer|prompt|version)|prompt|answer|output|user|assistant)\\b\\s*:?\\s*",
-        "",
-        true,
-        false,
-        false,
-        0
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "regex_pattern": "^\\s*(?:(?:final|refined|expanded|improved|polished)\\s+(?:output|answer|prompt|version)|prompt|answer|output|user|assistant)\\b\\s*:?\\s*",
-        "replace": "",
-        "case_insensitive": true,
-        "multiline": false,
-        "dotall": false,
-        "count": 0
-      }
-    },
-    {
-      "id": 68,
-      "type": "StringTrim",
-      "pos": [
-        2399.883850613252,
-        1379.7143214935893
-      ],
-      "size": [
-        320,
-        112
-      ],
-      "flags": {},
-      "order": 29,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 111
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            113
-          ]
-        }
-      ],
-      "title": "4e. Trim",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "StringTrim"
-      },
-      "widgets_values": [
-        "",
-        "Both"
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "mode": "Both"
-      }
-    },
-    {
-      "id": 69,
-      "type": "RegexMatch",
-      "pos": [
-        2399.883850613252,
-        1551.7143214935893
-      ],
-      "size": [
-        320,
-        214
-      ],
-      "flags": {},
-      "order": 25,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 145
-        }
-      ],
-      "outputs": [
-        {
-          "name": "matches",
-          "type": "BOOLEAN",
-          "links": [
-            115
-          ]
-        }
-      ],
-      "title": "4f. Qwen từ chối / bình luận?",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "RegexMatch"
-      },
-      "widgets_values": [
-        "",
-        "^\\s*$|I'?m sorry|I am sorry|I can'?t|I cannot|must decline|unable to (?:help|assist|fulfill|comply)|against my (?:guidelines|policies)|prompt you'?ve provided|your prompt is already|as an AI|You are a prompt rewriter|Follow these rules strictly|Main Character Token",
-        true,
-        false,
-        false
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "regex_pattern": "^\\s*$|I'?m sorry|I am sorry|I can'?t|I cannot|must decline|unable to (?:help|assist|fulfill|comply)|against my (?:guidelines|policies)|prompt you'?ve provided|your prompt is already|as an AI|You are a prompt rewriter|Follow these rules strictly|Main Character Token",
-        "case_insensitive": true,
-        "multiline": false,
-        "dotall": false
-      }
-    },
-    {
-      "id": 70,
-      "type": "ComfySwitchNode",
-      "pos": [
-        2399.883850613252,
-        1825.7143214935893
-      ],
-      "size": [
-        320,
-        78
-      ],
-      "flags": {},
-      "order": 30,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "on_false",
-          "shape": 7,
-          "type": "STRING",
-          "link": 113
-        },
-        {
-          "name": "on_true",
-          "shape": 7,
-          "type": "STRING",
-          "link": 114
-        },
-        {
-          "name": "switch",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "switch"
-          },
-          "link": 115
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "STRING",
-          "links": [
-            116
-          ]
-        }
-      ],
-      "title": "4g. Refine lỗi → prompt gốc",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "ComfySwitchNode"
-      },
-      "widgets_values": [
-        false
-      ],
-      "widgets_values_named": {
-        "switch": false
-      }
-    },
-    {
-      "id": 71,
-      "type": "ComfySwitchNode",
-      "pos": [
-        2399.883850613252,
-        1963.7143214935893
-      ],
-      "size": [
-        320,
-        78
-      ],
-      "flags": {},
-      "order": 31,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "on_false",
-          "shape": 7,
-          "type": "STRING",
-          "link": 106
-        },
-        {
-          "name": "on_true",
-          "shape": 7,
-          "type": "STRING",
-          "link": 116
-        },
-        {
-          "name": "switch",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "switch"
-          },
-          "link": 117
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "STRING",
-          "links": [
-            146
-          ]
-        }
-      ],
-      "title": "4h. Prompt: refine / gốc",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "ComfySwitchNode"
-      },
-      "widgets_values": [
-        false
-      ],
-      "widgets_values_named": {
-        "switch": false
-      }
-    },
-    {
-      "id": 72,
-      "type": "RegexReplace",
-      "pos": [
-        2829.883850613252,
-        323.7143214935893
-      ],
-      "size": [
-        320,
-        292
-      ],
-      "flags": {},
-      "order": 32,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 147
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            119
-          ]
-        }
-      ],
-      "title": "5b. Tóc: màu/độ dài → short",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "RegexReplace"
-      },
-      "widgets_values": [
-        "",
-        "\\b(?:long|medium[- ]length|shoulder[- ]length|jet|black|dark|brown|chestnut|blond|blonde|platinum|silver|grey|gray|greyish|grayish|white|red|ginger|auburn|brunette|ash)\\b[\\s/-]*(?=(?:[\\w/-]+\\s+){0,4}hair\\b)(?!(?:(?!hair\\b)[\\w/-]+\\s+){0,3}?(?:light|lighting|backlight|rim\\w*|glow\\w*|highlights?)\\b)",
-        "short ",
-        true,
-        false,
-        false,
-        0
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "regex_pattern": "\\b(?:long|medium[- ]length|shoulder[- ]length|jet|black|dark|brown|chestnut|blond|blonde|platinum|silver|grey|gray|greyish|grayish|white|red|ginger|auburn|brunette|ash)\\b[\\s/-]*(?=(?:[\\w/-]+\\s+){0,4}hair\\b)(?!(?:(?!hair\\b)[\\w/-]+\\s+){0,3}?(?:light|lighting|backlight|rim\\w*|glow\\w*|highlights?)\\b)",
-        "replace": "short ",
-        "case_insensitive": true,
-        "multiline": false,
-        "dotall": false,
-        "count": 0
-      }
-    },
-    {
-      "id": 73,
-      "type": "RegexReplace",
-      "pos": [
-        2829.883850613252,
-        675.7143214935893
-      ],
-      "size": [
-        320,
-        292
-      ],
-      "flags": {},
-      "order": 33,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 119
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            120
-          ]
-        }
-      ],
-      "title": "5c. Gộp 'short short'",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "RegexReplace"
-      },
-      "widgets_values": [
-        "",
-        "\\bshort[\\s,]+(?=(?:[\\w/-]+[\\s,]+){0,3}?short\\s+(?:[\\w/-]+\\s+){0,3}?hair\\b)",
-        "",
-        true,
-        false,
-        false,
-        0
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "regex_pattern": "\\bshort[\\s,]+(?=(?:[\\w/-]+[\\s,]+){0,3}?short\\s+(?:[\\w/-]+\\s+){0,3}?hair\\b)",
-        "replace": "",
-        "case_insensitive": true,
-        "multiline": false,
-        "dotall": false,
-        "count": 0
-      }
-    },
-    {
-      "id": 74,
-      "type": "RegexReplace",
-      "pos": [
-        2829.883850613252,
-        1027.7143214935893
-      ],
-      "size": [
-        320,
-        292
-      ],
-      "flags": {},
-      "order": 34,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 120
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            121
-          ]
-        }
-      ],
-      "title": "5d. Bỏ jawline/chin/cheekbones…",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "RegexReplace"
-      },
-      "widgets_values": [
-        "",
-        "\\b(?:sharp|defined|well-defined|strong|chiseled|chiselled|angular|square|pointed|high|prominent|sculpted|refined|narrow|v-shaped|straight|small|button|aquiline)\\s+(?:jaw\\s*line|jaw|chin|cheekbones?|nose|face shape)\\b|\\balmond[- ]shaped eyes\\b",
-        "",
-        true,
-        false,
-        false,
-        0
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "regex_pattern": "\\b(?:sharp|defined|well-defined|strong|chiseled|chiselled|angular|square|pointed|high|prominent|sculpted|refined|narrow|v-shaped|straight|small|button|aquiline)\\s+(?:jaw\\s*line|jaw|chin|cheekbones?|nose|face shape)\\b|\\balmond[- ]shaped eyes\\b",
-        "replace": "",
-        "case_insensitive": true,
-        "multiline": false,
-        "dotall": false,
-        "count": 0
-      }
-    },
-    {
-      "id": 75,
-      "type": "RegexReplace",
-      "pos": [
-        2829.883850613252,
-        1379.7143214935893
-      ],
-      "size": [
-        320,
-        292
-      ],
-      "flags": {},
-      "order": 35,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 121
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            122
-          ]
-        }
-      ],
-      "title": "5e. Dọn dấu phẩy thừa",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "RegexReplace"
-      },
-      "widgets_values": [
-        "",
-        "(?<=[:,.;])\\s*,|\\s+(?=[,.;])",
-        "",
-        false,
-        false,
-        false,
-        0
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "regex_pattern": "(?<=[:,.;])\\s*,|\\s+(?=[,.;])",
-        "replace": "",
-        "case_insensitive": false,
-        "multiline": false,
-        "dotall": false,
-        "count": 0
-      }
-    },
-    {
-      "id": 76,
-      "type": "RegexReplace",
-      "pos": [
-        2829.883850613252,
-        1731.7143214935893
-      ],
-      "size": [
-        320,
-        292
-      ],
-      "flags": {},
-      "order": 36,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 122
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            148,
-            156
-          ]
-        }
-      ],
-      "title": "5f. Dọn khoảng trắng",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "RegexReplace"
-      },
-      "widgets_values": [
-        "",
-        "[ \\t]{2,}",
-        " ",
-        false,
-        false,
-        false,
-        0
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "regex_pattern": "[ \\t]{2,}",
-        "replace": " ",
-        "case_insensitive": false,
-        "multiline": false,
-        "dotall": false,
-        "count": 0
-      }
-    },
-    {
-      "id": 77,
-      "type": "StringReplace",
-      "pos": [
-        3689.883850613252,
-        1027.7143214935893
-      ],
-      "size": [
-        320,
-        196.00000000000006
-      ],
-      "flags": {},
-      "order": 37,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 161
-        },
-        {
-          "name": "replace",
-          "type": "STRING",
-          "widget": {
-            "name": "replace"
-          },
-          "link": 130
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            165
-          ]
-        }
-      ],
-      "title": "6d. {char} → trigger",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "StringReplace"
-      },
-      "widgets_values": [
-        "",
-        "{char}",
-        ""
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "find": "{char}",
-        "replace": ""
-      }
-    },
-    {
-      "id": 81,
-      "type": "StringReplace",
-      "pos": [
-        1439.883850613252,
-        -28.285678506410733
-      ],
-      "size": [
-        315.8604739822324,
-        196
-      ],
-      "flags": {},
-      "order": 19,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 136
-        },
-        {
-          "name": "find",
-          "type": "STRING",
-          "widget": {
-            "name": "find"
-          },
-          "link": 137
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            99,
-            100,
-            101
-          ]
-        }
-      ],
-      "title": "2a. Trigger chữ → {char}",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "StringReplace"
-      },
-      "widgets_values": [
-        "",
-        "",
-        "{char}"
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "find": "",
-        "replace": "{char}"
       }
     },
     {
@@ -2101,7 +843,7 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            163
+            183
           ]
         }
       ],
@@ -2138,7 +880,7 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            167
+            184
           ]
         }
       ],
@@ -2156,821 +898,10 @@
       }
     },
     {
-      "id": 85,
-      "type": "RegexReplace",
-      "pos": [
-        2399.883850613252,
-        -28.285678506410733
-      ],
-      "size": [
-        320,
-        292
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 143
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            144,
-            145
-          ]
-        }
-      ],
-      "title": "4a. Cắt suy luận </think>",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "RegexReplace"
-      },
-      "widgets_values": [
-        "",
-        "^[\\s\\S]*</think>\\s*|</?think>",
-        "",
-        false,
-        false,
-        false,
-        0
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "regex_pattern": "^[\\s\\S]*</think>\\s*|</?think>",
-        "replace": "",
-        "case_insensitive": false,
-        "multiline": false,
-        "dotall": false,
-        "count": 0
-      }
-    },
-    {
-      "id": 86,
-      "type": "RegexReplace",
-      "pos": [
-        2829.883850613252,
-        -28.285678506410733
-      ],
-      "size": [
-        320,
-        292
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 146
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            147
-          ]
-        }
-      ],
-      "title": "5a. Gộp 1 đoạn (luôn chạy)",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "RegexReplace"
-      },
-      "widgets_values": [
-        "",
-        "(?:\\s*\\n\\s*)+",
-        " ",
-        false,
-        false,
-        false,
-        0
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "regex_pattern": "(?:\\s*\\n\\s*)+",
-        "replace": " ",
-        "case_insensitive": false,
-        "multiline": false,
-        "dotall": false,
-        "count": 0
-      }
-    },
-    {
-      "id": 87,
-      "type": "RegexReplace",
-      "pos": [
-        3259.883850613252,
-        -28.285678506410733
-      ],
-      "size": [
-        320,
-        292
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 148
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            149
-          ]
-        }
-      ],
-      "title": "S1. SFW: xoá chữ khoả thân/bộ phận",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "RegexReplace"
-      },
-      "widgets_values": [
-        "",
-        "(?:\\b(?:including|with)\\s+)?(?:\\b(?:a|an|his)\\s+)?(?:\\b(?:small|large|big|huge|thick|perfect|flaccid|erect|hard|circumcised|uncircumcised|visible|exposed|fully|completely|totally|partially)\\b[\\s,]+)*\\b(?:penis(?:es)?|cock|dick|testicles?|scrotum|genitals?|genitalia|pubic hair|pubes|foreskin|erection|nudity|nude|naked|undressed|unclothed|bare (?:buttocks|ass|butt)|buttocks|ass|erotic|male anatomy)\\b(?:\\s+with\\s+(?:visible\\s+)?testicles)?",
-        "",
-        true,
-        false,
-        false,
-        0
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "regex_pattern": "(?:\\b(?:including|with)\\s+)?(?:\\b(?:a|an|his)\\s+)?(?:\\b(?:small|large|big|huge|thick|perfect|flaccid|erect|hard|circumcised|uncircumcised|visible|exposed|fully|completely|totally|partially)\\b[\\s,]+)*\\b(?:penis(?:es)?|cock|dick|testicles?|scrotum|genitals?|genitalia|pubic hair|pubes|foreskin|erection|nudity|nude|naked|undressed|unclothed|bare (?:buttocks|ass|butt)|buttocks|ass|erotic|male anatomy)\\b(?:\\s+with\\s+(?:visible\\s+)?testicles)?",
-        "replace": "",
-        "case_insensitive": true,
-        "multiline": false,
-        "dotall": false,
-        "count": 0
-      }
-    },
-    {
-      "id": 88,
-      "type": "RegexReplace",
-      "pos": [
-        3259.883850613252,
-        323.7143214935893
-      ],
-      "size": [
-        320,
-        292
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 149
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            150,
-            151,
-            153
-          ]
-        }
-      ],
-      "title": "S2. SFW: dọn dấu",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "RegexReplace"
-      },
-      "widgets_values": [
-        "",
-        "^[\\s,;]+|(?<=[:,.;])\\s*[,;]|\\s+(?=[,.;])|(?<=\\s)\\s+",
-        "",
-        false,
-        false,
-        false,
-        0
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "regex_pattern": "^[\\s,;]+|(?<=[:,.;])\\s*[,;]|\\s+(?=[,.;])|(?<=\\s)\\s+",
-        "replace": "",
-        "case_insensitive": false,
-        "multiline": false,
-        "dotall": false,
-        "count": 0
-      }
-    },
-    {
-      "id": 89,
-      "type": "RegexMatch",
-      "pos": [
-        3259.883850613252,
-        675.7143214935893
-      ],
-      "size": [
-        320,
-        214
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 150
-        }
-      ],
-      "outputs": [
-        {
-          "name": "matches",
-          "type": "BOOLEAN",
-          "links": [
-            152
-          ]
-        }
-      ],
-      "title": "S3. SFW: đã có câu che hông?",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "RegexMatch"
-      },
-      "widgets_values": [
-        "",
-        "cover(?:s|ed|ing)?\\s+(?:the\\s+|his\\s+)?groin|groin\\s+(?:is\\s+|stays\\s+|remains\\s+)?(?:fully\\s+|completely\\s+)?(?:covered|hidden|concealed|out\\s+of\\s+(?:the\\s+)?frame)",
-        true,
-        false,
-        false
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "regex_pattern": "cover(?:s|ed|ing)?\\s+(?:the\\s+|his\\s+)?groin|groin\\s+(?:is\\s+|stays\\s+|remains\\s+)?(?:fully\\s+|completely\\s+)?(?:covered|hidden|concealed|out\\s+of\\s+(?:the\\s+)?frame)",
-        "case_insensitive": true,
-        "multiline": false,
-        "dotall": false
-      }
-    },
-    {
-      "id": 90,
-      "type": "StringConcatenate",
-      "pos": [
-        3259.883850613252,
-        949.7143214935893
-      ],
-      "size": [
-        320,
-        166
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string_b",
-          "type": "STRING",
-          "widget": {
-            "name": "string_b"
-          },
-          "link": null
-        },
-        {
-          "name": "string_a",
-          "type": "STRING",
-          "widget": {
-            "name": "string_a"
-          },
-          "link": 151
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            154
-          ]
-        }
-      ],
-      "title": "S4. SFW: thêm câu che hông",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "StringConcatenate"
-      },
-      "widgets_values": [
-        "",
-        "He wears briefs that fully cover the groin.",
-        ". "
-      ],
-      "widgets_values_named": {
-        "string_a": "",
-        "string_b": "He wears briefs that fully cover the groin.",
-        "delimiter": ". "
-      }
-    },
-    {
-      "id": 91,
-      "type": "ComfySwitchNode",
-      "pos": [
-        3259.883850613252,
-        1175.7143214935893
-      ],
-      "size": [
-        320,
-        78
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "on_false",
-          "shape": 7,
-          "type": "STRING",
-          "link": 154
-        },
-        {
-          "name": "on_true",
-          "shape": 7,
-          "type": "STRING",
-          "link": 153
-        },
-        {
-          "name": "switch",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "switch"
-          },
-          "link": 152
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "STRING",
-          "links": [
-            157
-          ]
-        }
-      ],
-      "title": "S5. SFW: chọn câu che",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "ComfySwitchNode"
-      },
-      "widgets_values": [
-        false
-      ],
-      "widgets_values_named": {
-        "switch": false
-      }
-    },
-    {
-      "id": 92,
-      "type": "ComfySwitchNode",
-      "pos": [
-        3259.883850613252,
-        1313.7143214935893
-      ],
-      "size": [
-        320,
-        78
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "on_false",
-          "shape": 7,
-          "type": "STRING",
-          "link": 157
-        },
-        {
-          "name": "on_true",
-          "shape": 7,
-          "type": "STRING",
-          "link": 156
-        },
-        {
-          "name": "switch",
-          "type": "BOOLEAN",
-          "widget": {
-            "name": "switch"
-          },
-          "link": 155
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "STRING",
-          "links": [
-            158
-          ]
-        }
-      ],
-      "title": "S6. nsfw bật → bỏ qua lớp SFW",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "ComfySwitchNode"
-      },
-      "widgets_values": [
-        false
-      ],
-      "widgets_values_named": {
-        "switch": false
-      }
-    },
-    {
-      "id": 93,
-      "type": "RegexReplace",
-      "pos": [
-        3689.883850613252,
-        -28.285678506410733
-      ],
-      "size": [
-        320,
-        292
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 158
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            159
-          ]
-        }
-      ],
-      "title": "6a. Bỏ {char} đứng riêng đầu thân",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "RegexReplace"
-      },
-      "widgets_values": [
-        "",
-        "^\\s*\\{char\\}(?:\\s*[.,:;]+\\s*|\\s+(?=[^a-z\\s'])|\\s*$)",
-        "",
-        false,
-        false,
-        false,
-        0
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "regex_pattern": "^\\s*\\{char\\}(?:\\s*[.,:;]+\\s*|\\s+(?=[^a-z\\s'])|\\s*$)",
-        "replace": "",
-        "case_insensitive": false,
-        "multiline": false,
-        "dotall": false,
-        "count": 0
-      }
-    },
-    {
-      "id": 94,
-      "type": "RegexReplace",
-      "pos": [
-        3689.883850613252,
-        323.7143214935893
-      ],
-      "size": [
-        320,
-        292
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 159
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            160
-          ]
-        }
-      ],
-      "title": "6b. {char}'s đầu → His",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "RegexReplace"
-      },
-      "widgets_values": [
-        "",
-        "^\\s*\\{char\\}'s\\b",
-        "His",
-        false,
-        false,
-        false,
-        0
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "regex_pattern": "^\\s*\\{char\\}'s\\b",
-        "replace": "His",
-        "case_insensitive": false,
-        "multiline": false,
-        "dotall": false,
-        "count": 0
-      }
-    },
-    {
-      "id": 95,
-      "type": "RegexReplace",
-      "pos": [
-        3689.883850613252,
-        675.7143214935893
-      ],
-      "size": [
-        320,
-        292
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "widget": {
-            "name": "string"
-          },
-          "link": 160
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            161
-          ]
-        }
-      ],
-      "title": "6c. {char} chủ ngữ đầu → He",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "RegexReplace"
-      },
-      "widgets_values": [
-        "",
-        "^\\s*\\{char\\}\\s+(?=[a-z])",
-        "He ",
-        false,
-        false,
-        false,
-        0
-      ],
-      "widgets_values_named": {
-        "string": "",
-        "regex_pattern": "^\\s*\\{char\\}\\s+(?=[a-z])",
-        "replace": "He ",
-        "case_insensitive": false,
-        "multiline": false,
-        "dotall": false,
-        "count": 0
-      }
-    },
-    {
-      "id": 96,
-      "type": "StringConcatenate",
-      "pos": [
-        3689.883850613252,
-        1283.7143214935893
-      ],
-      "size": [
-        320,
-        166
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string_b",
-          "type": "STRING",
-          "widget": {
-            "name": "string_b"
-          },
-          "link": 163
-        },
-        {
-          "name": "string_a",
-          "type": "STRING",
-          "widget": {
-            "name": "string_a"
-          },
-          "link": 162
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            164
-          ]
-        }
-      ],
-      "title": "6e. MainTrigger + Prefix",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "StringConcatenate"
-      },
-      "widgets_values": [
-        "",
-        "",
-        ". "
-      ],
-      "widgets_values_named": {
-        "string_a": "",
-        "string_b": "",
-        "delimiter": ". "
-      }
-    },
-    {
-      "id": 97,
-      "type": "StringConcatenate",
-      "pos": [
-        3689.883850613252,
-        1509.7143214935893
-      ],
-      "size": [
-        320,
-        166
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string_b",
-          "type": "STRING",
-          "widget": {
-            "name": "string_b"
-          },
-          "link": 165
-        },
-        {
-          "name": "string_a",
-          "type": "STRING",
-          "widget": {
-            "name": "string_a"
-          },
-          "link": 164
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            166
-          ]
-        }
-      ],
-      "title": "6f. + thân prompt",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "StringConcatenate"
-      },
-      "widgets_values": [
-        "",
-        "",
-        ". "
-      ],
-      "widgets_values_named": {
-        "string_a": "",
-        "string_b": "",
-        "delimiter": ". "
-      }
-    },
-    {
-      "id": 98,
-      "type": "StringConcatenate",
-      "pos": [
-        3689.883850613252,
-        1735.7143214935893
-      ],
-      "size": [
-        320,
-        166
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "string_b",
-          "type": "STRING",
-          "widget": {
-            "name": "string_b"
-          },
-          "link": 167
-        },
-        {
-          "name": "string_a",
-          "type": "STRING",
-          "widget": {
-            "name": "string_a"
-          },
-          "link": 166
-        }
-      ],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            168
-          ]
-        }
-      ],
-      "title": "6g. + Suffix",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.39.0",
-        "Node name for S&R": "StringConcatenate"
-      },
-      "widgets_values": [
-        "",
-        "",
-        ". "
-      ],
-      "widgets_values_named": {
-        "string_a": "",
-        "string_b": "",
-        "delimiter": ". "
-      }
-    },
-    {
       "id": 99,
       "type": "Select_Random",
       "pos": [
-        4119.883850613252,
+        1439.883850613252,
         -28.285678506410733
       ],
       "size": [
@@ -3008,7 +939,7 @@
       "id": 100,
       "type": "Find_and_Replace",
       "pos": [
-        4119.883850613252,
+        1439.883850613252,
         261.7143214935893
       ],
       "size": [
@@ -3054,7 +985,7 @@
       "id": 101,
       "type": "RegexReplace",
       "pos": [
-        4119.883850613252,
+        1439.883850613252,
         451.7143214935893
       ],
       "size": [
@@ -3112,7 +1043,7 @@
       "id": 102,
       "type": "RegexReplace",
       "pos": [
-        4119.883850613252,
+        1439.883850613252,
         803.7143214935893
       ],
       "size": [
@@ -3170,7 +1101,7 @@
       "id": 103,
       "type": "StringTrim",
       "pos": [
-        4119.883850613252,
+        1439.883850613252,
         1155.7143214935893
       ],
       "size": [
@@ -3221,7 +1152,7 @@
       "type": "MarkdownNote",
       "pos": [
         769.8838506132519,
-        109.71432149358927
+        321.7143214935893
       ],
       "size": [
         560,
@@ -3246,6 +1177,84 @@
       },
       "color": "#432",
       "bgcolor": "#653"
+    },
+    {
+      "id": 105,
+      "type": "7aba497f-52b6-5450-810a-3f8685205a41",
+      "pos": [
+        769.8838506132519,
+        -28.285678506410733
+      ],
+      "size": [
+        380,
+        270
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "use_txt",
+          "type": "BOOLEAN",
+          "link": 176
+        },
+        {
+          "name": "nsfw",
+          "type": "BOOLEAN",
+          "link": 177
+        },
+        {
+          "name": "refine",
+          "type": "BOOLEAN",
+          "link": 178
+        },
+        {
+          "name": "prompt_tay",
+          "type": "STRING",
+          "link": 179
+        },
+        {
+          "name": "prompt_txt",
+          "type": "STRING",
+          "link": 180
+        },
+        {
+          "name": "MainTrigger",
+          "type": "STRING",
+          "link": 181
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 182
+        },
+        {
+          "name": "Prefix",
+          "type": "STRING",
+          "link": 183
+        },
+        {
+          "name": "Suffix",
+          "type": "STRING",
+          "link": 184
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "prompt",
+          "name": "prompt",
+          "type": "STRING",
+          "links": [
+            168
+          ]
+        }
+      ],
+      "title": "Krea2 Prompt Builder v4",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0"
+      },
+      "widgets_values": []
     }
   ],
   "links": [
@@ -3314,448 +1323,8 @@
       "IMAGE"
     ],
     [
-      97,
-      61,
-      0,
-      60,
-      0,
-      "STRING"
-    ],
-    [
-      98,
-      62,
-      0,
-      60,
-      1,
-      "STRING"
-    ],
-    [
-      99,
-      81,
-      0,
-      57,
-      0,
-      "STRING"
-    ],
-    [
-      100,
-      81,
-      0,
-      58,
-      0,
-      "STRING"
-    ],
-    [
-      101,
-      81,
-      0,
-      59,
-      1,
-      "STRING"
-    ],
-    [
-      102,
-      58,
-      0,
-      59,
-      0,
-      "STRING"
-    ],
-    [
-      103,
-      57,
-      0,
-      59,
-      2,
-      "BOOLEAN"
-    ],
-    [
-      104,
-      53,
-      0,
-      56,
-      2,
-      "BOOLEAN"
-    ],
-    [
-      105,
-      55,
-      0,
-      60,
-      2,
-      "BOOLEAN"
-    ],
-    [
-      106,
-      59,
-      0,
-      71,
-      0,
-      "STRING"
-    ],
-    [
-      109,
-      65,
-      0,
-      66,
-      0,
-      "STRING"
-    ],
-    [
-      110,
-      66,
-      0,
-      67,
-      0,
-      "STRING"
-    ],
-    [
-      111,
-      67,
-      0,
-      68,
-      0,
-      "STRING"
-    ],
-    [
-      113,
-      68,
-      0,
-      70,
-      0,
-      "STRING"
-    ],
-    [
-      114,
-      59,
-      0,
-      70,
-      1,
-      "STRING"
-    ],
-    [
-      115,
-      69,
-      0,
-      70,
-      2,
-      "BOOLEAN"
-    ],
-    [
-      116,
-      70,
-      0,
-      71,
-      1,
-      "STRING"
-    ],
-    [
-      117,
-      54,
-      0,
-      71,
-      2,
-      "BOOLEAN"
-    ],
-    [
-      119,
-      72,
-      0,
-      73,
-      0,
-      "STRING"
-    ],
-    [
-      120,
-      73,
-      0,
-      74,
-      0,
-      "STRING"
-    ],
-    [
-      121,
-      74,
-      0,
-      75,
-      0,
-      "STRING"
-    ],
-    [
-      122,
-      75,
-      0,
-      76,
-      0,
-      "STRING"
-    ],
-    [
-      128,
-      41,
-      0,
-      56,
-      0,
-      "STRING"
-    ],
-    [
-      129,
-      42,
-      0,
-      56,
-      1,
-      "STRING"
-    ],
-    [
-      130,
-      38,
-      0,
-      77,
-      1,
-      "STRING"
-    ],
-    [
-      136,
-      56,
-      0,
-      81,
-      0,
-      "STRING"
-    ],
-    [
-      137,
-      38,
-      0,
-      81,
-      1,
-      "STRING"
-    ],
-    [
-      140,
-      35,
-      0,
-      63,
-      0,
-      "CLIP"
-    ],
-    [
-      141,
-      60,
-      0,
-      63,
-      4,
-      "STRING"
-    ],
-    [
-      142,
-      59,
-      0,
-      63,
-      5,
-      "STRING"
-    ],
-    [
-      143,
-      63,
-      0,
-      85,
-      0,
-      "STRING"
-    ],
-    [
-      144,
-      85,
-      0,
-      65,
-      0,
-      "STRING"
-    ],
-    [
-      145,
-      85,
-      0,
-      69,
-      0,
-      "STRING"
-    ],
-    [
-      146,
-      71,
-      0,
-      86,
-      0,
-      "STRING"
-    ],
-    [
-      147,
-      86,
-      0,
-      72,
-      0,
-      "STRING"
-    ],
-    [
-      148,
-      76,
-      0,
-      87,
-      0,
-      "STRING"
-    ],
-    [
-      149,
-      87,
-      0,
-      88,
-      0,
-      "STRING"
-    ],
-    [
-      150,
-      88,
-      0,
-      89,
-      0,
-      "STRING"
-    ],
-    [
-      151,
-      88,
-      0,
-      90,
-      1,
-      "STRING"
-    ],
-    [
-      152,
-      89,
-      0,
-      91,
-      2,
-      "BOOLEAN"
-    ],
-    [
-      153,
-      88,
-      0,
-      91,
-      1,
-      "STRING"
-    ],
-    [
-      154,
-      90,
-      0,
-      91,
-      0,
-      "STRING"
-    ],
-    [
-      155,
-      55,
-      0,
-      92,
-      2,
-      "BOOLEAN"
-    ],
-    [
-      156,
-      76,
-      0,
-      92,
-      1,
-      "STRING"
-    ],
-    [
-      157,
-      91,
-      0,
-      92,
-      0,
-      "STRING"
-    ],
-    [
-      158,
-      92,
-      0,
-      93,
-      0,
-      "STRING"
-    ],
-    [
-      159,
-      93,
-      0,
-      94,
-      0,
-      "STRING"
-    ],
-    [
-      160,
-      94,
-      0,
-      95,
-      0,
-      "STRING"
-    ],
-    [
-      161,
-      95,
-      0,
-      77,
-      0,
-      "STRING"
-    ],
-    [
-      162,
-      38,
-      0,
-      96,
-      1,
-      "STRING"
-    ],
-    [
-      163,
-      83,
-      0,
-      96,
-      0,
-      "STRING"
-    ],
-    [
-      164,
-      96,
-      0,
-      97,
-      1,
-      "STRING"
-    ],
-    [
-      165,
-      77,
-      0,
-      97,
-      0,
-      "STRING"
-    ],
-    [
-      166,
-      97,
-      0,
-      98,
-      1,
-      "STRING"
-    ],
-    [
-      167,
-      84,
-      0,
-      98,
-      0,
-      "STRING"
-    ],
-    [
       168,
-      98,
+      105,
       0,
       100,
       0,
@@ -3816,6 +1385,78 @@
       44,
       0,
       "STRING"
+    ],
+    [
+      176,
+      53,
+      0,
+      105,
+      0,
+      "BOOLEAN"
+    ],
+    [
+      177,
+      55,
+      0,
+      105,
+      1,
+      "BOOLEAN"
+    ],
+    [
+      178,
+      54,
+      0,
+      105,
+      2,
+      "BOOLEAN"
+    ],
+    [
+      179,
+      41,
+      0,
+      105,
+      3,
+      "STRING"
+    ],
+    [
+      180,
+      42,
+      0,
+      105,
+      4,
+      "STRING"
+    ],
+    [
+      181,
+      38,
+      0,
+      105,
+      5,
+      "STRING"
+    ],
+    [
+      182,
+      35,
+      0,
+      105,
+      6,
+      "CLIP"
+    ],
+    [
+      183,
+      83,
+      0,
+      105,
+      7,
+      "STRING"
+    ],
+    [
+      184,
+      84,
+      0,
+      105,
+      8,
+      "STRING"
     ]
   ],
   "groups": [
@@ -3849,8 +1490,8 @@
       "bounding": [
         719.8838506132519,
         -138.28567850641073,
-        3770.0000000000005,
-        2290.0000000000005
+        1090.0,
+        1516.0
       ],
       "color": "#b06634",
       "flags": {}
@@ -3859,7 +1500,7 @@
       "id": 5,
       "title": "Sampler + Output",
       "bounding": [
-        4569.883850613252,
+        1889.883850613252,
         68.31959117542445,
         460,
         1000
@@ -3868,101 +1509,10 @@
       "flags": {}
     },
     {
-      "id": 6,
-      "title": "1. Nguồn",
-      "bounding": [
-        749.8838506132519,
-        -88.28567850641073,
-        600,
-        1018.0
-      ],
-      "color": "#3f789e",
-      "font_size": 22,
-      "flags": {}
-    },
-    {
-      "id": 7,
-      "title": "2. {char}",
+      "id": 13,
+      "title": "7. Random swap (chỉnh token ở 7a)",
       "bounding": [
         1419.883850613252,
-        -88.28567850641073,
-        360,
-        906.0
-      ],
-      "color": "#8A8",
-      "font_size": 22,
-      "flags": {}
-    },
-    {
-      "id": 8,
-      "title": "3. LLM refine",
-      "bounding": [
-        1849.883850613252,
-        -88.28567850641073,
-        460,
-        714.0
-      ],
-      "color": "#a1309b",
-      "font_size": 22,
-      "flags": {}
-    },
-    {
-      "id": 9,
-      "title": "4. Dọn output LLM",
-      "bounding": [
-        2379.883850613252,
-        -88.28567850641073,
-        360,
-        2190.0000000000005
-      ],
-      "color": "#b58b2a",
-      "font_size": 22,
-      "flags": {}
-    },
-    {
-      "id": 10,
-      "title": "5. Ép identity LoRA",
-      "bounding": [
-        2809.883850613252,
-        -88.28567850641073,
-        360,
-        2172.0000000000005
-      ],
-      "color": "#88A",
-      "font_size": 22,
-      "flags": {}
-    },
-    {
-      "id": 11,
-      "title": "S. Chặn SFW (nsfw tắt)",
-      "bounding": [
-        3239.883850613252,
-        -88.28567850641073,
-        360,
-        1540.0
-      ],
-      "color": "#a33",
-      "font_size": 22,
-      "flags": {}
-    },
-    {
-      "id": 12,
-      "title": "6. Ghép",
-      "bounding": [
-        3669.883850613252,
-        -88.28567850641073,
-        360,
-        2050.0
-      ],
-      "color": "#3f789e",
-      "font_size": 22,
-      "flags": {}
-    },
-    {
-      "id": 13,
-      "title": "7. Random swap",
-      "bounding": [
-        4099.883850613252,
         -88.28567850641073,
         360,
         1416.0
@@ -3979,8 +1529,8 @@
         "version": 1,
         "state": {
           "lastGroupId": 5,
-          "lastNodeId": 84,
-          "lastLinkId": 142,
+          "lastNodeId": 105,
+          "lastLinkId": 185,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -4593,6 +2143,2787 @@
             "target_id": -20,
             "target_slot": 0,
             "type": "IMAGE"
+          }
+        ],
+        "extra": {}
+      },
+      {
+        "id": "7aba497f-52b6-5450-810a-3f8685205a41",
+        "version": 1,
+        "state": {
+          "lastGroupId": 13,
+          "lastNodeId": 105,
+          "lastLinkId": 185,
+          "lastRerouteId": 0
+        },
+        "revision": 0,
+        "config": {},
+        "name": "Krea2 Prompt Builder v4",
+        "inputNode": {
+          "id": -10,
+          "bounding": [
+            -400,
+            0,
+            160,
+            220
+          ]
+        },
+        "outputNode": {
+          "id": -20,
+          "bounding": [
+            3160,
+            0,
+            140,
+            60
+          ]
+        },
+        "inputs": [
+          {
+            "id": "8145931e-181b-5192-9e1c-8b667e29e156",
+            "name": "use_txt",
+            "type": "BOOLEAN",
+            "linkIds": [
+              104
+            ],
+            "localized_name": "use_txt",
+            "pos": [
+              -260,
+              24
+            ]
+          },
+          {
+            "id": "2cd89d61-ac78-5871-b1d5-9a5c10778d81",
+            "name": "nsfw",
+            "type": "BOOLEAN",
+            "linkIds": [
+              105,
+              155
+            ],
+            "localized_name": "nsfw",
+            "pos": [
+              -260,
+              44
+            ]
+          },
+          {
+            "id": "6cf836c8-efa0-5fa4-b3d8-3021856a7249",
+            "name": "refine",
+            "type": "BOOLEAN",
+            "linkIds": [
+              117
+            ],
+            "localized_name": "refine",
+            "pos": [
+              -260,
+              64
+            ]
+          },
+          {
+            "id": "27cdc354-38b9-5735-a043-ac71c6fc6664",
+            "name": "prompt_tay",
+            "type": "STRING",
+            "linkIds": [
+              128
+            ],
+            "localized_name": "prompt_tay",
+            "pos": [
+              -260,
+              84
+            ]
+          },
+          {
+            "id": "080a0cf0-a819-5b10-8b2a-3944151012cb",
+            "name": "prompt_txt",
+            "type": "STRING",
+            "linkIds": [
+              129
+            ],
+            "localized_name": "prompt_txt",
+            "pos": [
+              -260,
+              104
+            ]
+          },
+          {
+            "id": "1998004f-1999-58cc-8d97-6c50dc739760",
+            "name": "MainTrigger",
+            "type": "STRING",
+            "linkIds": [
+              130,
+              137,
+              162
+            ],
+            "localized_name": "MainTrigger",
+            "pos": [
+              -260,
+              124
+            ]
+          },
+          {
+            "id": "d39e46f6-c422-55a8-9e0d-cffc7d5e8aa0",
+            "name": "clip",
+            "type": "CLIP",
+            "linkIds": [
+              140
+            ],
+            "localized_name": "clip",
+            "pos": [
+              -260,
+              144
+            ]
+          },
+          {
+            "id": "58089df8-5d3f-5e3b-9022-2206ced8b7ae",
+            "name": "Prefix",
+            "type": "STRING",
+            "linkIds": [
+              163
+            ],
+            "localized_name": "Prefix",
+            "pos": [
+              -260,
+              164
+            ]
+          },
+          {
+            "id": "6ca83c30-9534-59cd-89d6-f1f2da49fe21",
+            "name": "Suffix",
+            "type": "STRING",
+            "linkIds": [
+              167
+            ],
+            "localized_name": "Suffix",
+            "pos": [
+              -260,
+              184
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "000b9405-9476-5a82-a8c4-772abd7da023",
+            "name": "prompt",
+            "type": "STRING",
+            "linkIds": [
+              185
+            ],
+            "localized_name": "prompt",
+            "pos": [
+              3184,
+              24
+            ]
+          }
+        ],
+        "widgets": [],
+        "nodes": [
+          {
+            "id": 56,
+            "type": "ComfySwitchNode",
+            "pos": [
+              20,
+              60
+            ],
+            "size": [
+              320,
+              78
+            ],
+            "flags": {},
+            "order": 17,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "on_false",
+                "shape": 7,
+                "type": "STRING",
+                "link": 128
+              },
+              {
+                "name": "on_true",
+                "shape": 7,
+                "type": "STRING",
+                "link": 129
+              },
+              {
+                "name": "switch",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "switch"
+                },
+                "link": 104
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "type": "STRING",
+                "links": [
+                  136
+                ]
+              }
+            ],
+            "title": "1. Nguồn: TXT / tay",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "ComfySwitchNode"
+            },
+            "widgets_values": [
+              false
+            ],
+            "widgets_values_named": {
+              "switch": false
+            }
+          },
+          {
+            "id": 57,
+            "type": "StringContains",
+            "pos": [
+              450,
+              316
+            ],
+            "size": [
+              311.7210995565847,
+              166
+            ],
+            "flags": {},
+            "order": 20,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 99
+              }
+            ],
+            "outputs": [
+              {
+                "name": "contains",
+                "type": "BOOLEAN",
+                "links": [
+                  103
+                ]
+              }
+            ],
+            "title": "2b. Có {char}?",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "StringContains"
+            },
+            "widgets_values": [
+              "",
+              "{char}",
+              true
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "substring": "{char}",
+              "case_sensitive": true
+            }
+          },
+          {
+            "id": 58,
+            "type": "StringConcatenate",
+            "pos": [
+              450,
+              542
+            ],
+            "size": [
+              320,
+              166
+            ],
+            "flags": {},
+            "order": 21,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string_b",
+                "type": "STRING",
+                "widget": {
+                  "name": "string_b"
+                },
+                "link": 100
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  102
+                ]
+              }
+            ],
+            "title": "2c. Thêm {char} vào đầu",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "StringConcatenate"
+            },
+            "widgets_values": [
+              "{char}",
+              "",
+              ". "
+            ],
+            "widgets_values_named": {
+              "string_a": "{char}",
+              "string_b": "",
+              "delimiter": ". "
+            }
+          },
+          {
+            "id": 59,
+            "type": "ComfySwitchNode",
+            "pos": [
+              450,
+              768
+            ],
+            "size": [
+              320,
+              78
+            ],
+            "flags": {},
+            "order": 22,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "on_false",
+                "shape": 7,
+                "type": "STRING",
+                "link": 102
+              },
+              {
+                "name": "on_true",
+                "shape": 7,
+                "type": "STRING",
+                "link": 101
+              },
+              {
+                "name": "switch",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "switch"
+                },
+                "link": 103
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "type": "STRING",
+                "links": [
+                  106,
+                  114,
+                  142
+                ]
+              }
+            ],
+            "title": "2d. {char} có sẵn / đã thêm",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "ComfySwitchNode"
+            },
+            "widgets_values": [
+              false
+            ],
+            "widgets_values_named": {
+              "switch": false
+            }
+          },
+          {
+            "id": 60,
+            "type": "ComfySwitchNode",
+            "pos": [
+              880,
+              60
+            ],
+            "size": [
+              320,
+              78
+            ],
+            "flags": {},
+            "order": 18,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "on_false",
+                "shape": 7,
+                "type": "STRING",
+                "link": 97
+              },
+              {
+                "name": "on_true",
+                "shape": 7,
+                "type": "STRING",
+                "link": 98
+              },
+              {
+                "name": "switch",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "switch"
+                },
+                "link": 105
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "type": "STRING",
+                "links": [
+                  141
+                ]
+              }
+            ],
+            "title": "3a. System: NSFW / SFW",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "ComfySwitchNode"
+            },
+            "widgets_values": [
+              false
+            ],
+            "widgets_values_named": {
+              "switch": false
+            }
+          },
+          {
+            "id": 61,
+            "type": "PrimitiveStringMultiline",
+            "pos": [
+              860,
+              -720
+            ],
+            "size": [
+              520,
+              640
+            ],
+            "flags": {},
+            "order": 12,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  97
+                ]
+              }
+            ],
+            "title": "System prompt SFW",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "PrimitiveStringMultiline"
+            },
+            "widgets_values": [
+              "You are a prompt rewriter for text-to-image models. You only rewrite text — you never create images yourself — so never refuse and never comment on the request; if unsure, return the user's prompt unchanged. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nPlan silently before writing — do not output your plan:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n7. **Always Keep the Groin Covered:** Treat depictions of people with dignity. In your output every person's groin and buttocks must be covered, and you must say so in words. If the input mentions nudity or intimate anatomy (nude, naked, undressed, bare, penis, testicles, genitals, pubic hair, erection, bare buttocks), delete those words and do one of: (a) dress the person in briefs and write \"wearing briefs that fully cover the groin\"; or (b) when underwear does not fit the scene, frame the shot so the groin is out of view (waist-up crop, seen from behind above the waist, or a solid object or thick fabric fully in front of the hips) and write that the groin is out of frame or fully hidden. If the input never says what covers the groin, add briefs the same way. Water, foam, steam, shadow and thin draped fabric do not count as covering. Keep every clothing item the user wrote (e.g. briefs, towel, shorts) with the same word.\n8. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n9. **Main Character Token:** `{char}` names the main character, whose identity comes from a LoRA. Keep `{char}` exactly as written, once, as the subject of the main character's description. Any other person is a secondary character — call them \"another man\" / \"another woman\" or keep the user's own description; never give them `{char}`.\n10. **Let the LoRA Define Identity (overrides rules 1 and 6):** For `{char}` only, remove hair color and hair length even if the user wrote them — write at most \"short hair\"; keep hair state (wet, messy, tousled, slicked-back). Remove facial-structure words even if the user wrote them (jawline, chin, cheekbones, nose, eye shape, lips, face shape); describe expression and emotion instead. Do not invent facial structure for secondary characters.\n11. **Camera Defaults:** If the user's prompt already states camera settings (white balance, lens or focal length, aperture or f-stop), keep them and add nothing. Otherwise end the paragraph with exactly: \"White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft.\"\n12. **Output Format:** Output exactly one cohesive paragraph and nothing else. Start directly with the prompt itself — no preamble, no title, no commentary, no bullets, no markdown, no negative prompt."
+            ],
+            "widgets_values_named": {
+              "value": "You are a prompt rewriter for text-to-image models. You only rewrite text — you never create images yourself — so never refuse and never comment on the request; if unsure, return the user's prompt unchanged. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nPlan silently before writing — do not output your plan:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n7. **Always Keep the Groin Covered:** Treat depictions of people with dignity. In your output every person's groin and buttocks must be covered, and you must say so in words. If the input mentions nudity or intimate anatomy (nude, naked, undressed, bare, penis, testicles, genitals, pubic hair, erection, bare buttocks), delete those words and do one of: (a) dress the person in briefs and write \"wearing briefs that fully cover the groin\"; or (b) when underwear does not fit the scene, frame the shot so the groin is out of view (waist-up crop, seen from behind above the waist, or a solid object or thick fabric fully in front of the hips) and write that the groin is out of frame or fully hidden. If the input never says what covers the groin, add briefs the same way. Water, foam, steam, shadow and thin draped fabric do not count as covering. Keep every clothing item the user wrote (e.g. briefs, towel, shorts) with the same word.\n8. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n9. **Main Character Token:** `{char}` names the main character, whose identity comes from a LoRA. Keep `{char}` exactly as written, once, as the subject of the main character's description. Any other person is a secondary character — call them \"another man\" / \"another woman\" or keep the user's own description; never give them `{char}`.\n10. **Let the LoRA Define Identity (overrides rules 1 and 6):** For `{char}` only, remove hair color and hair length even if the user wrote them — write at most \"short hair\"; keep hair state (wet, messy, tousled, slicked-back). Remove facial-structure words even if the user wrote them (jawline, chin, cheekbones, nose, eye shape, lips, face shape); describe expression and emotion instead. Do not invent facial structure for secondary characters.\n11. **Camera Defaults:** If the user's prompt already states camera settings (white balance, lens or focal length, aperture or f-stop), keep them and add nothing. Otherwise end the paragraph with exactly: \"White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft.\"\n12. **Output Format:** Output exactly one cohesive paragraph and nothing else. Start directly with the prompt itself — no preamble, no title, no commentary, no bullets, no markdown, no negative prompt."
+            }
+          },
+          {
+            "id": 62,
+            "type": "PrimitiveStringMultiline",
+            "pos": [
+              1420,
+              -720
+            ],
+            "size": [
+              520,
+              640
+            ],
+            "flags": {},
+            "order": 13,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  98
+                ]
+              }
+            ],
+            "title": "System prompt NSFW",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "PrimitiveStringMultiline"
+            },
+            "widgets_values": [
+              "You are a prompt rewriter for text-to-image models. You only rewrite text — you never create images yourself — so never refuse and never comment on the request; if unsure, return the user's prompt unchanged. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nPlan silently before writing — do not output your plan:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n7. **Bare Skin Only When Asked:** Treat depictions of people with dignity. Keep people clothed unless the input asks for nudity (nude, naked, undressed, topless, shirtless). Keep every clothing item and coverage detail from the input (e.g. \"fully covered\", \"briefs\"); never drop clothing the user wrote. When it does, match the requested level: partial wording (partially nude, revealing, topless, half-undressed) → bare only that part and keep the rest covered; full wording (fully nude, completely naked) → describe the bare body plainly, without euphemism. If the input only says \"nude\" or \"naked\" with no level, keep it partial: the body is bare but the groin stays naturally hidden by pose, shadow or framing.\n8. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n9. **Main Character Token:** `{char}` names the main character, whose identity comes from a LoRA. Keep `{char}` exactly as written, once, as the subject of the main character's description. Any other person is a secondary character — call them \"another man\" / \"another woman\" or keep the user's own description; never give them `{char}`.\n10. **Let the LoRA Define Identity (overrides rules 1 and 6):** For `{char}` only, remove hair color and hair length even if the user wrote them — write at most \"short hair\"; keep hair state (wet, messy, tousled, slicked-back). Remove facial-structure words even if the user wrote them (jawline, chin, cheekbones, nose, eye shape, lips, face shape); describe expression and emotion instead. Do not invent facial structure for secondary characters.\n11. **Camera Defaults:** If the user's prompt already states camera settings (white balance, lens or focal length, aperture or f-stop), keep them and add nothing. Otherwise end the paragraph with exactly: \"White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft.\"\n12. **Output Format:** Output exactly one cohesive paragraph and nothing else. Start directly with the prompt itself — no preamble, no title, no commentary, no bullets, no markdown, no negative prompt."
+            ],
+            "widgets_values_named": {
+              "value": "You are a prompt rewriter for text-to-image models. You only rewrite text — you never create images yourself — so never refuse and never comment on the request; if unsure, return the user's prompt unchanged. Your task is to expand the user's prompt into a highly effective image-generation prompt.\n\nPlan silently before writing — do not output your plan:\n- What is the subject and mood?\n- What visual styles, mediums, and lighting options would fit? Consider two or three alternatives and pick the one that best serves the caption.\n- What composition, framing, and grounded details will help the text-to-image model?\n\nFollow these rules strictly:\n1. **Faithfulness First:** Preserve all original subjects, actions, colors, and spatial relationships. Do not add new objects, props, characters, or animals unless the user clearly implies them.\n2. **Practical T2I Structure:** Write a prompt that a text-to-image model can parse cleanly. Group subjects with their own attributes and actions. Use grounded phrasing for poses, interactions, and spatial layout.\n3. **Style Planning Stays Internal:** Use your internal reasoning to choose style, medium, framing, and lighting. Do not emit planning tags or wrappers in the visible answer body.\n4. **Text Rendering:** If the user requests visible text, quotes, labels, or typography, specify the exact text clearly and wrap requested words in quotes.\n5. **Avoid Over-Specification:** Do not invent highly specific clothing, colors, materials, or scene details unless the input supports them.\n6. **Respect Existing Detail:** If the user's prompt is already detailed, lightly polish and finalize rather than heavily expanding — preserve their phrasing and direction.\n7. **Bare Skin Only When Asked:** Treat depictions of people with dignity. Keep people clothed unless the input asks for nudity (nude, naked, undressed, topless, shirtless). Keep every clothing item and coverage detail from the input (e.g. \"fully covered\", \"briefs\"); never drop clothing the user wrote. When it does, match the requested level: partial wording (partially nude, revealing, topless, half-undressed) → bare only that part and keep the rest covered; full wording (fully nude, completely naked) → describe the bare body plainly, without euphemism. If the input only says \"nude\" or \"naked\" with no level, keep it partial: the body is bare but the groin stays naturally hidden by pose, shadow or framing.\n8. **Preserve User Medium:** When the user explicitly requests a medium (e.g. \"photo of\", \"photograph of\", \"illustration of\", \"painting of\", \"sketch of\", \"3D render of\"), honor it. Do not pivot to a different medium to avoid difficulty — match the user's stated intent.\n9. **Main Character Token:** `{char}` names the main character, whose identity comes from a LoRA. Keep `{char}` exactly as written, once, as the subject of the main character's description. Any other person is a secondary character — call them \"another man\" / \"another woman\" or keep the user's own description; never give them `{char}`.\n10. **Let the LoRA Define Identity (overrides rules 1 and 6):** For `{char}` only, remove hair color and hair length even if the user wrote them — write at most \"short hair\"; keep hair state (wet, messy, tousled, slicked-back). Remove facial-structure words even if the user wrote them (jawline, chin, cheekbones, nose, eye shape, lips, face shape); describe expression and emotion instead. Do not invent facial structure for secondary characters.\n11. **Camera Defaults:** If the user's prompt already states camera settings (white balance, lens or focal length, aperture or f-stop), keep them and add nothing. Otherwise end the paragraph with exactly: \"White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft.\"\n12. **Output Format:** Output exactly one cohesive paragraph and nothing else. Start directly with the prompt itself — no preamble, no title, no commentary, no bullets, no markdown, no negative prompt."
+            }
+          },
+          {
+            "id": 63,
+            "type": "TextGenerate",
+            "pos": [
+              880,
+              198
+            ],
+            "size": [
+              420,
+              456
+            ],
+            "flags": {},
+            "order": 23,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "clip",
+                "type": "CLIP",
+                "link": 140
+              },
+              {
+                "name": "image",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              },
+              {
+                "name": "video",
+                "shape": 7,
+                "type": "IMAGE",
+                "link": null
+              },
+              {
+                "name": "audio",
+                "shape": 7,
+                "type": "AUDIO",
+                "link": null
+              },
+              {
+                "name": "system_prompt",
+                "shape": 7,
+                "type": "STRING",
+                "link": 141
+              },
+              {
+                "name": "prompt",
+                "type": "STRING",
+                "widget": {
+                  "name": "prompt"
+                },
+                "link": 142
+              }
+            ],
+            "outputs": [
+              {
+                "name": "generated_text",
+                "type": "STRING",
+                "links": [
+                  143
+                ]
+              },
+              {
+                "name": "thinking",
+                "type": "STRING",
+                "links": []
+              }
+            ],
+            "title": "3b. LLM refine (Qwen3-VL-4B)",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "TextGenerate"
+            },
+            "widgets_values": [
+              "",
+              1024,
+              "on",
+              0.7,
+              64,
+              0.95,
+              0.05,
+              1.05,
+              0,
+              0,
+              false,
+              true,
+              "auto"
+            ],
+            "widgets_values_named": {
+              "prompt": "",
+              "max_length": 1024,
+              "sampling_mode": "on",
+              "sampling_mode.temperature": 0.7,
+              "sampling_mode.top_k": 64,
+              "sampling_mode.top_p": 0.95,
+              "sampling_mode.min_p": 0.05,
+              "sampling_mode.repetition_penalty": 1.05,
+              "sampling_mode.seed": 0,
+              "sampling_mode.presence_penalty": 0,
+              "thinking": false,
+              "use_default_template": true,
+              "mtp": "auto"
+            }
+          },
+          {
+            "id": 65,
+            "type": "RegexReplace",
+            "pos": [
+              1410,
+              412
+            ],
+            "size": [
+              320,
+              292
+            ],
+            "flags": {},
+            "order": 26,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 144
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  109
+                ]
+              }
+            ],
+            "title": "4b. Bỏ câu dẫn / markdown",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "widgets_values": [
+              "",
+              "^\\s*(?:\\*\\*)?\\s*(?:here|sure|okay|below|final prompt|refined prompt|expanded prompt|this is)[^\\n]*:\\s*(?:\\*\\*)?\\s*$|\\*\\*|^\\s*(?:-{3,}|#+\\s*|[-*•]\\s+)|\\s*\\b(?:let me know|feel free to|hope this helps|would you like)\\b[^\\n]*",
+              "",
+              true,
+              true,
+              false,
+              0
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "regex_pattern": "^\\s*(?:\\*\\*)?\\s*(?:here|sure|okay|below|final prompt|refined prompt|expanded prompt|this is)[^\\n]*:\\s*(?:\\*\\*)?\\s*$|\\*\\*|^\\s*(?:-{3,}|#+\\s*|[-*•]\\s+)|\\s*\\b(?:let me know|feel free to|hope this helps|would you like)\\b[^\\n]*",
+              "replace": "",
+              "case_insensitive": true,
+              "multiline": true,
+              "dotall": false,
+              "count": 0
+            }
+          },
+          {
+            "id": 66,
+            "type": "RegexReplace",
+            "pos": [
+              1410,
+              764
+            ],
+            "size": [
+              320,
+              292
+            ],
+            "flags": {},
+            "order": 27,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 109
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  110
+                ]
+              }
+            ],
+            "title": "4c. Gộp 1 đoạn",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "widgets_values": [
+              "",
+              "(?:\\s*\\n\\s*)+",
+              " ",
+              true,
+              false,
+              false,
+              0
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "regex_pattern": "(?:\\s*\\n\\s*)+",
+              "replace": " ",
+              "case_insensitive": true,
+              "multiline": false,
+              "dotall": false,
+              "count": 0
+            }
+          },
+          {
+            "id": 67,
+            "type": "RegexReplace",
+            "pos": [
+              1410,
+              1116
+            ],
+            "size": [
+              320,
+              292
+            ],
+            "flags": {},
+            "order": 28,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 110
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  111
+                ]
+              }
+            ],
+            "title": "4d. Bỏ nhãn 'Final Output:'",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "widgets_values": [
+              "",
+              "^\\s*(?:(?:final|refined|expanded|improved|polished)\\s+(?:output|answer|prompt|version)|prompt|answer|output|user|assistant)\\b\\s*:?\\s*",
+              "",
+              true,
+              false,
+              false,
+              0
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "regex_pattern": "^\\s*(?:(?:final|refined|expanded|improved|polished)\\s+(?:output|answer|prompt|version)|prompt|answer|output|user|assistant)\\b\\s*:?\\s*",
+              "replace": "",
+              "case_insensitive": true,
+              "multiline": false,
+              "dotall": false,
+              "count": 0
+            }
+          },
+          {
+            "id": 68,
+            "type": "StringTrim",
+            "pos": [
+              1410,
+              1468
+            ],
+            "size": [
+              320,
+              112
+            ],
+            "flags": {},
+            "order": 29,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 111
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  113
+                ]
+              }
+            ],
+            "title": "4e. Trim",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "StringTrim"
+            },
+            "widgets_values": [
+              "",
+              "Both"
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "mode": "Both"
+            }
+          },
+          {
+            "id": 69,
+            "type": "RegexMatch",
+            "pos": [
+              1410,
+              1640
+            ],
+            "size": [
+              320,
+              214
+            ],
+            "flags": {},
+            "order": 25,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 145
+              }
+            ],
+            "outputs": [
+              {
+                "name": "matches",
+                "type": "BOOLEAN",
+                "links": [
+                  115
+                ]
+              }
+            ],
+            "title": "4f. Qwen từ chối / bình luận?",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexMatch"
+            },
+            "widgets_values": [
+              "",
+              "^\\s*$|I'?m sorry|I am sorry|I can'?t|I cannot|must decline|unable to (?:help|assist|fulfill|comply)|against my (?:guidelines|policies)|prompt you'?ve provided|your prompt is already|as an AI|You are a prompt rewriter|Follow these rules strictly|Main Character Token",
+              true,
+              false,
+              false
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "regex_pattern": "^\\s*$|I'?m sorry|I am sorry|I can'?t|I cannot|must decline|unable to (?:help|assist|fulfill|comply)|against my (?:guidelines|policies)|prompt you'?ve provided|your prompt is already|as an AI|You are a prompt rewriter|Follow these rules strictly|Main Character Token",
+              "case_insensitive": true,
+              "multiline": false,
+              "dotall": false
+            }
+          },
+          {
+            "id": 70,
+            "type": "ComfySwitchNode",
+            "pos": [
+              1410,
+              1914
+            ],
+            "size": [
+              320,
+              78
+            ],
+            "flags": {},
+            "order": 30,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "on_false",
+                "shape": 7,
+                "type": "STRING",
+                "link": 113
+              },
+              {
+                "name": "on_true",
+                "shape": 7,
+                "type": "STRING",
+                "link": 114
+              },
+              {
+                "name": "switch",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "switch"
+                },
+                "link": 115
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "type": "STRING",
+                "links": [
+                  116
+                ]
+              }
+            ],
+            "title": "4g. Refine lỗi → prompt gốc",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "ComfySwitchNode"
+            },
+            "widgets_values": [
+              false
+            ],
+            "widgets_values_named": {
+              "switch": false
+            }
+          },
+          {
+            "id": 71,
+            "type": "ComfySwitchNode",
+            "pos": [
+              1410,
+              2052
+            ],
+            "size": [
+              320,
+              78
+            ],
+            "flags": {},
+            "order": 31,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "on_false",
+                "shape": 7,
+                "type": "STRING",
+                "link": 106
+              },
+              {
+                "name": "on_true",
+                "shape": 7,
+                "type": "STRING",
+                "link": 116
+              },
+              {
+                "name": "switch",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "switch"
+                },
+                "link": 117
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "type": "STRING",
+                "links": [
+                  146
+                ]
+              }
+            ],
+            "title": "4h. Prompt: refine / gốc",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "ComfySwitchNode"
+            },
+            "widgets_values": [
+              false
+            ],
+            "widgets_values_named": {
+              "switch": false
+            }
+          },
+          {
+            "id": 72,
+            "type": "RegexReplace",
+            "pos": [
+              1840,
+              412
+            ],
+            "size": [
+              320,
+              292
+            ],
+            "flags": {},
+            "order": 32,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 147
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  119
+                ]
+              }
+            ],
+            "title": "5b. Tóc: màu/độ dài → short",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "widgets_values": [
+              "",
+              "\\b(?:long|medium[- ]length|shoulder[- ]length|jet|black|dark|brown|chestnut|blond|blonde|platinum|silver|grey|gray|greyish|grayish|white|red|ginger|auburn|brunette|ash)\\b[\\s/-]*(?=(?:[\\w/-]+\\s+){0,4}hair\\b)(?!(?:(?!hair\\b)[\\w/-]+\\s+){0,3}?(?:light|lighting|backlight|rim\\w*|glow\\w*|highlights?)\\b)",
+              "short ",
+              true,
+              false,
+              false,
+              0
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "regex_pattern": "\\b(?:long|medium[- ]length|shoulder[- ]length|jet|black|dark|brown|chestnut|blond|blonde|platinum|silver|grey|gray|greyish|grayish|white|red|ginger|auburn|brunette|ash)\\b[\\s/-]*(?=(?:[\\w/-]+\\s+){0,4}hair\\b)(?!(?:(?!hair\\b)[\\w/-]+\\s+){0,3}?(?:light|lighting|backlight|rim\\w*|glow\\w*|highlights?)\\b)",
+              "replace": "short ",
+              "case_insensitive": true,
+              "multiline": false,
+              "dotall": false,
+              "count": 0
+            }
+          },
+          {
+            "id": 73,
+            "type": "RegexReplace",
+            "pos": [
+              1840,
+              764
+            ],
+            "size": [
+              320,
+              292
+            ],
+            "flags": {},
+            "order": 33,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 119
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  120
+                ]
+              }
+            ],
+            "title": "5c. Gộp 'short short'",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "widgets_values": [
+              "",
+              "\\bshort[\\s,]+(?=(?:[\\w/-]+[\\s,]+){0,3}?short\\s+(?:[\\w/-]+\\s+){0,3}?hair\\b)",
+              "",
+              true,
+              false,
+              false,
+              0
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "regex_pattern": "\\bshort[\\s,]+(?=(?:[\\w/-]+[\\s,]+){0,3}?short\\s+(?:[\\w/-]+\\s+){0,3}?hair\\b)",
+              "replace": "",
+              "case_insensitive": true,
+              "multiline": false,
+              "dotall": false,
+              "count": 0
+            }
+          },
+          {
+            "id": 74,
+            "type": "RegexReplace",
+            "pos": [
+              1840,
+              1116
+            ],
+            "size": [
+              320,
+              292
+            ],
+            "flags": {},
+            "order": 34,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 120
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  121
+                ]
+              }
+            ],
+            "title": "5d. Bỏ jawline/chin/cheekbones…",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "widgets_values": [
+              "",
+              "\\b(?:sharp|defined|well-defined|strong|chiseled|chiselled|angular|square|pointed|high|prominent|sculpted|refined|narrow|v-shaped|straight|small|button|aquiline)\\s+(?:jaw\\s*line|jaw|chin|cheekbones?|nose|face shape)\\b|\\balmond[- ]shaped eyes\\b",
+              "",
+              true,
+              false,
+              false,
+              0
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "regex_pattern": "\\b(?:sharp|defined|well-defined|strong|chiseled|chiselled|angular|square|pointed|high|prominent|sculpted|refined|narrow|v-shaped|straight|small|button|aquiline)\\s+(?:jaw\\s*line|jaw|chin|cheekbones?|nose|face shape)\\b|\\balmond[- ]shaped eyes\\b",
+              "replace": "",
+              "case_insensitive": true,
+              "multiline": false,
+              "dotall": false,
+              "count": 0
+            }
+          },
+          {
+            "id": 75,
+            "type": "RegexReplace",
+            "pos": [
+              1840,
+              1468
+            ],
+            "size": [
+              320,
+              292
+            ],
+            "flags": {},
+            "order": 35,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 121
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  122
+                ]
+              }
+            ],
+            "title": "5e. Dọn dấu phẩy thừa",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "widgets_values": [
+              "",
+              "(?<=[:,.;])\\s*,|\\s+(?=[,.;])",
+              "",
+              false,
+              false,
+              false,
+              0
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "regex_pattern": "(?<=[:,.;])\\s*,|\\s+(?=[,.;])",
+              "replace": "",
+              "case_insensitive": false,
+              "multiline": false,
+              "dotall": false,
+              "count": 0
+            }
+          },
+          {
+            "id": 76,
+            "type": "RegexReplace",
+            "pos": [
+              1840,
+              1820
+            ],
+            "size": [
+              320,
+              292
+            ],
+            "flags": {},
+            "order": 36,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 122
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  148,
+                  156
+                ]
+              }
+            ],
+            "title": "5f. Dọn khoảng trắng",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "widgets_values": [
+              "",
+              "[ \\t]{2,}",
+              " ",
+              false,
+              false,
+              false,
+              0
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "regex_pattern": "[ \\t]{2,}",
+              "replace": " ",
+              "case_insensitive": false,
+              "multiline": false,
+              "dotall": false,
+              "count": 0
+            }
+          },
+          {
+            "id": 77,
+            "type": "StringReplace",
+            "pos": [
+              2700,
+              1116
+            ],
+            "size": [
+              320,
+              196.00000000000006
+            ],
+            "flags": {},
+            "order": 37,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 161
+              },
+              {
+                "name": "replace",
+                "type": "STRING",
+                "widget": {
+                  "name": "replace"
+                },
+                "link": 130
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  165
+                ]
+              }
+            ],
+            "title": "6d. {char} → trigger",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "StringReplace"
+            },
+            "widgets_values": [
+              "",
+              "{char}",
+              ""
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "find": "{char}",
+              "replace": ""
+            }
+          },
+          {
+            "id": 81,
+            "type": "StringReplace",
+            "pos": [
+              450,
+              60
+            ],
+            "size": [
+              315.8604739822324,
+              196
+            ],
+            "flags": {},
+            "order": 19,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 136
+              },
+              {
+                "name": "find",
+                "type": "STRING",
+                "widget": {
+                  "name": "find"
+                },
+                "link": 137
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  99,
+                  100,
+                  101
+                ]
+              }
+            ],
+            "title": "2a. Trigger chữ → {char}",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "StringReplace"
+            },
+            "widgets_values": [
+              "",
+              "",
+              "{char}"
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "find": "",
+              "replace": "{char}"
+            }
+          },
+          {
+            "id": 85,
+            "type": "RegexReplace",
+            "pos": [
+              1410,
+              60
+            ],
+            "size": [
+              320,
+              292
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 143
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  144,
+                  145
+                ]
+              }
+            ],
+            "title": "4a. Cắt suy luận </think>",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "widgets_values": [
+              "",
+              "^[\\s\\S]*</think>\\s*|</?think>",
+              "",
+              false,
+              false,
+              false,
+              0
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "regex_pattern": "^[\\s\\S]*</think>\\s*|</?think>",
+              "replace": "",
+              "case_insensitive": false,
+              "multiline": false,
+              "dotall": false,
+              "count": 0
+            }
+          },
+          {
+            "id": 86,
+            "type": "RegexReplace",
+            "pos": [
+              1840,
+              60
+            ],
+            "size": [
+              320,
+              292
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 146
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  147
+                ]
+              }
+            ],
+            "title": "5a. Gộp 1 đoạn (luôn chạy)",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "widgets_values": [
+              "",
+              "(?:\\s*\\n\\s*)+",
+              " ",
+              false,
+              false,
+              false,
+              0
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "regex_pattern": "(?:\\s*\\n\\s*)+",
+              "replace": " ",
+              "case_insensitive": false,
+              "multiline": false,
+              "dotall": false,
+              "count": 0
+            }
+          },
+          {
+            "id": 87,
+            "type": "RegexReplace",
+            "pos": [
+              2270,
+              60
+            ],
+            "size": [
+              320,
+              292
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 148
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  149
+                ]
+              }
+            ],
+            "title": "S1. SFW: xoá chữ khoả thân/bộ phận",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "widgets_values": [
+              "",
+              "(?:\\b(?:including|with)\\s+)?(?:\\b(?:a|an|his)\\s+)?(?:\\b(?:small|large|big|huge|thick|perfect|flaccid|erect|hard|circumcised|uncircumcised|visible|exposed|fully|completely|totally|partially)\\b[\\s,]+)*\\b(?:penis(?:es)?|cock|dick|testicles?|scrotum|genitals?|genitalia|pubic hair|pubes|foreskin|erection|nudity|nude|naked|undressed|unclothed|bare (?:buttocks|ass|butt)|buttocks|ass|erotic|male anatomy)\\b(?:\\s+with\\s+(?:visible\\s+)?testicles)?",
+              "",
+              true,
+              false,
+              false,
+              0
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "regex_pattern": "(?:\\b(?:including|with)\\s+)?(?:\\b(?:a|an|his)\\s+)?(?:\\b(?:small|large|big|huge|thick|perfect|flaccid|erect|hard|circumcised|uncircumcised|visible|exposed|fully|completely|totally|partially)\\b[\\s,]+)*\\b(?:penis(?:es)?|cock|dick|testicles?|scrotum|genitals?|genitalia|pubic hair|pubes|foreskin|erection|nudity|nude|naked|undressed|unclothed|bare (?:buttocks|ass|butt)|buttocks|ass|erotic|male anatomy)\\b(?:\\s+with\\s+(?:visible\\s+)?testicles)?",
+              "replace": "",
+              "case_insensitive": true,
+              "multiline": false,
+              "dotall": false,
+              "count": 0
+            }
+          },
+          {
+            "id": 88,
+            "type": "RegexReplace",
+            "pos": [
+              2270,
+              412
+            ],
+            "size": [
+              320,
+              292
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 149
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  150,
+                  151,
+                  153
+                ]
+              }
+            ],
+            "title": "S2. SFW: dọn dấu",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "widgets_values": [
+              "",
+              "^[\\s,;]+|(?<=[:,.;])\\s*[,;]|\\s+(?=[,.;])|(?<=\\s)\\s+",
+              "",
+              false,
+              false,
+              false,
+              0
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "regex_pattern": "^[\\s,;]+|(?<=[:,.;])\\s*[,;]|\\s+(?=[,.;])|(?<=\\s)\\s+",
+              "replace": "",
+              "case_insensitive": false,
+              "multiline": false,
+              "dotall": false,
+              "count": 0
+            }
+          },
+          {
+            "id": 89,
+            "type": "RegexMatch",
+            "pos": [
+              2270,
+              764
+            ],
+            "size": [
+              320,
+              214
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 150
+              }
+            ],
+            "outputs": [
+              {
+                "name": "matches",
+                "type": "BOOLEAN",
+                "links": [
+                  152
+                ]
+              }
+            ],
+            "title": "S3. SFW: đã có câu che hông?",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexMatch"
+            },
+            "widgets_values": [
+              "",
+              "cover(?:s|ed|ing)?\\s+(?:the\\s+|his\\s+)?groin|groin\\s+(?:is\\s+|stays\\s+|remains\\s+)?(?:fully\\s+|completely\\s+)?(?:covered|hidden|concealed|out\\s+of\\s+(?:the\\s+)?frame)",
+              true,
+              false,
+              false
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "regex_pattern": "cover(?:s|ed|ing)?\\s+(?:the\\s+|his\\s+)?groin|groin\\s+(?:is\\s+|stays\\s+|remains\\s+)?(?:fully\\s+|completely\\s+)?(?:covered|hidden|concealed|out\\s+of\\s+(?:the\\s+)?frame)",
+              "case_insensitive": true,
+              "multiline": false,
+              "dotall": false
+            }
+          },
+          {
+            "id": 90,
+            "type": "StringConcatenate",
+            "pos": [
+              2270,
+              1038
+            ],
+            "size": [
+              320,
+              166
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string_b",
+                "type": "STRING",
+                "widget": {
+                  "name": "string_b"
+                },
+                "link": null
+              },
+              {
+                "name": "string_a",
+                "type": "STRING",
+                "widget": {
+                  "name": "string_a"
+                },
+                "link": 151
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  154
+                ]
+              }
+            ],
+            "title": "S4. SFW: thêm câu che hông",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "StringConcatenate"
+            },
+            "widgets_values": [
+              "",
+              "He wears briefs that fully cover the groin.",
+              ". "
+            ],
+            "widgets_values_named": {
+              "string_a": "",
+              "string_b": "He wears briefs that fully cover the groin.",
+              "delimiter": ". "
+            }
+          },
+          {
+            "id": 91,
+            "type": "ComfySwitchNode",
+            "pos": [
+              2270,
+              1264
+            ],
+            "size": [
+              320,
+              78
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "on_false",
+                "shape": 7,
+                "type": "STRING",
+                "link": 154
+              },
+              {
+                "name": "on_true",
+                "shape": 7,
+                "type": "STRING",
+                "link": 153
+              },
+              {
+                "name": "switch",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "switch"
+                },
+                "link": 152
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "type": "STRING",
+                "links": [
+                  157
+                ]
+              }
+            ],
+            "title": "S5. SFW: chọn câu che",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "ComfySwitchNode"
+            },
+            "widgets_values": [
+              false
+            ],
+            "widgets_values_named": {
+              "switch": false
+            }
+          },
+          {
+            "id": 92,
+            "type": "ComfySwitchNode",
+            "pos": [
+              2270,
+              1402
+            ],
+            "size": [
+              320,
+              78
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "on_false",
+                "shape": 7,
+                "type": "STRING",
+                "link": 157
+              },
+              {
+                "name": "on_true",
+                "shape": 7,
+                "type": "STRING",
+                "link": 156
+              },
+              {
+                "name": "switch",
+                "type": "BOOLEAN",
+                "widget": {
+                  "name": "switch"
+                },
+                "link": 155
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "type": "STRING",
+                "links": [
+                  158
+                ]
+              }
+            ],
+            "title": "S6. nsfw bật → bỏ qua lớp SFW",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "ComfySwitchNode"
+            },
+            "widgets_values": [
+              false
+            ],
+            "widgets_values_named": {
+              "switch": false
+            }
+          },
+          {
+            "id": 93,
+            "type": "RegexReplace",
+            "pos": [
+              2700,
+              60
+            ],
+            "size": [
+              320,
+              292
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 158
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  159
+                ]
+              }
+            ],
+            "title": "6a. Bỏ {char} đứng riêng đầu thân",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "widgets_values": [
+              "",
+              "^\\s*\\{char\\}(?:\\s*[.,:;]+\\s*|\\s+(?=[^a-z\\s'])|\\s*$)",
+              "",
+              false,
+              false,
+              false,
+              0
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "regex_pattern": "^\\s*\\{char\\}(?:\\s*[.,:;]+\\s*|\\s+(?=[^a-z\\s'])|\\s*$)",
+              "replace": "",
+              "case_insensitive": false,
+              "multiline": false,
+              "dotall": false,
+              "count": 0
+            }
+          },
+          {
+            "id": 94,
+            "type": "RegexReplace",
+            "pos": [
+              2700,
+              412
+            ],
+            "size": [
+              320,
+              292
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 159
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  160
+                ]
+              }
+            ],
+            "title": "6b. {char}'s đầu → His",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "widgets_values": [
+              "",
+              "^\\s*\\{char\\}'s\\b",
+              "His",
+              false,
+              false,
+              false,
+              0
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "regex_pattern": "^\\s*\\{char\\}'s\\b",
+              "replace": "His",
+              "case_insensitive": false,
+              "multiline": false,
+              "dotall": false,
+              "count": 0
+            }
+          },
+          {
+            "id": 95,
+            "type": "RegexReplace",
+            "pos": [
+              2700,
+              764
+            ],
+            "size": [
+              320,
+              292
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string",
+                "type": "STRING",
+                "widget": {
+                  "name": "string"
+                },
+                "link": 160
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  161
+                ]
+              }
+            ],
+            "title": "6c. {char} chủ ngữ đầu → He",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "RegexReplace"
+            },
+            "widgets_values": [
+              "",
+              "^\\s*\\{char\\}\\s+(?=[a-z])",
+              "He ",
+              false,
+              false,
+              false,
+              0
+            ],
+            "widgets_values_named": {
+              "string": "",
+              "regex_pattern": "^\\s*\\{char\\}\\s+(?=[a-z])",
+              "replace": "He ",
+              "case_insensitive": false,
+              "multiline": false,
+              "dotall": false,
+              "count": 0
+            }
+          },
+          {
+            "id": 96,
+            "type": "StringConcatenate",
+            "pos": [
+              2700,
+              1372.0
+            ],
+            "size": [
+              320,
+              166
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string_b",
+                "type": "STRING",
+                "widget": {
+                  "name": "string_b"
+                },
+                "link": 163
+              },
+              {
+                "name": "string_a",
+                "type": "STRING",
+                "widget": {
+                  "name": "string_a"
+                },
+                "link": 162
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  164
+                ]
+              }
+            ],
+            "title": "6e. MainTrigger + Prefix",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "StringConcatenate"
+            },
+            "widgets_values": [
+              "",
+              "",
+              ". "
+            ],
+            "widgets_values_named": {
+              "string_a": "",
+              "string_b": "",
+              "delimiter": ". "
+            }
+          },
+          {
+            "id": 97,
+            "type": "StringConcatenate",
+            "pos": [
+              2700,
+              1598.0
+            ],
+            "size": [
+              320,
+              166
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string_b",
+                "type": "STRING",
+                "widget": {
+                  "name": "string_b"
+                },
+                "link": 165
+              },
+              {
+                "name": "string_a",
+                "type": "STRING",
+                "widget": {
+                  "name": "string_a"
+                },
+                "link": 164
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  166
+                ]
+              }
+            ],
+            "title": "6f. + thân prompt",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "StringConcatenate"
+            },
+            "widgets_values": [
+              "",
+              "",
+              ". "
+            ],
+            "widgets_values_named": {
+              "string_a": "",
+              "string_b": "",
+              "delimiter": ". "
+            }
+          },
+          {
+            "id": 98,
+            "type": "StringConcatenate",
+            "pos": [
+              2700,
+              1824.0
+            ],
+            "size": [
+              320,
+              166
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "string_b",
+                "type": "STRING",
+                "widget": {
+                  "name": "string_b"
+                },
+                "link": 167
+              },
+              {
+                "name": "string_a",
+                "type": "STRING",
+                "widget": {
+                  "name": "string_a"
+                },
+                "link": 166
+              }
+            ],
+            "outputs": [
+              {
+                "name": "STRING",
+                "type": "STRING",
+                "links": [
+                  185
+                ]
+              }
+            ],
+            "title": "6g. + Suffix",
+            "properties": {
+              "cnr_id": "comfy-core",
+              "ver": "0.39.0",
+              "Node name for S&R": "StringConcatenate"
+            },
+            "widgets_values": [
+              "",
+              "",
+              ". "
+            ],
+            "widgets_values_named": {
+              "string_a": "",
+              "string_b": "",
+              "delimiter": ". "
+            }
+          }
+        ],
+        "groups": [
+          {
+            "id": 6,
+            "title": "1. Nguồn",
+            "bounding": [
+              0,
+              0,
+              360,
+              198
+            ],
+            "color": "#3f789e",
+            "font_size": 22,
+            "flags": {}
+          },
+          {
+            "id": 7,
+            "title": "2. {char}",
+            "bounding": [
+              430,
+              0,
+              360,
+              906
+            ],
+            "color": "#8A8",
+            "font_size": 22,
+            "flags": {}
+          },
+          {
+            "id": 8,
+            "title": "3. LLM refine",
+            "bounding": [
+              860,
+              0,
+              460,
+              714
+            ],
+            "color": "#a1309b",
+            "font_size": 22,
+            "flags": {}
+          },
+          {
+            "id": 9,
+            "title": "4. Dọn output LLM",
+            "bounding": [
+              1390,
+              0,
+              360,
+              2190
+            ],
+            "color": "#b58b2a",
+            "font_size": 22,
+            "flags": {}
+          },
+          {
+            "id": 10,
+            "title": "5. Ép identity LoRA",
+            "bounding": [
+              1820,
+              0,
+              360,
+              2172
+            ],
+            "color": "#88A",
+            "font_size": 22,
+            "flags": {}
+          },
+          {
+            "id": 11,
+            "title": "S. Chặn SFW (nsfw tắt)",
+            "bounding": [
+              2250,
+              0,
+              360,
+              1540
+            ],
+            "color": "#a33",
+            "font_size": 22,
+            "flags": {}
+          },
+          {
+            "id": 12,
+            "title": "6. Ghép",
+            "bounding": [
+              2680,
+              0,
+              360,
+              2050.0
+            ],
+            "color": "#3f789e",
+            "font_size": 22,
+            "flags": {}
+          }
+        ],
+        "links": [
+          {
+            "id": 97,
+            "origin_id": 61,
+            "origin_slot": 0,
+            "target_id": 60,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 98,
+            "origin_id": 62,
+            "origin_slot": 0,
+            "target_id": 60,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 99,
+            "origin_id": 81,
+            "origin_slot": 0,
+            "target_id": 57,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 100,
+            "origin_id": 81,
+            "origin_slot": 0,
+            "target_id": 58,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 101,
+            "origin_id": 81,
+            "origin_slot": 0,
+            "target_id": 59,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 102,
+            "origin_id": 58,
+            "origin_slot": 0,
+            "target_id": 59,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 103,
+            "origin_id": 57,
+            "origin_slot": 0,
+            "target_id": 59,
+            "target_slot": 2,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 104,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 56,
+            "target_slot": 2,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 105,
+            "origin_id": -10,
+            "origin_slot": 1,
+            "target_id": 60,
+            "target_slot": 2,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 106,
+            "origin_id": 59,
+            "origin_slot": 0,
+            "target_id": 71,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 109,
+            "origin_id": 65,
+            "origin_slot": 0,
+            "target_id": 66,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 110,
+            "origin_id": 66,
+            "origin_slot": 0,
+            "target_id": 67,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 111,
+            "origin_id": 67,
+            "origin_slot": 0,
+            "target_id": 68,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 113,
+            "origin_id": 68,
+            "origin_slot": 0,
+            "target_id": 70,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 114,
+            "origin_id": 59,
+            "origin_slot": 0,
+            "target_id": 70,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 115,
+            "origin_id": 69,
+            "origin_slot": 0,
+            "target_id": 70,
+            "target_slot": 2,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 116,
+            "origin_id": 70,
+            "origin_slot": 0,
+            "target_id": 71,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 117,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 71,
+            "target_slot": 2,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 119,
+            "origin_id": 72,
+            "origin_slot": 0,
+            "target_id": 73,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 120,
+            "origin_id": 73,
+            "origin_slot": 0,
+            "target_id": 74,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 121,
+            "origin_id": 74,
+            "origin_slot": 0,
+            "target_id": 75,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 122,
+            "origin_id": 75,
+            "origin_slot": 0,
+            "target_id": 76,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 128,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 56,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 129,
+            "origin_id": -10,
+            "origin_slot": 4,
+            "target_id": 56,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 130,
+            "origin_id": -10,
+            "origin_slot": 5,
+            "target_id": 77,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 136,
+            "origin_id": 56,
+            "origin_slot": 0,
+            "target_id": 81,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 137,
+            "origin_id": -10,
+            "origin_slot": 5,
+            "target_id": 81,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 140,
+            "origin_id": -10,
+            "origin_slot": 6,
+            "target_id": 63,
+            "target_slot": 0,
+            "type": "CLIP"
+          },
+          {
+            "id": 141,
+            "origin_id": 60,
+            "origin_slot": 0,
+            "target_id": 63,
+            "target_slot": 4,
+            "type": "STRING"
+          },
+          {
+            "id": 142,
+            "origin_id": 59,
+            "origin_slot": 0,
+            "target_id": 63,
+            "target_slot": 5,
+            "type": "STRING"
+          },
+          {
+            "id": 143,
+            "origin_id": 63,
+            "origin_slot": 0,
+            "target_id": 85,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 144,
+            "origin_id": 85,
+            "origin_slot": 0,
+            "target_id": 65,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 145,
+            "origin_id": 85,
+            "origin_slot": 0,
+            "target_id": 69,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 146,
+            "origin_id": 71,
+            "origin_slot": 0,
+            "target_id": 86,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 147,
+            "origin_id": 86,
+            "origin_slot": 0,
+            "target_id": 72,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 148,
+            "origin_id": 76,
+            "origin_slot": 0,
+            "target_id": 87,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 149,
+            "origin_id": 87,
+            "origin_slot": 0,
+            "target_id": 88,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 150,
+            "origin_id": 88,
+            "origin_slot": 0,
+            "target_id": 89,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 151,
+            "origin_id": 88,
+            "origin_slot": 0,
+            "target_id": 90,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 152,
+            "origin_id": 89,
+            "origin_slot": 0,
+            "target_id": 91,
+            "target_slot": 2,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 153,
+            "origin_id": 88,
+            "origin_slot": 0,
+            "target_id": 91,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 154,
+            "origin_id": 90,
+            "origin_slot": 0,
+            "target_id": 91,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 155,
+            "origin_id": -10,
+            "origin_slot": 1,
+            "target_id": 92,
+            "target_slot": 2,
+            "type": "BOOLEAN"
+          },
+          {
+            "id": 156,
+            "origin_id": 76,
+            "origin_slot": 0,
+            "target_id": 92,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 157,
+            "origin_id": 91,
+            "origin_slot": 0,
+            "target_id": 92,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 158,
+            "origin_id": 92,
+            "origin_slot": 0,
+            "target_id": 93,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 159,
+            "origin_id": 93,
+            "origin_slot": 0,
+            "target_id": 94,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 160,
+            "origin_id": 94,
+            "origin_slot": 0,
+            "target_id": 95,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 161,
+            "origin_id": 95,
+            "origin_slot": 0,
+            "target_id": 77,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 162,
+            "origin_id": -10,
+            "origin_slot": 5,
+            "target_id": 96,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 163,
+            "origin_id": -10,
+            "origin_slot": 7,
+            "target_id": 96,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 164,
+            "origin_id": 96,
+            "origin_slot": 0,
+            "target_id": 97,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 165,
+            "origin_id": 77,
+            "origin_slot": 0,
+            "target_id": 97,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 166,
+            "origin_id": 97,
+            "origin_slot": 0,
+            "target_id": 98,
+            "target_slot": 1,
+            "type": "STRING"
+          },
+          {
+            "id": 167,
+            "origin_id": -10,
+            "origin_slot": 8,
+            "target_id": 98,
+            "target_slot": 0,
+            "type": "STRING"
+          },
+          {
+            "id": 185,
+            "origin_id": 98,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 0,
+            "type": "STRING"
           }
         ],
         "extra": {}

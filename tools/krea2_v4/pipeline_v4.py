@@ -90,7 +90,7 @@ README_V4 = """## Krea-2 Turbo + LoRA — T2I v4
 
 **Thứ tự prompt cuối:** `MainTrigger` → `Prefix` → prompt đã xử lý → `Suffix` (nối bằng `. `). Rồi mọi từ `brief|briefs|underwear|towel|pants|sweatpants|shorts|sweatshorts` (kể cả trong Suffix) được thay bằng **1** token random từ *7a* (khớp nguyên từ).
 
-**Prompt Builder (trái → phải):** 1 Nguồn · 2 `{char}` · 3 LLM refine · 4 Dọn output LLM · 5 Ép identity LoRA · 6 Ghép · 7 Random swap. Bảng regex: note *Regex – bảng tra*.
+**Prompt Builder (trái → phải):** 1 Nguồn · 2 `{char}` · 3 LLM refine · 4 Dọn output LLM · 5 Ép identity LoRA · S Chặn SFW · 6 Ghép — nằm **trong** subgraph *Krea2 Prompt Builder v4* (double-click để mở; 2 system prompt SFW/NSFW ở trong, trên cột 3). Output `prompt` → **7 Random swap** để ngoài: sửa danh sách token ở *7a*, danh sách từ cần thay ở *7b*. Bảng regex: note *Regex – bảng tra*.
 
 **`{char}`:** chữ trigger trong prompt (vd `Ivan_Ryo.`) được đổi thành `{char}`; không có thì tự thêm vào đầu. `{char}` đứng riêng ở đầu (`{char}. …`, `{char} A 25yo…`) bị bỏ vì trigger đã đứng đầu chuỗi; `{char}` làm chủ ngữ đầu câu thành `He` / `His` (`{char} lies…` → `He lies…`); `{char}` giữa câu đổi thành trigger. **MainTrigger không được để trống.**
 
@@ -157,8 +157,13 @@ def split_txt(path):
     return [b.split("###", 1)[0].strip() for b in blocks]
 
 
+def all_nodes(wf):
+    """Root nodes and nodes inside every subgraph definition."""
+    return wf["nodes"] + [n for sg in wf["definitions"]["subgraphs"] for n in sg["nodes"]]
+
+
 def _named(wf, title):
-    return next(n for n in wf["nodes"] if n.get("title") == title)["widgets_values_named"]
+    return next(n for n in all_nodes(wf) if n.get("title") == title)["widgets_values_named"]
 
 
 def _rx(wf, title, s):

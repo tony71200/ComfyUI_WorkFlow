@@ -201,6 +201,12 @@ Mô phỏng offline sau Task 4 cho thấy vấn đề, bạn chọn:
 
 Số node sau patch: 54 (thêm `5a`, `6b`, `6c`). Còn lại chưa sửa: dấu `,.` khi `5d` xoá cụm cuối câu (`…shorts, sharp jawline.` → `…shorts,.`) và màu tóc viết **sau** chữ `hair` (`hair dyed pastel purple`).
 
+## Thay đổi sau test (2026-10-29, đã duyệt)
+
+- **Rule 7 SFW** đổi thành "Always Keep the Groin Covered": LLM phải xoá chữ khoả thân và ghi rõ hông được che (briefs hoặc góc máy). `4b` bỏ thêm câu chat "Let me know…".
+- **Cột S — lớp chặn SFW** (chỉ khi `nsfw` tắt, cả khi refine tắt/lỗi): S1 xoá chữ khoả thân/bộ phận, S2 dọn dấu, S3–S5 ghép `He wears briefs that fully cover the groin.` nếu chưa có câu che, S6 bỏ qua cả cột khi `nsfw` bật. Test: chữ sạch 15/15, ảnh vẫn lộ 5/15 do LoRA `krea_good_bulge` và UNet NSFW (report pass D/E) — bạn chấp nhận nguyên nhân từ model.
+- **Đóng gói subgraph** (trước đây ngoài phạm vi): cột 1–6 + S và 2 system prompt vào subgraph `Krea2 Prompt Builder v4`; input `clip, prompt_txt, prompt_tay, use_txt, refine, nsfw, MainTrigger, Prefix, Suffix`, output `prompt`. Cột 7 (random swap) để ngoài để chỉnh token. `patch_v4.py` đóng gói tự động từ đồ thị phẳng; `check_v4.py` kiểm tra xuyên ranh giới subgraph. Smoke test SFW + NSFW qua subgraph khớp mô phỏng từng ký tự.
+
 ## Rủi ro
 
 - Randomize của frontend có thể chọn trong `[0, n]` thay vì `[0, n-1]` → backend kẹp về `n-1`, item cuối bị ra nhiều hơn. Pass A sẽ cho thấy; nếu đúng thì sửa `select_random.js` (`max = n - 1`) và ghi trong report.

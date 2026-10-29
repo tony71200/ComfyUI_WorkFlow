@@ -24,10 +24,17 @@ def post(path, body):
 
 
 def sync(api, wf):
-    """Copy widget values of the prompt-logic nodes from the workflow file; wired inputs (lists) stay as they are."""
-    for n in wf["nodes"]:
-        if n["type"] in SYNC_TYPES or n.get("title") in SYNC_TITLES:
-            inputs = api[str(n["id"])]["inputs"]
+    """Copy widget values of the prompt-logic nodes from the workflow file; wired inputs (lists) stay as they are.
+    Nodes inside a subgraph appear in the API prompt as "<instance id>:<inner id>"."""
+    subs = wf["definitions"]["subgraphs"]
+    keyed = [(str(n["id"]), n) for n in wf["nodes"]]
+    for inst in wf["nodes"]:
+        for sg in subs:
+            if inst["type"] == sg["id"]:
+                keyed += [(f"{inst['id']}:{n['id']}", n) for n in sg["nodes"]]
+    for key, n in keyed:
+        if key in api and (n["type"] in SYNC_TYPES or n.get("title") in SYNC_TITLES):
+            inputs = api[key]["inputs"]
             for k, v in n["widgets_values_named"].items():
                 if k in inputs and not isinstance(inputs[k], list):
                     inputs[k] = v

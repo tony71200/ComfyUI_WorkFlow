@@ -4,6 +4,7 @@ Works on the user's hand-edited file and refuses to run twice; to redo: git chec
 import copy
 import json
 import sys
+import uuid
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -179,34 +180,121 @@ NEW = {"4a": n4a, "5a": n5a, "S1": nS1, "S2": nS2, "S3": nS3, "S4": nS4, "S5": n
        "7a": n7a, "7b": n7b, "7c": n7c, "7d": n7d, "7e": n7e}
 ID = {**KEEP, **NEW}
 
-# ---------- layout: colored column groups inside "Prompt Builder", left to right (key prefix → column) ----------
-COLS = [("1", "1. Nguồn", "#3f789e"), ("2", "2. {char}", "#8A8"), ("3", "3. LLM refine", "#a1309b"),
-        ("4", "4. Dọn output LLM", "#b58b2a"), ("5", "5. Ép identity LoRA", "#88A"),
-        ("S", "S. Chặn SFW (nsfw tắt)", "#a33"), ("6", "6. Ghép", "#3f789e"), ("7", "7. Random swap", "#b06634")]
+# ---------- layout helper: colored column groups, left to right (key prefix → column) ----------
+GAP, PAD, TITLE_H = 70, 20, 40
+next_gid = max(g.get("id", 0) for g in w["groups"]) + 1
+
+
+def columns(cols, x0, y0, extra=None):
+    """Stack each column's nodes top-down; returns (groups, right edge, bottom edge)."""
+    global next_gid
+    x, bottom, groups = x0, y0, []
+    for prefix, gtitle, color in cols:
+        ids = [ID[k] for k in TITLE if k[0] == prefix] + (extra or {}).get(prefix, [])
+        colw = max(N[i]["size"][0] for i in ids)
+        y = y0 + TITLE_H + PAD
+        for i in ids:
+            N[i]["pos"] = [x + PAD, y]
+            y += N[i]["size"][1] + 60
+        groups.append({"id": next_gid, "title": gtitle, "bounding": [x, y0, colw + 2 * PAD, y - y0], "color": color,
+                       "font_size": 22, "flags": {}})
+        next_gid += 1
+        bottom = max(bottom, y)
+        x += colw + 2 * PAD + GAP
+    return groups, x - GAP, bottom
+
+
+# inside the subgraph: columns 1-6 + S, system prompts above column 3 (subgraph coordinates start at 0, 0)
+INNER_COLS = [("1", "1. Nguồn", "#3f789e"), ("2", "2. {char}", "#8A8"), ("3", "3. LLM refine", "#a1309b"),
+              ("4", "4. Dọn output LLM", "#b58b2a"), ("5", "5. Ép identity LoRA", "#88A"),
+              ("S", "S. Chặn SFW (nsfw tắt)", "#a33"), ("6", "6. Ghép", "#3f789e")]
+inner_groups, inner_right, inner_bottom = columns(INNER_COLS, 0, 0)
+c3 = inner_groups[2]["bounding"][0]
+for k, nid in enumerate((61, 62)):
+    N[nid]["pos"] = [c3 + k * (N[61]["size"][0] + 40), -N[nid]["size"][1] - 80]
+
+# ---------- pack columns 1-6 + S and the system prompts into subgraph "Krea2 Prompt Builder v4" ----------
+SG_NAME = "Krea2 Prompt Builder v4"
+INSIDE = {ID[k] for k in TITLE if k[0] in "123456S"} | {61, 62}
+IN_NAMES = {35: "clip", 42: "prompt_txt", 41: "prompt_tay", 53: "use_txt", 54: "refine", 55: "nsfw",
+            38: "MainTrigger", 83: "Prefix", 84: "Suffix"}
+sg_id, inst = str(uuid.uuid5(uuid.NAMESPACE_URL, "krea2-v4/" + SG_NAME)), new_id()
+sg_links, sg_in, sg_out, inst_in, inst_out, in_slot, out_slot = [], [], [], [], [], {}, {}
+
+
+def new_link_id():
+    w["last_link_id"] += 1
+    return w["last_link_id"]
+
+
+for l in list(w["links"]):
+    lid_, o, os_, t, ts, typ = l
+    if o in INSIDE and t in INSIDE:                       # stays a link, now inside the subgraph
+        w["links"].remove(l)
+        sg_links.append(dict(id=lid_, origin_id=o, origin_slot=os_, target_id=t, target_slot=ts, type=typ))
+    elif t in INSIDE:                                     # outside -> inside: one subgraph input per source
+        if (o, os_) not in in_slot:
+            k = in_slot[(o, os_)] = len(sg_in)
+            name = IN_NAMES[o]
+            sg_in.append({"id": str(uuid.uuid5(uuid.NAMESPACE_URL, f"krea2-v4/in/{name}")), "name": name, "type": typ, "linkIds": [],
+                          "localized_name": name, "pos": [0, 0]})
+            rl = new_link_id()
+            w["links"].append([rl, o, os_, inst, k, typ])
+            N[o]["outputs"][os_]["links"].append(rl)
+            inst_in.append({"name": name, "type": typ, "link": rl})
+        k = in_slot[(o, os_)]
+        w["links"].remove(l)
+        N[o]["outputs"][os_]["links"].remove(lid_)
+        sg_in[k]["linkIds"].append(lid_)                  # same id, now from the subgraph input node
+        sg_links.append(dict(id=lid_, origin_id=-10, origin_slot=k, target_id=t, target_slot=ts, type=typ))
+    elif o in INSIDE:                                     # inside -> outside: one subgraph output per source
+        if (o, os_) not in out_slot:
+            k = out_slot[(o, os_)] = len(sg_out)
+            il = new_link_id()
+            sg_out.append({"id": str(uuid.uuid5(uuid.NAMESPACE_URL, "krea2-v4/out/prompt")), "name": "prompt", "type": typ, "linkIds": [il],
+                           "localized_name": "prompt", "pos": [0, 0]})
+            sg_links.append(dict(id=il, origin_id=o, origin_slot=os_, target_id=-20, target_slot=k, type=typ))
+            N[o]["outputs"][os_]["links"].append(il)
+            inst_out.append({"localized_name": "prompt", "name": "prompt", "type": typ, "links": []})
+        k = out_slot[(o, os_)]
+        N[o]["outputs"][os_]["links"].remove(lid_)
+        l[1], l[2] = inst, k                              # same id, now from the instance output
+        inst_out[k]["links"].append(lid_)
+assert len(sg_out) == 1, "Prompt Builder must have exactly one output (the assembled prompt)"
+
+sg_nodes = [N.pop(i) for i in sorted(INSIDE)]
+w["nodes"] = [n for n in w["nodes"] if n["id"] not in INSIDE]
+in_x = -400
+out_x = inner_right + 120
+for k, e in enumerate(sg_in):
+    e["pos"] = [in_x + 140, 24 + 20 * k]
+for k, e in enumerate(sg_out):
+    e["pos"] = [out_x + 24, 24 + 20 * k]
+w["definitions"]["subgraphs"].append({
+    "id": sg_id, "version": 1,
+    "state": {"lastGroupId": next_gid, "lastNodeId": w["last_node_id"], "lastLinkId": w["last_link_id"], "lastRerouteId": 0},
+    "revision": 0, "config": {}, "name": SG_NAME,
+    "inputNode": {"id": -10, "bounding": [in_x, 0, 160, 40 + 20 * len(sg_in)]},
+    "outputNode": {"id": -20, "bounding": [out_x, 0, 140, 40 + 20 * len(sg_out)]},
+    "inputs": sg_in, "outputs": sg_out, "widgets": [], "nodes": sg_nodes, "groups": inner_groups,
+    "links": sg_links, "extra": {}})
+for sg in w["definitions"]["subgraphs"]:  # keep id counters ahead of every node/link in the file
+    sg["state"]["lastNodeId"], sg["state"]["lastLinkId"] = w["last_node_id"], w["last_link_id"]
+N[inst] = {"id": inst, "type": sg_id, "pos": [0, 0], "size": [380, 270], "flags": {}, "order": 0, "mode": 0,
+           "inputs": inst_in, "outputs": inst_out, "title": SG_NAME,
+           "properties": {"cnr_id": "comfy-core", "ver": "0.39.0"}, "widgets_values": []}
+w["nodes"].append(N[inst])
+
+# ---------- root layout: Prompt Builder = subgraph node + regex note | column 7 ----------
 pb = next(g for g in w["groups"] if g["title"] == "Prompt Builder")
 X0, Y0 = pb["bounding"][0] + 30, pb["bounding"][1] + 50
-GAP, PAD, TITLE_H = 70, 20, 40
-x, bottom, new_groups = X0, Y0, []
-next_gid = max(g.get("id", 0) for g in w["groups"]) + 1
-for prefix, gtitle, color in COLS:
-    ids = [ID[k] for k in TITLE if k[0] == prefix] + ([note] if prefix == "1" else [])
-    colw = max(N[i]["size"][0] for i in ids)
-    y = Y0 + TITLE_H + PAD
-    for i in ids:
-        N[i]["pos"] = [x + PAD, y]
-        y += N[i]["size"][1] + 60
-    new_groups.append({"id": next_gid, "title": gtitle, "bounding": [x, Y0, colw + 2 * PAD, y - Y0], "color": color,
-                       "font_size": 22, "flags": {}})
-    next_gid += 1
-    bottom = max(bottom, y)
-    x += colw + 2 * PAD + GAP
-pb["bounding"] = [X0 - 30, Y0 - 50, x - GAP - X0 + 60, bottom - Y0 + 100]
-w["groups"].extend(new_groups)
-
-# system prompts stay above the group, aligned over column 3
-c3 = new_groups[2]["bounding"][0]
-N[61]["pos"][0] = c3
-N[62]["pos"][0] = c3 + N[61]["size"][0] + 40
+N[inst]["pos"] = [X0 + PAD, Y0 + TITLE_H + PAD]
+N[note]["pos"] = [X0 + PAD, Y0 + TITLE_H + PAD + N[inst]["size"][1] + 80]
+left_w = max(N[inst]["size"][0], N[note]["size"][0]) + 2 * PAD
+left_bottom = N[note]["pos"][1] + N[note]["size"][1] + 40
+col7_groups, right, bottom = columns([("7", "7. Random swap (chỉnh token ở 7a)", "#b06634")], X0 + left_w + GAP, Y0)
+w["groups"].extend(col7_groups)
+pb["bounding"] = [X0 - 30, Y0 - 50, right - X0 + 60, max(bottom, left_bottom) - Y0 + 100]
 
 # move "Sampler + Output" (group + its nodes) to the right of Prompt Builder
 so = next(g for g in w["groups"] if g["title"] == "Sampler + Output")

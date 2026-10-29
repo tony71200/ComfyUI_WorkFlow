@@ -52,22 +52,48 @@ for ref in re.findall(r"%([A-Za-z0-9_]+)\.", fp):
 assert "%MainTrigger.value%" in fp and "_v4_" in fp, fp
 print("filename refs ok:", fp)
 
-# v4 wiring
-T = {n.get("title"): n for n in d["nodes"]}
-for t in TITLE.values():
+# subgraph "Krea2 Prompt Builder v4": columns 1-6 + S and the system prompts inside, column 7 outside
+PB = next(sg for sg in d["definitions"]["subgraphs"] if sg["name"] == "Krea2 Prompt Builder v4")
+INST = next(n for n in d["nodes"] if n["type"] == PB["id"])
+assert INST.get("title") == PB["name"]
+assert [i["name"] for i in INST["inputs"]] == [i["name"] for i in PB["inputs"]], "instance inputs != subgraph inputs"
+assert [o["name"] for o in INST["outputs"]] == [o["name"] for o in PB["outputs"]] == ["prompt"]
+assert all(i["link"] is not None for i in INST["inputs"]), "unwired Prompt Builder input"
+ROOT = {n["id"]: n for n in d["nodes"]}
+INNER = {n["id"]: n for n in PB["nodes"]}
+assert not ROOT.keys() & INNER.keys(), "node id used both at root and inside the subgraph"
+T = {n.get("title"): n for n in [*ROOT.values(), *INNER.values()]}
+for k, t in TITLE.items():
     assert t in T, ("missing node", t)
+    assert (T[t]["id"] in INNER) == (k[0] in "123456S"), ("wrong side of the subgraph", t)
+for t in ("System prompt SFW", "System prompt NSFW"):
+    assert T[t]["id"] in INNER, t
 for t in ("Prefix", "Suffix", "MainTrigger", "Regex – bảng tra", "README – Krea2 LoRA T2I v4"):
-    assert t in T, ("missing node", t)
+    assert T.get(t, {}).get("id") in ROOT, ("missing root node", t)
 for gone in ("3c. Bỏ 'negative prompt…'", "5a. Có trigger?", "5b. Ghép trigger vào đầu", "5c. Chốt an toàn", "5d. Ghép trigger vào cuối"):
     assert gone not in T, ("should be removed", gone)
-LINK = {l[0]: l for l in d["links"]}
+RL = {l[0]: dict(zip(KEYS, l)) for l in d["links"]}
+IL = {l["id"]: l for l in PB["links"]}
+
+
+def origin_title(link, inner):
+    """Title of the real node a link comes from, looking through the subgraph boundary both ways."""
+    if inner and link["origin_id"] == -10:
+        return origin_title(RL[INST["inputs"][link["origin_slot"]]["link"]], False)
+    if inner:
+        return INNER[link["origin_id"]].get("title")
+    if link["origin_id"] == INST["id"]:
+        il = next(l for l in PB["links"] if l["target_id"] == -20 and l["target_slot"] == link["origin_slot"])
+        return origin_title(il, True)
+    return ROOT[link["origin_id"]].get("title")
 
 
 def src(title_or_id, name):
-    n = T[title_or_id] if isinstance(title_or_id, str) else next(x for x in d["nodes"] if x["id"] == title_or_id)
+    n = T[title_or_id] if isinstance(title_or_id, str) else ROOT[title_or_id]
+    inner = n["id"] in INNER
     i = next(i for i in n["inputs"] if i["name"] == name)
     assert i["link"] is not None, (n.get("title"), name, "not linked")
-    return next(x for x in d["nodes"] if x["id"] == LINK[i["link"]][1]).get("title")
+    return origin_title((IL if inner else RL)[i["link"]], inner)
 
 
 assert src(TITLE["4a"], "string") == TITLE["3b"]
@@ -103,9 +129,13 @@ sfw = T["System prompt SFW"]["widgets_values"][0]
 assert "7. **Always Keep the Groin Covered:**" in sfw and "Keep every clothing item" in sfw and "Respect the Human Form" not in sfw
 assert "let me know" in T[TITLE["4b"]]["widgets_values_named"]["regex_pattern"]
 
-# layout: every Prompt Builder node sits inside its column group
-G = {g["title"]: g["bounding"] for g in d["groups"]}
+assert src(TITLE["3b"], "clip") == "Text encoder Qwen3-VL-4B (type krea2)"
+assert src(TITLE["1"], "on_true") == "TextSplitter" and src(TITLE["1"], "switch").startswith("use_txt")
+assert src(TITLE["4h"], "switch") == "refine (LLM)" and src(TITLE["3a"], "switch") == "nsfw"
+
+# layout: every Prompt Builder node sits inside its column group (subgraph coordinates for columns 1-6 + S)
 for col in "12345S67":
+    G = {g["title"]: g["bounding"] for g in (PB["groups"] if col in "123456S" else d["groups"])}
     gt = next(t for t in G if t.startswith(f"{col}. "))
     x, y, w, h = G[gt]
     for k, t in TITLE.items():
