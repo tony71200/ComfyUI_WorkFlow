@@ -9,3 +9,6 @@
 !docs/
 !tools/
 __pycache__/
+
+tools/krea2_v4/out/
+tools/krea2_v4/comfy_server.log
