@@ -9,8 +9,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from pipeline_v4 import (CAMERA_RULE, FILENAME_PREFIX, README_V4, REFUSE_EXTRA, REGEX_NOTE, RX_CHATTER,  # noqa: E402
                          RX_DEDUP, RX_DEDUP_REPL, RX_DOTS, RX_DOTS_REPL, RX_HAIR, RX_HAIR_DEDUP, RX_LEAD_CHAR,
-                         RX_LEAD_POSS, RX_LEAD_SUBJ, RX_ONE_PARA, RX_THINK, SFW_RULE7, SFW_RULE7_HEAD, SWAP_FIND,
-                         SWAP_ITEMS, TITLE, WF_PATH)
+                         RX_LEAD_POSS, RX_LEAD_SUBJ, RX_ONE_PARA, RX_SFW_COVERED, RX_SFW_EXPLICIT, RX_SFW_TIDY,
+                         RX_THINK, SFW_COVER_TEXT, SFW_RULE7, SFW_RULE7_HEAD, SWAP_FIND, SWAP_ITEMS, TITLE, WF_PATH)
 
 sys.stdout.reconfigure(encoding="utf-8")
 w = json.loads(WF_PATH.read_text(encoding="utf-8"))
@@ -108,13 +108,25 @@ link(n5a, 0, 72, "string")
 set_w(72, "regex_pattern", RX_HAIR)
 set_w(73, "regex_pattern", RX_HAIR_DEDUP)
 
+# ---------- column S: SFW guard, bypassed when nsfw is on (switches are lazy) ----------
+nS1 = clone(65, TITLE["S1"], regex_pattern=RX_SFW_EXPLICIT, replace="", **{**RX_OFF, "case_insensitive": True})
+nS2 = clone(65, TITLE["S2"], regex_pattern=RX_SFW_TIDY, replace="", **RX_OFF)
+nS3 = clone(69, TITLE["S3"], regex_pattern=RX_SFW_COVERED, case_insensitive=True, multiline=False, dotall=False)
+nS4 = clone(58, TITLE["S4"], string_a="", string_b=SFW_COVER_TEXT, delimiter=". ")
+nS5 = clone(59, TITLE["S5"], switch=False)
+nS6 = clone(59, TITLE["S6"], switch=False)
+link(76, 0, nS1, "string"); link(nS1, 0, nS2, "string")
+link(nS2, 0, nS3, "string"); link(nS2, 0, nS4, "string_a")
+link(nS3, 0, nS5, "switch"); link(nS2, 0, nS5, "on_true"); link(nS4, 0, nS5, "on_false")
+link(55, 0, nS6, "switch"); link(76, 0, nS6, "on_true"); link(nS5, 0, nS6, "on_false")
+
 # ---------- column 6: leading {char}, then MainTrigger. Prefix. body. Suffix ----------
 for nid in (78, 79, 80, 82):
     rm_node(nid)
 n6a = clone(65, TITLE["6a"], regex_pattern=RX_LEAD_CHAR, replace="", **RX_OFF)
 n6b = clone(65, TITLE["6b"], regex_pattern=RX_LEAD_POSS, replace="His", **RX_OFF)
 n6c = clone(65, TITLE["6c"], regex_pattern=RX_LEAD_SUBJ, replace="He ", **RX_OFF)
-link(76, 0, n6a, "string"); link(n6a, 0, n6b, "string"); link(n6b, 0, n6c, "string")
+link(nS6, 0, n6a, "string"); link(n6a, 0, n6b, "string"); link(n6b, 0, n6c, "string")
 link(n6c, 0, 77, "string")
 n6e, n6f, n6g = (clone(58, TITLE[k], string_a="", string_b="", delimiter=". ") for k in ("6e", "6f", "6g"))
 link(38, 0, n6e, "string_a"); link(83, 0, n6e, "string_b")
@@ -162,20 +174,22 @@ KEEP = {"1": 56, "2a": 81, "2b": 57, "2c": 58, "2d": 59, "3a": 60, "3b": 63, "4b
         "4f": 69, "4g": 70, "4h": 71, "5b": 72, "5c": 73, "5d": 74, "5e": 75, "5f": 76, "6d": 77}
 for k, nid in KEEP.items():
     N[nid]["title"] = TITLE[k]
-NEW = {"4a": n4a, "5a": n5a, "6a": n6a, "6b": n6b, "6c": n6c, "6e": n6e, "6f": n6f, "6g": n6g,
+NEW = {"4a": n4a, "5a": n5a, "S1": nS1, "S2": nS2, "S3": nS3, "S4": nS4, "S5": nS5, "S6": nS6,
+       "6a": n6a, "6b": n6b, "6c": n6c, "6e": n6e, "6f": n6f, "6g": n6g,
        "7a": n7a, "7b": n7b, "7c": n7c, "7d": n7d, "7e": n7e}
 ID = {**KEEP, **NEW}
 
-# ---------- layout: 7 colored column groups inside "Prompt Builder", left to right ----------
-COLS = [("1. Nguồn", "#3f789e"), ("2. {char}", "#8A8"), ("3. LLM refine", "#a1309b"), ("4. Dọn output LLM", "#b58b2a"),
-        ("5. Ép identity LoRA", "#88A"), ("6. Ghép", "#3f789e"), ("7. Random swap", "#b06634")]
+# ---------- layout: colored column groups inside "Prompt Builder", left to right (key prefix → column) ----------
+COLS = [("1", "1. Nguồn", "#3f789e"), ("2", "2. {char}", "#8A8"), ("3", "3. LLM refine", "#a1309b"),
+        ("4", "4. Dọn output LLM", "#b58b2a"), ("5", "5. Ép identity LoRA", "#88A"),
+        ("S", "S. Chặn SFW (nsfw tắt)", "#a33"), ("6", "6. Ghép", "#3f789e"), ("7", "7. Random swap", "#b06634")]
 pb = next(g for g in w["groups"] if g["title"] == "Prompt Builder")
 X0, Y0 = pb["bounding"][0] + 30, pb["bounding"][1] + 50
 GAP, PAD, TITLE_H = 70, 20, 40
 x, bottom, new_groups = X0, Y0, []
 next_gid = max(g.get("id", 0) for g in w["groups"]) + 1
-for ci, (gtitle, color) in enumerate(COLS, start=1):
-    ids = [ID[k] for k in TITLE if k[0] == str(ci)] + ([note] if ci == 1 else [])
+for prefix, gtitle, color in COLS:
+    ids = [ID[k] for k in TITLE if k[0] == prefix] + ([note] if prefix == "1" else [])
     colw = max(N[i]["size"][0] for i in ids)
     y = Y0 + TITLE_H + PAD
     for i in ids:

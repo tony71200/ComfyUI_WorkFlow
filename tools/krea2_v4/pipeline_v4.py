@@ -50,6 +50,19 @@ SFW_RULE7 = ("7. **Always Keep the Groin Covered:** Treat depictions of people w
              "of the hips) and write that the groin is out of frame or fully hidden. If the input never says what covers "
              "the groin, add briefs the same way. Water, foam, steam, shadow and thin draped fabric do not count as "
              "covering. Keep every clothing item the user wrote (e.g. briefs, towel, shorts) with the same word.")
+# S1-S6: SFW guard, only when nsfw is off (also when refine is off or fell back): the 4B LLM does not follow
+# rule 7 reliably, so explicit words are deleted and a groin-cover sentence is added when none is there.
+SFW_ADJ = (r"small|large|big|huge|thick|perfect|flaccid|erect|hard|circumcised|uncircumcised|visible|exposed"
+           r"|fully|completely|totally|partially")
+RX_SFW_EXPLICIT = (rf"(?:\b(?:including|with)\s+)?(?:\b(?:a|an|his)\s+)?(?:\b(?:{SFW_ADJ})\b[\s,]+)*"
+                   r"\b(?:penis(?:es)?|cock|dick|testicles?|scrotum|genitals?|genitalia|pubic hair|pubes|foreskin"
+                   r"|erection|nudity|nude|naked|undressed|unclothed|bare (?:buttocks|ass|butt)|buttocks|ass|erotic"
+                   r"|male anatomy)\b"
+                   r"(?:\s+with\s+(?:visible\s+)?testicles)?")
+RX_SFW_TIDY = r"^[\s,;]+|(?<=[:,.;])\s*[,;]|\s+(?=[,.;])|(?<=\s)\s+"
+RX_SFW_COVERED = (r"cover(?:s|ed|ing)?\s+(?:the\s+|his\s+)?groin|groin\s+(?:is\s+|stays\s+|remains\s+)?"
+                  r"(?:fully\s+|completely\s+)?(?:covered|hidden|concealed|out\s+of\s+(?:the\s+)?frame)")
+SFW_COVER_TEXT = "He wears briefs that fully cover the groin."
 # 4b addition: trailing chat from the LLM ("Let me know if you want to adjust…") up to the end of the line.
 RX_CHATTER = r"|\s*\b(?:let me know|feel free to|hope this helps|would you like)\b[^\n]*"
 FILENAME_PREFIX = "Krea2_%date:yyyy_MM_dd%/Krea2_T2I_v4_%MainTrigger.value%_%TextSplitter.index%_%date:yyMMdd%_%Seed.value%"
@@ -63,6 +76,8 @@ TITLE = {
     "4g": "4g. Refine lỗi → prompt gốc", "4h": "4h. Prompt: refine / gốc",
     "5a": "5a. Gộp 1 đoạn (luôn chạy)", "5b": "5b. Tóc: màu/độ dài → short", "5c": "5c. Gộp 'short short'",
     "5d": "5d. Bỏ jawline/chin/cheekbones…", "5e": "5e. Dọn dấu phẩy thừa", "5f": "5f. Dọn khoảng trắng",
+    "S1": "S1. SFW: xoá chữ khoả thân/bộ phận", "S2": "S2. SFW: dọn dấu", "S3": "S3. SFW: đã có câu che hông?",
+    "S4": "S4. SFW: thêm câu che hông", "S5": "S5. SFW: chọn câu che", "S6": "S6. nsfw bật → bỏ qua lớp SFW",
     "6a": "6a. Bỏ {char} đứng riêng đầu thân", "6b": "6b. {char}'s đầu → His", "6c": "6c. {char} chủ ngữ đầu → He",
     "6d": "6d. {char} → trigger", "6e": "6e. MainTrigger + Prefix", "6f": "6f. + thân prompt", "6g": "6g. + Suffix",
     "7a": "7a. Random token quần áo", "7b": "7b. Swap quần áo → token", "7c": "7c. Gộp token lặp",
@@ -83,7 +98,9 @@ README_V4 = """## Krea-2 Turbo + LoRA — T2I v4
 
 **Toggle:** `use_txt` (bật: .txt, tắt: Prompt tay) · `refine` (Qwen3-VL-4B viết lại; lỗi/từ chối → prompt gốc) · `nsfw` (System prompt NSFW thay SFW, chỉ khi refine bật).
 
-**SFW (rule 7):** LLM phải ghi rõ vùng kín được che — nude/naked → mặc briefs hoặc chọn góc máy giấu hông (waist-up, từ sau lưng, vật che). UNet là bản NSFW nên chỗ nào không ghi "che" thì dễ bị lộ. Khi refine lỗi và quay về prompt gốc thì không có lớp này.
+**SFW (rule 7):** LLM phải ghi rõ vùng kín được che — nude/naked → mặc briefs hoặc chọn góc máy giấu hông (waist-up, từ sau lưng, vật che). UNet là bản NSFW nên chỗ nào không ghi "che" thì dễ bị lộ.
+
+**Lớp chặn SFW (cột S, chỉ khi `nsfw` tắt — chạy cả khi refine tắt/lỗi):** S1 xoá chữ khoả thân/bộ phận (nude, naked, penis, testicles, pubic hair, erection, buttocks…, kèm tính từ đi theo); S3–S5 ghép `He wears briefs that fully cover the groin.` nếu prompt chưa có câu che hông (`briefs` sau đó thành token random). Không đụng Trigger/Prefix/Suffix — `good bulge` trong Suffix và LoRA `krea_good_bulge` vẫn đẩy ảnh về phía hở; muốn SFW chắc hơn thì giảm LoRA đó.
 
 **Thinking:** text encoder dùng chung cho Krea2 và LLM — **không** thay bằng bản Qwen3-VL Thinking. Muốn LLM thinking thì cần loader riêng (chưa có), bật `thinking`, `max_length ≥ 2048`. Node *4a* cắt mọi thứ đến `</think>`. Giới hạn: suy luận bị cắt ngang mà không mở bằng `<think>` vẫn có thể lọt vào prompt.
 
@@ -109,6 +126,10 @@ REGEX_NOTE = """## Regex – bảng tra (R = chỉ khi refine bật, A = luôn c
 | 5d | sharp/defined/strong… + jawline/chin/cheekbones/nose | rỗng | LoRA giữ mặt | A |
 | 5e | ` ,` · `,,` · ` .` | rỗng | dọn dấu phẩy | A |
 | 5f | 2+ dấu cách | 1 dấu cách | dọn khoảng trắng | A |
+| S1 | nude/naked/penis/testicles/pubic hair/erection/buttocks/erotic (+ tính từ, mạo từ đi trước) | rỗng | chặn SFW | nsfw tắt |
+| S2 | `, ,` · ` ;` · khoảng trắng thừa | rỗng | dọn sau S1 | nsfw tắt |
+| S3 | "cover(s) the groin" · "groin is covered/hidden/out of frame" | (đúng/sai) | đã có câu che? | nsfw tắt |
+| S4–S5 | — | + `He wears briefs that fully cover the groin.` | thêm câu che nếu thiếu | nsfw tắt |
 | 6a | `{char}` đứng riêng đầu thân | rỗng | trigger đã đứng đầu | A |
 | 6b | `{char}'s` đầu thân | `His` | giữ chủ ngữ | A |
 | 6c | `{char}` + chữ thường đầu thân | `He ` | giữ chủ ngữ | A |
@@ -147,7 +168,7 @@ def _rx(wf, title, s):
     return re.sub(v["regex_pattern"], v["replace"], s, count=v["count"], flags=flags)
 
 
-def simulate(wf, raw, prefix, suffix, token, refined=None):
+def simulate(wf, raw, prefix, suffix, token, refined=None, nsfw=True):
     """Final prompt of the patched workflow. refined=None means refine off; else the raw LLM output."""
     trig = next(n for n in wf["nodes"] if n.get("title") == "MainTrigger")["widgets_values_named"]["value"]
     s = raw.replace(trig, "{char}")                                   # 2a
@@ -161,7 +182,14 @@ def simulate(wf, raw, prefix, suffix, token, refined=None):
             for k in ("4b", "4c", "4d"):
                 out = _rx(wf, TITLE[k], out)
             body = out.strip()                                        # 4e
-    for k in ("5a", "5b", "5c", "5d", "5e", "5f", "6a", "6b", "6c"):
+    for k in ("5a", "5b", "5c", "5d", "5e", "5f"):
+        body = _rx(wf, TITLE[k], body)
+    if not nsfw:                                                      # S1-S6
+        body = _rx(wf, TITLE["S2"], _rx(wf, TITLE["S1"], body))
+        m = _named(wf, TITLE["S3"])
+        if not re.search(m["regex_pattern"], body, re.I if m["case_insensitive"] else 0):
+            body = body + ". " + _named(wf, TITLE["S4"])["string_b"]
+    for k in ("6a", "6b", "6c"):
         body = _rx(wf, TITLE[k], body)
     body = body.replace("{char}", trig)                               # 6d
     s = ". ".join([trig, prefix, body, suffix])                       # 6e / 6f / 6g
@@ -187,7 +215,23 @@ def check_final(final, trig, token):
     return bad
 
 
+def check_sfw(final):
+    """SFW invariants: no explicit words left, a groin-cover sentence present."""
+    bad = [f"explicit {w!r}" for w in re.findall(RX_SFW_EXPLICIT, final, re.I) if w.strip()]
+    if not re.search(RX_SFW_COVERED, final, re.I):
+        bad.append("no groin cover")
+    return bad
+
+
 def _pattern_asserts():
+    sfw = lambda s: re.sub(RX_SFW_TIDY, "", re.sub(RX_SFW_EXPLICIT, "", s, flags=re.I))
+    assert sfw("stands nude and barefoot") == "stands and barefoot"
+    assert sfw("anatomy including a flaccid, circumcised penis with visible testicles; wearing briefs") == "anatomy; wearing briefs"
+    assert sfw("naked, nude, pubic hair, flaccid penis, testicles, bare feet") == "bare feet"
+    assert sfw("bare-chested, a soccer ball") == "bare-chested, a soccer ball"
+    assert re.search(RX_SFW_COVERED, "tnga_brief that fully cover the groin", re.I)
+    assert re.search(RX_SFW_COVERED, "the groin is out of frame", re.I)
+    assert not re.search(RX_SFW_COVERED, "white briefs", re.I)
     assert re.sub(RX_THINK, "", "plan...</think>\n\nFinal text <think>") == "Final text "
     assert re.sub(RX_THINK, "", "no reasoning here") == "no reasoning here"
     assert re.sub(RX_LEAD_CHAR, "", "{char}. A man, {char} smiles") == "A man, {char} smiles"
@@ -228,6 +272,12 @@ if __name__ == "__main__":
                 bad = [b for b in bad if b != "token missing"]
             assert not bad, (i, bad, final[:300])
             print(f"[{i:02d}] {final[:160]}")
+    for i, raw in enumerate(split_txt(TEST_TXT)):                    # SFW guard on, refine off / fallback
+        token = SWAP_ITEMS[i % len(SWAP_ITEMS)]
+        final = simulate(wf, raw, "an Asian 25yo young man", "good bulge, briefs", token, nsfw=False)
+        bad = check_final(final, "Ivan_Ryo.", token) + check_sfw(final)
+        assert not bad, (i, bad, final[:400])
+        print(f"[sfw {i:02d}] …{final[-150:]}")
     fake_llm = ("plan: keep it short</think>\n\nHere is the refined prompt:\n"
                 "**{char}** lies on a float in black swim shorts, sharp jawline. Let me know if you want changes!")
     llm = simulate(wf, "{char} on a float", "", "good bulge, briefs", "hpstr_brief", refined=fake_llm)

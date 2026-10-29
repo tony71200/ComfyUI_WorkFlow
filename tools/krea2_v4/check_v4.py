@@ -74,7 +74,11 @@ assert src(TITLE["4a"], "string") == TITLE["3b"]
 assert src(TITLE["4b"], "string") == TITLE["4a"]
 assert src(TITLE["4f"], "string") == TITLE["4a"]
 assert src(TITLE["5a"], "string") == TITLE["4h"] and src(TITLE["5b"], "string") == TITLE["5a"]
-assert src(TITLE["6a"], "string") == TITLE["5f"]
+assert src(TITLE["S1"], "string") == TITLE["5f"] and src(TITLE["S2"], "string") == TITLE["S1"]
+assert src(TITLE["S3"], "string") == TITLE["S2"] and src(TITLE["S4"], "string_a") == TITLE["S2"]
+assert (src(TITLE["S5"], "switch"), src(TITLE["S5"], "on_true"), src(TITLE["S5"], "on_false")) == (TITLE["S3"], TITLE["S2"], TITLE["S4"])
+assert (src(TITLE["S6"], "switch"), src(TITLE["S6"], "on_true"), src(TITLE["S6"], "on_false")) == ("nsfw", TITLE["5f"], TITLE["S5"])
+assert src(TITLE["6a"], "string") == TITLE["S6"]
 assert src(TITLE["6b"], "string") == TITLE["6a"] and src(TITLE["6c"], "string") == TITLE["6b"]
 assert src(TITLE["6d"], "string") == TITLE["6c"]
 assert src(TITLE["6e"], "string_a") == "MainTrigger" and src(TITLE["6e"], "string_b") == "Prefix"
@@ -101,7 +105,7 @@ assert "let me know" in T[TITLE["4b"]]["widgets_values_named"]["regex_pattern"]
 
 # layout: every Prompt Builder node sits inside its column group
 G = {g["title"]: g["bounding"] for g in d["groups"]}
-for col in "1234567":
+for col in "12345S67":
     gt = next(t for t in G if t.startswith(f"{col}. "))
     x, y, w, h = G[gt]
     for k, t in TITLE.items():

@@ -1,8 +1,8 @@
 {
   "id": "aed86f0f-aab7-4e3b-817c-3e98c322b156",
   "revision": 0,
-  "last_node_id": 98,
-  "last_link_id": 165,
+  "last_node_id": 104,
+  "last_link_id": 175,
   "nodes": [
     {
       "id": 34,
@@ -262,7 +262,7 @@
           "links": [
             130,
             137,
-            152
+            162
           ]
         }
       ],
@@ -494,7 +494,7 @@
       "id": 44,
       "type": "PreviewAny",
       "pos": [
-        4178.563465034931,
+        4608.563465034931,
         1220.5266605030595
       ],
       "size": [
@@ -508,7 +508,7 @@
         {
           "name": "source",
           "type": "*",
-          "link": 165
+          "link": 175
         }
       ],
       "outputs": [
@@ -531,7 +531,7 @@
       "id": 45,
       "type": "7c138a89-d2b0-43ea-9bb8-ece66980ec94",
       "pos": [
-        4159.883850613252,
+        4589.883850613252,
         128.31959117542442
       ],
       "size": [
@@ -563,7 +563,7 @@
           "widget": {
             "name": "prompt"
           },
-          "link": 163
+          "link": 173
         },
         {
           "name": "width",
@@ -633,7 +633,7 @@
       "id": 46,
       "type": "SaveImageA1Metadata",
       "pos": [
-        4167.374252253259,
+        4597.374252253259,
         562.557937410212
       ],
       "size": [
@@ -656,7 +656,7 @@
           "widget": {
             "name": "positive_prompt_override"
           },
-          "link": 164
+          "link": 174
         }
       ],
       "outputs": [],
@@ -706,10 +706,10 @@
         "Node name for S&R": "MarkdownNote"
       },
       "widgets_values": [
-        "## Krea-2 Turbo + LoRA — T2I v4\n\n**Model:** homofidelis Krea2 NSFW turbo int8 · qwen3-vl-4b-heretic fp8 (type krea2) · qwen_image_vae. 8 bước, euler/simple, CFG 1.\n\n**Thứ tự prompt cuối:** `MainTrigger` → `Prefix` → prompt đã xử lý → `Suffix` (nối bằng `. `). Rồi mọi từ `brief|briefs|underwear|towel|pants|sweatpants|shorts|sweatshorts` (kể cả trong Suffix) được thay bằng **1** token random từ *7a* (khớp nguyên từ).\n\n**Prompt Builder (trái → phải):** 1 Nguồn · 2 `{char}` · 3 LLM refine · 4 Dọn output LLM · 5 Ép identity LoRA · 6 Ghép · 7 Random swap. Bảng regex: note *Regex – bảng tra*.\n\n**`{char}`:** chữ trigger trong prompt (vd `Ivan_Ryo.`) được đổi thành `{char}`; không có thì tự thêm vào đầu. `{char}` đứng riêng ở đầu (`{char}. …`, `{char} A 25yo…`) bị bỏ vì trigger đã đứng đầu chuỗi; `{char}` làm chủ ngữ đầu câu thành `He` / `His` (`{char} lies…` → `He lies…`); `{char}` giữa câu đổi thành trigger. **MainTrigger không được để trống.**\n\n**Camera mặc định (rule 11 của cả 2 system prompt, chỉ khi refine bật):** prompt chưa có white balance / lens / khẩu độ thì LLM thêm `White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft.`; đã có thì giữ nguyên.\n\n**Toggle:** `use_txt` (bật: .txt, tắt: Prompt tay) · `refine` (Qwen3-VL-4B viết lại; lỗi/từ chối → prompt gốc) · `nsfw` (System prompt NSFW thay SFW, chỉ khi refine bật).\n\n**SFW (rule 7):** LLM phải ghi rõ vùng kín được che — nude/naked → mặc briefs hoặc chọn góc máy giấu hông (waist-up, từ sau lưng, vật che). UNet là bản NSFW nên chỗ nào không ghi \"che\" thì dễ bị lộ. Khi refine lỗi và quay về prompt gốc thì không có lớp này.\n\n**Thinking:** text encoder dùng chung cho Krea2 và LLM — **không** thay bằng bản Qwen3-VL Thinking. Muốn LLM thinking thì cần loader riêng (chưa có), bật `thinking`, `max_length ≥ 2048`. Node *4a* cắt mọi thứ đến `</think>`. Giới hạn: suy luận bị cắt ngang mà không mở bằng `<think>` vẫn có thể lọt vào prompt.\n\n**Negative prompt:** không còn regex bỏ \"negative prompt\" — khi refine tắt, chữ `Negative prompt: …` trong .txt đi thẳng vào prompt.\n\n**TextSplitter:** đoạn cách nhau 1 dòng trống, phần sau `###` bị bỏ. *Start Auto Batch* chạy hết file; *7a* và *Seed* random lại mỗi lượt.\n\n**Lưu:** `Krea2_<ngày>/Krea2_T2I_v4_<MainTrigger>_<TextSplitter.index>_<yyMMdd>_<Seed>`."
+        "## Krea-2 Turbo + LoRA — T2I v4\n\n**Model:** homofidelis Krea2 NSFW turbo int8 · qwen3-vl-4b-heretic fp8 (type krea2) · qwen_image_vae. 8 bước, euler/simple, CFG 1.\n\n**Thứ tự prompt cuối:** `MainTrigger` → `Prefix` → prompt đã xử lý → `Suffix` (nối bằng `. `). Rồi mọi từ `brief|briefs|underwear|towel|pants|sweatpants|shorts|sweatshorts` (kể cả trong Suffix) được thay bằng **1** token random từ *7a* (khớp nguyên từ).\n\n**Prompt Builder (trái → phải):** 1 Nguồn · 2 `{char}` · 3 LLM refine · 4 Dọn output LLM · 5 Ép identity LoRA · 6 Ghép · 7 Random swap. Bảng regex: note *Regex – bảng tra*.\n\n**`{char}`:** chữ trigger trong prompt (vd `Ivan_Ryo.`) được đổi thành `{char}`; không có thì tự thêm vào đầu. `{char}` đứng riêng ở đầu (`{char}. …`, `{char} A 25yo…`) bị bỏ vì trigger đã đứng đầu chuỗi; `{char}` làm chủ ngữ đầu câu thành `He` / `His` (`{char} lies…` → `He lies…`); `{char}` giữa câu đổi thành trigger. **MainTrigger không được để trống.**\n\n**Camera mặc định (rule 11 của cả 2 system prompt, chỉ khi refine bật):** prompt chưa có white balance / lens / khẩu độ thì LLM thêm `White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft.`; đã có thì giữ nguyên.\n\n**Toggle:** `use_txt` (bật: .txt, tắt: Prompt tay) · `refine` (Qwen3-VL-4B viết lại; lỗi/từ chối → prompt gốc) · `nsfw` (System prompt NSFW thay SFW, chỉ khi refine bật).\n\n**SFW (rule 7):** LLM phải ghi rõ vùng kín được che — nude/naked → mặc briefs hoặc chọn góc máy giấu hông (waist-up, từ sau lưng, vật che). UNet là bản NSFW nên chỗ nào không ghi \"che\" thì dễ bị lộ.\n\n**Lớp chặn SFW (cột S, chỉ khi `nsfw` tắt — chạy cả khi refine tắt/lỗi):** S1 xoá chữ khoả thân/bộ phận (nude, naked, penis, testicles, pubic hair, erection, buttocks…, kèm tính từ đi theo); S3–S5 ghép `He wears briefs that fully cover the groin.` nếu prompt chưa có câu che hông (`briefs` sau đó thành token random). Không đụng Trigger/Prefix/Suffix — `good bulge` trong Suffix và LoRA `krea_good_bulge` vẫn đẩy ảnh về phía hở; muốn SFW chắc hơn thì giảm LoRA đó.\n\n**Thinking:** text encoder dùng chung cho Krea2 và LLM — **không** thay bằng bản Qwen3-VL Thinking. Muốn LLM thinking thì cần loader riêng (chưa có), bật `thinking`, `max_length ≥ 2048`. Node *4a* cắt mọi thứ đến `</think>`. Giới hạn: suy luận bị cắt ngang mà không mở bằng `<think>` vẫn có thể lọt vào prompt.\n\n**Negative prompt:** không còn regex bỏ \"negative prompt\" — khi refine tắt, chữ `Negative prompt: …` trong .txt đi thẳng vào prompt.\n\n**TextSplitter:** đoạn cách nhau 1 dòng trống, phần sau `###` bị bỏ. *Start Auto Batch* chạy hết file; *7a* và *Seed* random lại mỗi lượt.\n\n**Lưu:** `Krea2_<ngày>/Krea2_T2I_v4_<MainTrigger>_<TextSplitter.index>_<yyMMdd>_<Seed>`."
       ],
       "widgets_values_named": {
-        "text": "## Krea-2 Turbo + LoRA — T2I v4\n\n**Model:** homofidelis Krea2 NSFW turbo int8 · qwen3-vl-4b-heretic fp8 (type krea2) · qwen_image_vae. 8 bước, euler/simple, CFG 1.\n\n**Thứ tự prompt cuối:** `MainTrigger` → `Prefix` → prompt đã xử lý → `Suffix` (nối bằng `. `). Rồi mọi từ `brief|briefs|underwear|towel|pants|sweatpants|shorts|sweatshorts` (kể cả trong Suffix) được thay bằng **1** token random từ *7a* (khớp nguyên từ).\n\n**Prompt Builder (trái → phải):** 1 Nguồn · 2 `{char}` · 3 LLM refine · 4 Dọn output LLM · 5 Ép identity LoRA · 6 Ghép · 7 Random swap. Bảng regex: note *Regex – bảng tra*.\n\n**`{char}`:** chữ trigger trong prompt (vd `Ivan_Ryo.`) được đổi thành `{char}`; không có thì tự thêm vào đầu. `{char}` đứng riêng ở đầu (`{char}. …`, `{char} A 25yo…`) bị bỏ vì trigger đã đứng đầu chuỗi; `{char}` làm chủ ngữ đầu câu thành `He` / `His` (`{char} lies…` → `He lies…`); `{char}` giữa câu đổi thành trigger. **MainTrigger không được để trống.**\n\n**Camera mặc định (rule 11 của cả 2 system prompt, chỉ khi refine bật):** prompt chưa có white balance / lens / khẩu độ thì LLM thêm `White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft.`; đã có thì giữ nguyên.\n\n**Toggle:** `use_txt` (bật: .txt, tắt: Prompt tay) · `refine` (Qwen3-VL-4B viết lại; lỗi/từ chối → prompt gốc) · `nsfw` (System prompt NSFW thay SFW, chỉ khi refine bật).\n\n**SFW (rule 7):** LLM phải ghi rõ vùng kín được che — nude/naked → mặc briefs hoặc chọn góc máy giấu hông (waist-up, từ sau lưng, vật che). UNet là bản NSFW nên chỗ nào không ghi \"che\" thì dễ bị lộ. Khi refine lỗi và quay về prompt gốc thì không có lớp này.\n\n**Thinking:** text encoder dùng chung cho Krea2 và LLM — **không** thay bằng bản Qwen3-VL Thinking. Muốn LLM thinking thì cần loader riêng (chưa có), bật `thinking`, `max_length ≥ 2048`. Node *4a* cắt mọi thứ đến `</think>`. Giới hạn: suy luận bị cắt ngang mà không mở bằng `<think>` vẫn có thể lọt vào prompt.\n\n**Negative prompt:** không còn regex bỏ \"negative prompt\" — khi refine tắt, chữ `Negative prompt: …` trong .txt đi thẳng vào prompt.\n\n**TextSplitter:** đoạn cách nhau 1 dòng trống, phần sau `###` bị bỏ. *Start Auto Batch* chạy hết file; *7a* và *Seed* random lại mỗi lượt.\n\n**Lưu:** `Krea2_<ngày>/Krea2_T2I_v4_<MainTrigger>_<TextSplitter.index>_<yyMMdd>_<Seed>`."
+        "text": "## Krea-2 Turbo + LoRA — T2I v4\n\n**Model:** homofidelis Krea2 NSFW turbo int8 · qwen3-vl-4b-heretic fp8 (type krea2) · qwen_image_vae. 8 bước, euler/simple, CFG 1.\n\n**Thứ tự prompt cuối:** `MainTrigger` → `Prefix` → prompt đã xử lý → `Suffix` (nối bằng `. `). Rồi mọi từ `brief|briefs|underwear|towel|pants|sweatpants|shorts|sweatshorts` (kể cả trong Suffix) được thay bằng **1** token random từ *7a* (khớp nguyên từ).\n\n**Prompt Builder (trái → phải):** 1 Nguồn · 2 `{char}` · 3 LLM refine · 4 Dọn output LLM · 5 Ép identity LoRA · 6 Ghép · 7 Random swap. Bảng regex: note *Regex – bảng tra*.\n\n**`{char}`:** chữ trigger trong prompt (vd `Ivan_Ryo.`) được đổi thành `{char}`; không có thì tự thêm vào đầu. `{char}` đứng riêng ở đầu (`{char}. …`, `{char} A 25yo…`) bị bỏ vì trigger đã đứng đầu chuỗi; `{char}` làm chủ ngữ đầu câu thành `He` / `His` (`{char} lies…` → `He lies…`); `{char}` giữa câu đổi thành trigger. **MainTrigger không được để trống.**\n\n**Camera mặc định (rule 11 của cả 2 system prompt, chỉ khi refine bật):** prompt chưa có white balance / lens / khẩu độ thì LLM thêm `White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft.`; đã có thì giữ nguyên.\n\n**Toggle:** `use_txt` (bật: .txt, tắt: Prompt tay) · `refine` (Qwen3-VL-4B viết lại; lỗi/từ chối → prompt gốc) · `nsfw` (System prompt NSFW thay SFW, chỉ khi refine bật).\n\n**SFW (rule 7):** LLM phải ghi rõ vùng kín được che — nude/naked → mặc briefs hoặc chọn góc máy giấu hông (waist-up, từ sau lưng, vật che). UNet là bản NSFW nên chỗ nào không ghi \"che\" thì dễ bị lộ.\n\n**Lớp chặn SFW (cột S, chỉ khi `nsfw` tắt — chạy cả khi refine tắt/lỗi):** S1 xoá chữ khoả thân/bộ phận (nude, naked, penis, testicles, pubic hair, erection, buttocks…, kèm tính từ đi theo); S3–S5 ghép `He wears briefs that fully cover the groin.` nếu prompt chưa có câu che hông (`briefs` sau đó thành token random). Không đụng Trigger/Prefix/Suffix — `good bulge` trong Suffix và LoRA `krea_good_bulge` vẫn đẩy ảnh về phía hở; muốn SFW chắc hơn thì giảm LoRA đó.\n\n**Thinking:** text encoder dùng chung cho Krea2 và LLM — **không** thay bằng bản Qwen3-VL Thinking. Muốn LLM thinking thì cần loader riêng (chưa có), bật `thinking`, `max_length ≥ 2048`. Node *4a* cắt mọi thứ đến `</think>`. Giới hạn: suy luận bị cắt ngang mà không mở bằng `<think>` vẫn có thể lọt vào prompt.\n\n**Negative prompt:** không còn regex bỏ \"negative prompt\" — khi refine tắt, chữ `Negative prompt: …` trong .txt đi thẳng vào prompt.\n\n**TextSplitter:** đoạn cách nhau 1 dòng trống, phần sau `###` bị bỏ. *Start Auto Batch* chạy hết file; *7a* và *Seed* random lại mỗi lượt.\n\n**Lưu:** `Krea2_<ngày>/Krea2_T2I_v4_<MainTrigger>_<TextSplitter.index>_<yyMMdd>_<Seed>`."
       },
       "color": "#432",
       "bgcolor": "#653"
@@ -808,7 +808,8 @@
           "name": "BOOLEAN",
           "type": "BOOLEAN",
           "links": [
-            105
+            105,
+            155
           ]
         }
       ],
@@ -1932,7 +1933,8 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            148
+            148,
+            156
           ]
         }
       ],
@@ -1965,7 +1967,7 @@
       "id": 77,
       "type": "StringReplace",
       "pos": [
-        3259.883850613252,
+        3689.883850613252,
         1027.7143214935893
       ],
       "size": [
@@ -1982,7 +1984,7 @@
           "widget": {
             "name": "string"
           },
-          "link": 151
+          "link": 161
         },
         {
           "name": "replace",
@@ -1998,7 +2000,7 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            155
+            165
           ]
         }
       ],
@@ -2099,7 +2101,7 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            153
+            163
           ]
         }
       ],
@@ -2136,7 +2138,7 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            157
+            167
           ]
         }
       ],
@@ -2303,7 +2305,7 @@
           ]
         }
       ],
-      "title": "6a. Bỏ {char} đứng riêng đầu thân",
+      "title": "S1. SFW: xoá chữ khoả thân/bộ phận",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.39.0",
@@ -2311,18 +2313,18 @@
       },
       "widgets_values": [
         "",
-        "^\\s*\\{char\\}(?:\\s*[.,:;]+\\s*|\\s+(?=[^a-z\\s'])|\\s*$)",
+        "(?:\\b(?:including|with)\\s+)?(?:\\b(?:a|an|his)\\s+)?(?:\\b(?:small|large|big|huge|thick|perfect|flaccid|erect|hard|circumcised|uncircumcised|visible|exposed|fully|completely|totally|partially)\\b[\\s,]+)*\\b(?:penis(?:es)?|cock|dick|testicles?|scrotum|genitals?|genitalia|pubic hair|pubes|foreskin|erection|nudity|nude|naked|undressed|unclothed|bare (?:buttocks|ass|butt)|buttocks|ass|erotic|male anatomy)\\b(?:\\s+with\\s+(?:visible\\s+)?testicles)?",
         "",
-        false,
+        true,
         false,
         false,
         0
       ],
       "widgets_values_named": {
         "string": "",
-        "regex_pattern": "^\\s*\\{char\\}(?:\\s*[.,:;]+\\s*|\\s+(?=[^a-z\\s'])|\\s*$)",
+        "regex_pattern": "(?:\\b(?:including|with)\\s+)?(?:\\b(?:a|an|his)\\s+)?(?:\\b(?:small|large|big|huge|thick|perfect|flaccid|erect|hard|circumcised|uncircumcised|visible|exposed|fully|completely|totally|partially)\\b[\\s,]+)*\\b(?:penis(?:es)?|cock|dick|testicles?|scrotum|genitals?|genitalia|pubic hair|pubes|foreskin|erection|nudity|nude|naked|undressed|unclothed|bare (?:buttocks|ass|butt)|buttocks|ass|erotic|male anatomy)\\b(?:\\s+with\\s+(?:visible\\s+)?testicles)?",
         "replace": "",
-        "case_insensitive": false,
+        "case_insensitive": true,
         "multiline": false,
         "dotall": false,
         "count": 0
@@ -2357,7 +2359,353 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            150
+            150,
+            151,
+            153
+          ]
+        }
+      ],
+      "title": "S2. SFW: dọn dấu",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "RegexReplace"
+      },
+      "widgets_values": [
+        "",
+        "^[\\s,;]+|(?<=[:,.;])\\s*[,;]|\\s+(?=[,.;])|(?<=\\s)\\s+",
+        "",
+        false,
+        false,
+        false,
+        0
+      ],
+      "widgets_values_named": {
+        "string": "",
+        "regex_pattern": "^[\\s,;]+|(?<=[:,.;])\\s*[,;]|\\s+(?=[,.;])|(?<=\\s)\\s+",
+        "replace": "",
+        "case_insensitive": false,
+        "multiline": false,
+        "dotall": false,
+        "count": 0
+      }
+    },
+    {
+      "id": 89,
+      "type": "RegexMatch",
+      "pos": [
+        3259.883850613252,
+        675.7143214935893
+      ],
+      "size": [
+        320,
+        214
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string",
+          "type": "STRING",
+          "widget": {
+            "name": "string"
+          },
+          "link": 150
+        }
+      ],
+      "outputs": [
+        {
+          "name": "matches",
+          "type": "BOOLEAN",
+          "links": [
+            152
+          ]
+        }
+      ],
+      "title": "S3. SFW: đã có câu che hông?",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "RegexMatch"
+      },
+      "widgets_values": [
+        "",
+        "cover(?:s|ed|ing)?\\s+(?:the\\s+|his\\s+)?groin|groin\\s+(?:is\\s+|stays\\s+|remains\\s+)?(?:fully\\s+|completely\\s+)?(?:covered|hidden|concealed|out\\s+of\\s+(?:the\\s+)?frame)",
+        true,
+        false,
+        false
+      ],
+      "widgets_values_named": {
+        "string": "",
+        "regex_pattern": "cover(?:s|ed|ing)?\\s+(?:the\\s+|his\\s+)?groin|groin\\s+(?:is\\s+|stays\\s+|remains\\s+)?(?:fully\\s+|completely\\s+)?(?:covered|hidden|concealed|out\\s+of\\s+(?:the\\s+)?frame)",
+        "case_insensitive": true,
+        "multiline": false,
+        "dotall": false
+      }
+    },
+    {
+      "id": 90,
+      "type": "StringConcatenate",
+      "pos": [
+        3259.883850613252,
+        949.7143214935893
+      ],
+      "size": [
+        320,
+        166
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string_b",
+          "type": "STRING",
+          "widget": {
+            "name": "string_b"
+          },
+          "link": null
+        },
+        {
+          "name": "string_a",
+          "type": "STRING",
+          "widget": {
+            "name": "string_a"
+          },
+          "link": 151
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            154
+          ]
+        }
+      ],
+      "title": "S4. SFW: thêm câu che hông",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "StringConcatenate"
+      },
+      "widgets_values": [
+        "",
+        "He wears briefs that fully cover the groin.",
+        ". "
+      ],
+      "widgets_values_named": {
+        "string_a": "",
+        "string_b": "He wears briefs that fully cover the groin.",
+        "delimiter": ". "
+      }
+    },
+    {
+      "id": 91,
+      "type": "ComfySwitchNode",
+      "pos": [
+        3259.883850613252,
+        1175.7143214935893
+      ],
+      "size": [
+        320,
+        78
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "on_false",
+          "shape": 7,
+          "type": "STRING",
+          "link": 154
+        },
+        {
+          "name": "on_true",
+          "shape": 7,
+          "type": "STRING",
+          "link": 153
+        },
+        {
+          "name": "switch",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "switch"
+          },
+          "link": 152
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "STRING",
+          "links": [
+            157
+          ]
+        }
+      ],
+      "title": "S5. SFW: chọn câu che",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "ComfySwitchNode"
+      },
+      "widgets_values": [
+        false
+      ],
+      "widgets_values_named": {
+        "switch": false
+      }
+    },
+    {
+      "id": 92,
+      "type": "ComfySwitchNode",
+      "pos": [
+        3259.883850613252,
+        1313.7143214935893
+      ],
+      "size": [
+        320,
+        78
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "on_false",
+          "shape": 7,
+          "type": "STRING",
+          "link": 157
+        },
+        {
+          "name": "on_true",
+          "shape": 7,
+          "type": "STRING",
+          "link": 156
+        },
+        {
+          "name": "switch",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "switch"
+          },
+          "link": 155
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "STRING",
+          "links": [
+            158
+          ]
+        }
+      ],
+      "title": "S6. nsfw bật → bỏ qua lớp SFW",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "ComfySwitchNode"
+      },
+      "widgets_values": [
+        false
+      ],
+      "widgets_values_named": {
+        "switch": false
+      }
+    },
+    {
+      "id": 93,
+      "type": "RegexReplace",
+      "pos": [
+        3689.883850613252,
+        -28.285678506410733
+      ],
+      "size": [
+        320,
+        292
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string",
+          "type": "STRING",
+          "widget": {
+            "name": "string"
+          },
+          "link": 158
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            159
+          ]
+        }
+      ],
+      "title": "6a. Bỏ {char} đứng riêng đầu thân",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0",
+        "Node name for S&R": "RegexReplace"
+      },
+      "widgets_values": [
+        "",
+        "^\\s*\\{char\\}(?:\\s*[.,:;]+\\s*|\\s+(?=[^a-z\\s'])|\\s*$)",
+        "",
+        false,
+        false,
+        false,
+        0
+      ],
+      "widgets_values_named": {
+        "string": "",
+        "regex_pattern": "^\\s*\\{char\\}(?:\\s*[.,:;]+\\s*|\\s+(?=[^a-z\\s'])|\\s*$)",
+        "replace": "",
+        "case_insensitive": false,
+        "multiline": false,
+        "dotall": false,
+        "count": 0
+      }
+    },
+    {
+      "id": 94,
+      "type": "RegexReplace",
+      "pos": [
+        3689.883850613252,
+        323.7143214935893
+      ],
+      "size": [
+        320,
+        292
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string",
+          "type": "STRING",
+          "widget": {
+            "name": "string"
+          },
+          "link": 159
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            160
           ]
         }
       ],
@@ -2387,10 +2735,10 @@
       }
     },
     {
-      "id": 89,
+      "id": 95,
       "type": "RegexReplace",
       "pos": [
-        3259.883850613252,
+        3689.883850613252,
         675.7143214935893
       ],
       "size": [
@@ -2407,7 +2755,7 @@
           "widget": {
             "name": "string"
           },
-          "link": 150
+          "link": 160
         }
       ],
       "outputs": [
@@ -2415,7 +2763,7 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            151
+            161
           ]
         }
       ],
@@ -2445,10 +2793,10 @@
       }
     },
     {
-      "id": 90,
+      "id": 96,
       "type": "StringConcatenate",
       "pos": [
-        3259.883850613252,
+        3689.883850613252,
         1283.7143214935893
       ],
       "size": [
@@ -2465,7 +2813,7 @@
           "widget": {
             "name": "string_b"
           },
-          "link": 153
+          "link": 163
         },
         {
           "name": "string_a",
@@ -2473,7 +2821,7 @@
           "widget": {
             "name": "string_a"
           },
-          "link": 152
+          "link": 162
         }
       ],
       "outputs": [
@@ -2481,7 +2829,7 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            154
+            164
           ]
         }
       ],
@@ -2503,10 +2851,10 @@
       }
     },
     {
-      "id": 91,
+      "id": 97,
       "type": "StringConcatenate",
       "pos": [
-        3259.883850613252,
+        3689.883850613252,
         1509.7143214935893
       ],
       "size": [
@@ -2523,7 +2871,7 @@
           "widget": {
             "name": "string_b"
           },
-          "link": 155
+          "link": 165
         },
         {
           "name": "string_a",
@@ -2531,7 +2879,7 @@
           "widget": {
             "name": "string_a"
           },
-          "link": 154
+          "link": 164
         }
       ],
       "outputs": [
@@ -2539,7 +2887,7 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            156
+            166
           ]
         }
       ],
@@ -2561,10 +2909,10 @@
       }
     },
     {
-      "id": 92,
+      "id": 98,
       "type": "StringConcatenate",
       "pos": [
-        3259.883850613252,
+        3689.883850613252,
         1735.7143214935893
       ],
       "size": [
@@ -2581,7 +2929,7 @@
           "widget": {
             "name": "string_b"
           },
-          "link": 157
+          "link": 167
         },
         {
           "name": "string_a",
@@ -2589,7 +2937,7 @@
           "widget": {
             "name": "string_a"
           },
-          "link": 156
+          "link": 166
         }
       ],
       "outputs": [
@@ -2597,7 +2945,7 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            158
+            168
           ]
         }
       ],
@@ -2619,10 +2967,10 @@
       }
     },
     {
-      "id": 93,
+      "id": 99,
       "type": "Select_Random",
       "pos": [
-        3689.883850613252,
+        4119.883850613252,
         -28.285678506410733
       ],
       "size": [
@@ -2638,7 +2986,7 @@
           "name": "text",
           "type": "STRING",
           "links": [
-            159
+            169
           ]
         }
       ],
@@ -2657,10 +3005,10 @@
       ]
     },
     {
-      "id": 94,
+      "id": 100,
       "type": "Find_and_Replace",
       "pos": [
-        3689.883850613252,
+        4119.883850613252,
         261.7143214935893
       ],
       "size": [
@@ -2674,13 +3022,13 @@
         {
           "name": "text",
           "type": "STRING",
-          "link": 158
+          "link": 168
         },
         {
           "name": "replace_in",
           "shape": 7,
           "type": "STRING",
-          "link": 159
+          "link": 169
         }
       ],
       "outputs": [
@@ -2688,7 +3036,7 @@
           "name": "text",
           "type": "STRING",
           "links": [
-            160
+            170
           ]
         }
       ],
@@ -2703,10 +3051,10 @@
       ]
     },
     {
-      "id": 95,
+      "id": 101,
       "type": "RegexReplace",
       "pos": [
-        3689.883850613252,
+        4119.883850613252,
         451.7143214935893
       ],
       "size": [
@@ -2723,7 +3071,7 @@
           "widget": {
             "name": "string"
           },
-          "link": 160
+          "link": 170
         }
       ],
       "outputs": [
@@ -2731,7 +3079,7 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            161
+            171
           ]
         }
       ],
@@ -2761,10 +3109,10 @@
       }
     },
     {
-      "id": 96,
+      "id": 102,
       "type": "RegexReplace",
       "pos": [
-        3689.883850613252,
+        4119.883850613252,
         803.7143214935893
       ],
       "size": [
@@ -2781,7 +3129,7 @@
           "widget": {
             "name": "string"
           },
-          "link": 161
+          "link": 171
         }
       ],
       "outputs": [
@@ -2789,7 +3137,7 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            162
+            172
           ]
         }
       ],
@@ -2819,10 +3167,10 @@
       }
     },
     {
-      "id": 97,
+      "id": 103,
       "type": "StringTrim",
       "pos": [
-        3689.883850613252,
+        4119.883850613252,
         1155.7143214935893
       ],
       "size": [
@@ -2839,7 +3187,7 @@
           "widget": {
             "name": "string"
           },
-          "link": 162
+          "link": 172
         }
       ],
       "outputs": [
@@ -2847,9 +3195,9 @@
           "name": "STRING",
           "type": "STRING",
           "links": [
-            163,
-            164,
-            165
+            173,
+            174,
+            175
           ]
         }
       ],
@@ -2869,7 +3217,7 @@
       }
     },
     {
-      "id": 98,
+      "id": 104,
       "type": "MarkdownNote",
       "pos": [
         769.8838506132519,
@@ -2891,10 +3239,10 @@
         "Node name for S&R": "MarkdownNote"
       },
       "widgets_values": [
-        "## Regex – bảng tra (R = chỉ khi refine bật, A = luôn chạy)\n\n| Node | Tìm | Thay | Mục đích | |\n|---|---|---|---|---|\n| 2a | chữ MainTrigger | `{char}` | trigger trong .txt → `{char}` | A |\n| 4a | `^[\\s\\S]*</think>\\s*` · `</?think>` | rỗng | cắt suy luận thinking | R |\n| 4b | dòng \"Here is…:\" · `**` · `---` · `#` · gạch đầu dòng | rỗng | câu dẫn / markdown | R |\n| 4c | xuống dòng | 1 dấu cách | 1 đoạn | R |\n| 4d | nhãn đầu \"Final Output:\", \"Prompt:\"… | rỗng | bỏ nhãn | R |\n| 4f | rỗng · I'm sorry · I can't · as an AI · chép system prompt… | (đúng/sai) | lỗi → dùng prompt gốc | R |\n| 5a | xuống dòng | 1 dấu cách | 1 đoạn (cả khi refine tắt) | A |\n| 5b | màu/độ dài trong 4 từ trước `hair` (trừ khi có light/rim/glow trước `hair`) | `short ` | LoRA giữ tóc | A |\n| 5c | `short` thừa trước `hair` (kể cả `short, short`) | rỗng | gộp short short | A |\n| 5d | sharp/defined/strong… + jawline/chin/cheekbones/nose | rỗng | LoRA giữ mặt | A |\n| 5e | ` ,` · `,,` · ` .` | rỗng | dọn dấu phẩy | A |\n| 5f | 2+ dấu cách | 1 dấu cách | dọn khoảng trắng | A |\n| 6a | `{char}` đứng riêng đầu thân | rỗng | trigger đã đứng đầu | A |\n| 6b | `{char}'s` đầu thân | `His` | giữ chủ ngữ | A |\n| 6c | `{char}` + chữ thường đầu thân | `He ` | giữ chủ ngữ | A |\n| 6d | `{char}` | MainTrigger | `{char}` giữa câu | A |\n| 7b | brief/briefs/underwear/towel/pants/sweatpants/shorts/sweatshorts | token 7a | token LoRA quần áo (nguyên từ) | A |\n| 7c | token `_` lặp liền nhau | 1 token | gộp lặp | A |\n| 7d | `..` · `. .` · dấu thừa cuối | `.` | dọn sau khi ghép | A |\n\nVì sao không để trong system prompt: refine tắt thì không có LLM; Qwen3-VL-4B không tuân luật đều tay; lỗi định dạng là output của chính model; token LoRA không nên đưa cho LLM. System prompt vẫn giữ các luật này — LLM làm đúng thì regex không làm gì."
+        "## Regex – bảng tra (R = chỉ khi refine bật, A = luôn chạy)\n\n| Node | Tìm | Thay | Mục đích | |\n|---|---|---|---|---|\n| 2a | chữ MainTrigger | `{char}` | trigger trong .txt → `{char}` | A |\n| 4a | `^[\\s\\S]*</think>\\s*` · `</?think>` | rỗng | cắt suy luận thinking | R |\n| 4b | dòng \"Here is…:\" · `**` · `---` · `#` · gạch đầu dòng | rỗng | câu dẫn / markdown | R |\n| 4c | xuống dòng | 1 dấu cách | 1 đoạn | R |\n| 4d | nhãn đầu \"Final Output:\", \"Prompt:\"… | rỗng | bỏ nhãn | R |\n| 4f | rỗng · I'm sorry · I can't · as an AI · chép system prompt… | (đúng/sai) | lỗi → dùng prompt gốc | R |\n| 5a | xuống dòng | 1 dấu cách | 1 đoạn (cả khi refine tắt) | A |\n| 5b | màu/độ dài trong 4 từ trước `hair` (trừ khi có light/rim/glow trước `hair`) | `short ` | LoRA giữ tóc | A |\n| 5c | `short` thừa trước `hair` (kể cả `short, short`) | rỗng | gộp short short | A |\n| 5d | sharp/defined/strong… + jawline/chin/cheekbones/nose | rỗng | LoRA giữ mặt | A |\n| 5e | ` ,` · `,,` · ` .` | rỗng | dọn dấu phẩy | A |\n| 5f | 2+ dấu cách | 1 dấu cách | dọn khoảng trắng | A |\n| S1 | nude/naked/penis/testicles/pubic hair/erection/buttocks/erotic (+ tính từ, mạo từ đi trước) | rỗng | chặn SFW | nsfw tắt |\n| S2 | `, ,` · ` ;` · khoảng trắng thừa | rỗng | dọn sau S1 | nsfw tắt |\n| S3 | \"cover(s) the groin\" · \"groin is covered/hidden/out of frame\" | (đúng/sai) | đã có câu che? | nsfw tắt |\n| S4–S5 | — | + `He wears briefs that fully cover the groin.` | thêm câu che nếu thiếu | nsfw tắt |\n| 6a | `{char}` đứng riêng đầu thân | rỗng | trigger đã đứng đầu | A |\n| 6b | `{char}'s` đầu thân | `His` | giữ chủ ngữ | A |\n| 6c | `{char}` + chữ thường đầu thân | `He ` | giữ chủ ngữ | A |\n| 6d | `{char}` | MainTrigger | `{char}` giữa câu | A |\n| 7b | brief/briefs/underwear/towel/pants/sweatpants/shorts/sweatshorts | token 7a | token LoRA quần áo (nguyên từ) | A |\n| 7c | token `_` lặp liền nhau | 1 token | gộp lặp | A |\n| 7d | `..` · `. .` · dấu thừa cuối | `.` | dọn sau khi ghép | A |\n\nVì sao không để trong system prompt: refine tắt thì không có LLM; Qwen3-VL-4B không tuân luật đều tay; lỗi định dạng là output của chính model; token LoRA không nên đưa cho LLM. System prompt vẫn giữ các luật này — LLM làm đúng thì regex không làm gì."
       ],
       "widgets_values_named": {
-        "text": "## Regex – bảng tra (R = chỉ khi refine bật, A = luôn chạy)\n\n| Node | Tìm | Thay | Mục đích | |\n|---|---|---|---|---|\n| 2a | chữ MainTrigger | `{char}` | trigger trong .txt → `{char}` | A |\n| 4a | `^[\\s\\S]*</think>\\s*` · `</?think>` | rỗng | cắt suy luận thinking | R |\n| 4b | dòng \"Here is…:\" · `**` · `---` · `#` · gạch đầu dòng | rỗng | câu dẫn / markdown | R |\n| 4c | xuống dòng | 1 dấu cách | 1 đoạn | R |\n| 4d | nhãn đầu \"Final Output:\", \"Prompt:\"… | rỗng | bỏ nhãn | R |\n| 4f | rỗng · I'm sorry · I can't · as an AI · chép system prompt… | (đúng/sai) | lỗi → dùng prompt gốc | R |\n| 5a | xuống dòng | 1 dấu cách | 1 đoạn (cả khi refine tắt) | A |\n| 5b | màu/độ dài trong 4 từ trước `hair` (trừ khi có light/rim/glow trước `hair`) | `short ` | LoRA giữ tóc | A |\n| 5c | `short` thừa trước `hair` (kể cả `short, short`) | rỗng | gộp short short | A |\n| 5d | sharp/defined/strong… + jawline/chin/cheekbones/nose | rỗng | LoRA giữ mặt | A |\n| 5e | ` ,` · `,,` · ` .` | rỗng | dọn dấu phẩy | A |\n| 5f | 2+ dấu cách | 1 dấu cách | dọn khoảng trắng | A |\n| 6a | `{char}` đứng riêng đầu thân | rỗng | trigger đã đứng đầu | A |\n| 6b | `{char}'s` đầu thân | `His` | giữ chủ ngữ | A |\n| 6c | `{char}` + chữ thường đầu thân | `He ` | giữ chủ ngữ | A |\n| 6d | `{char}` | MainTrigger | `{char}` giữa câu | A |\n| 7b | brief/briefs/underwear/towel/pants/sweatpants/shorts/sweatshorts | token 7a | token LoRA quần áo (nguyên từ) | A |\n| 7c | token `_` lặp liền nhau | 1 token | gộp lặp | A |\n| 7d | `..` · `. .` · dấu thừa cuối | `.` | dọn sau khi ghép | A |\n\nVì sao không để trong system prompt: refine tắt thì không có LLM; Qwen3-VL-4B không tuân luật đều tay; lỗi định dạng là output của chính model; token LoRA không nên đưa cho LLM. System prompt vẫn giữ các luật này — LLM làm đúng thì regex không làm gì."
+        "text": "## Regex – bảng tra (R = chỉ khi refine bật, A = luôn chạy)\n\n| Node | Tìm | Thay | Mục đích | |\n|---|---|---|---|---|\n| 2a | chữ MainTrigger | `{char}` | trigger trong .txt → `{char}` | A |\n| 4a | `^[\\s\\S]*</think>\\s*` · `</?think>` | rỗng | cắt suy luận thinking | R |\n| 4b | dòng \"Here is…:\" · `**` · `---` · `#` · gạch đầu dòng | rỗng | câu dẫn / markdown | R |\n| 4c | xuống dòng | 1 dấu cách | 1 đoạn | R |\n| 4d | nhãn đầu \"Final Output:\", \"Prompt:\"… | rỗng | bỏ nhãn | R |\n| 4f | rỗng · I'm sorry · I can't · as an AI · chép system prompt… | (đúng/sai) | lỗi → dùng prompt gốc | R |\n| 5a | xuống dòng | 1 dấu cách | 1 đoạn (cả khi refine tắt) | A |\n| 5b | màu/độ dài trong 4 từ trước `hair` (trừ khi có light/rim/glow trước `hair`) | `short ` | LoRA giữ tóc | A |\n| 5c | `short` thừa trước `hair` (kể cả `short, short`) | rỗng | gộp short short | A |\n| 5d | sharp/defined/strong… + jawline/chin/cheekbones/nose | rỗng | LoRA giữ mặt | A |\n| 5e | ` ,` · `,,` · ` .` | rỗng | dọn dấu phẩy | A |\n| 5f | 2+ dấu cách | 1 dấu cách | dọn khoảng trắng | A |\n| S1 | nude/naked/penis/testicles/pubic hair/erection/buttocks/erotic (+ tính từ, mạo từ đi trước) | rỗng | chặn SFW | nsfw tắt |\n| S2 | `, ,` · ` ;` · khoảng trắng thừa | rỗng | dọn sau S1 | nsfw tắt |\n| S3 | \"cover(s) the groin\" · \"groin is covered/hidden/out of frame\" | (đúng/sai) | đã có câu che? | nsfw tắt |\n| S4–S5 | — | + `He wears briefs that fully cover the groin.` | thêm câu che nếu thiếu | nsfw tắt |\n| 6a | `{char}` đứng riêng đầu thân | rỗng | trigger đã đứng đầu | A |\n| 6b | `{char}'s` đầu thân | `His` | giữ chủ ngữ | A |\n| 6c | `{char}` + chữ thường đầu thân | `He ` | giữ chủ ngữ | A |\n| 6d | `{char}` | MainTrigger | `{char}` giữa câu | A |\n| 7b | brief/briefs/underwear/towel/pants/sweatpants/shorts/sweatshorts | token 7a | token LoRA quần áo (nguyên từ) | A |\n| 7c | token `_` lặp liền nhau | 1 token | gộp lặp | A |\n| 7d | `..` · `. .` · dấu thừa cuối | `.` | dọn sau khi ghép | A |\n\nVì sao không để trong system prompt: refine tắt thì không có LLM; Qwen3-VL-4B không tuân luật đều tay; lỗi định dạng là output của chính model; token LoRA không nên đưa cho LLM. System prompt vẫn giữ các luật này — LLM làm đúng thì regex không làm gì."
       },
       "color": "#432",
       "bgcolor": "#653"
@@ -3271,26 +3619,26 @@
     ],
     [
       151,
-      89,
-      0,
-      77,
-      0,
-      "STRING"
-    ],
-    [
-      152,
-      38,
+      88,
       0,
       90,
       1,
       "STRING"
     ],
     [
+      152,
+      89,
+      0,
+      91,
+      2,
+      "BOOLEAN"
+    ],
+    [
       153,
-      83,
+      88,
       0,
-      90,
-      0,
+      91,
+      1,
       "STRING"
     ],
     [
@@ -3298,20 +3646,20 @@
       90,
       0,
       91,
-      1,
+      0,
       "STRING"
     ],
     [
       155,
-      77,
+      55,
       0,
-      91,
-      0,
-      "STRING"
+      92,
+      2,
+      "BOOLEAN"
     ],
     [
       156,
-      91,
+      76,
       0,
       92,
       1,
@@ -3319,7 +3667,7 @@
     ],
     [
       157,
-      84,
+      91,
       0,
       92,
       0,
@@ -3329,7 +3677,7 @@
       158,
       92,
       0,
-      94,
+      93,
       0,
       "STRING"
     ],
@@ -3338,7 +3686,7 @@
       93,
       0,
       94,
-      1,
+      0,
       "STRING"
     ],
     [
@@ -3353,37 +3701,117 @@
       161,
       95,
       0,
-      96,
+      77,
       0,
       "STRING"
     ],
     [
       162,
+      38,
+      0,
       96,
+      1,
+      "STRING"
+    ],
+    [
+      163,
+      83,
+      0,
+      96,
+      0,
+      "STRING"
+    ],
+    [
+      164,
+      96,
+      0,
+      97,
+      1,
+      "STRING"
+    ],
+    [
+      165,
+      77,
       0,
       97,
       0,
       "STRING"
     ],
     [
-      163,
+      166,
       97,
+      0,
+      98,
+      1,
+      "STRING"
+    ],
+    [
+      167,
+      84,
+      0,
+      98,
+      0,
+      "STRING"
+    ],
+    [
+      168,
+      98,
+      0,
+      100,
+      0,
+      "STRING"
+    ],
+    [
+      169,
+      99,
+      0,
+      100,
+      1,
+      "STRING"
+    ],
+    [
+      170,
+      100,
+      0,
+      101,
+      0,
+      "STRING"
+    ],
+    [
+      171,
+      101,
+      0,
+      102,
+      0,
+      "STRING"
+    ],
+    [
+      172,
+      102,
+      0,
+      103,
+      0,
+      "STRING"
+    ],
+    [
+      173,
+      103,
       0,
       45,
       3,
       "STRING"
     ],
     [
-      164,
-      97,
+      174,
+      103,
       0,
       46,
       1,
       "STRING"
     ],
     [
-      165,
-      97,
+      175,
+      103,
       0,
       44,
       0,
@@ -3421,7 +3849,7 @@
       "bounding": [
         719.8838506132519,
         -138.28567850641073,
-        3340.0000000000005,
+        3770.0000000000005,
         2290.0000000000005
       ],
       "color": "#b06634",
@@ -3431,7 +3859,7 @@
       "id": 5,
       "title": "Sampler + Output",
       "bounding": [
-        4139.883850613252,
+        4569.883850613252,
         68.31959117542445,
         460,
         1000
@@ -3506,9 +3934,22 @@
     },
     {
       "id": 11,
-      "title": "6. Ghép",
+      "title": "S. Chặn SFW (nsfw tắt)",
       "bounding": [
         3239.883850613252,
+        -88.28567850641073,
+        360,
+        1540.0
+      ],
+      "color": "#a33",
+      "font_size": 22,
+      "flags": {}
+    },
+    {
+      "id": 12,
+      "title": "6. Ghép",
+      "bounding": [
+        3669.883850613252,
         -88.28567850641073,
         360,
         2050.0
@@ -3518,10 +3959,10 @@
       "flags": {}
     },
     {
-      "id": 12,
+      "id": 13,
       "title": "7. Random swap",
       "bounding": [
-        3669.883850613252,
+        4099.883850613252,
         -88.28567850641073,
         360,
         1416.0
