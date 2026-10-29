@@ -73,12 +73,14 @@ def src(title_or_id, name):
 assert src(TITLE["4a"], "string") == TITLE["3b"]
 assert src(TITLE["4b"], "string") == TITLE["4a"]
 assert src(TITLE["4f"], "string") == TITLE["4a"]
-assert src(TITLE["6a"], "string") == TITLE["5e"]
-assert src(TITLE["6b"], "string") == TITLE["6a"]
-assert src(TITLE["6c"], "string_a") == "MainTrigger" and src(TITLE["6c"], "string_b") == "Prefix"
-assert src(TITLE["6d"], "string_a") == TITLE["6c"] and src(TITLE["6d"], "string_b") == TITLE["6b"]
-assert src(TITLE["6e"], "string_a") == TITLE["6d"] and src(TITLE["6e"], "string_b") == "Suffix"
-assert src(TITLE["7b"], "text") == TITLE["6e"] and src(TITLE["7b"], "replace_in") == TITLE["7a"]
+assert src(TITLE["5a"], "string") == TITLE["4h"] and src(TITLE["5b"], "string") == TITLE["5a"]
+assert src(TITLE["6a"], "string") == TITLE["5f"]
+assert src(TITLE["6b"], "string") == TITLE["6a"] and src(TITLE["6c"], "string") == TITLE["6b"]
+assert src(TITLE["6d"], "string") == TITLE["6c"]
+assert src(TITLE["6e"], "string_a") == "MainTrigger" and src(TITLE["6e"], "string_b") == "Prefix"
+assert src(TITLE["6f"], "string_a") == TITLE["6e"] and src(TITLE["6f"], "string_b") == TITLE["6d"]
+assert src(TITLE["6g"], "string_a") == TITLE["6f"] and src(TITLE["6g"], "string_b") == "Suffix"
+assert src(TITLE["7b"], "text") == TITLE["6g"] and src(TITLE["7b"], "replace_in") == TITLE["7a"]
 assert src(TITLE["7c"], "string") == TITLE["7b"] and src(TITLE["7d"], "string") == TITLE["7c"]
 assert src(TITLE["7e"], "string") == TITLE["7d"]
 for nid, name in ((45, "prompt"), (46, "positive_prompt_override"), (44, "source")):
@@ -87,7 +89,12 @@ fr = T[TITLE["7b"]]["widgets_values"]
 assert fr[1] == "" and fr[2] is True, fr
 sr = T[TITLE["7a"]]["widgets_values"]
 assert sr[:-2] == ["tnga_brief", "lrcontour_brief", "stng_bikini", "hpstr_brief", "dblstrap_bikini"] and sr[-1] == "randomize", sr
-assert "11. **Output Format:**" in T["System prompt NSFW"]["widgets_values"][0]
+for sp in ("System prompt SFW", "System prompt NSFW"):
+    text = T[sp]["widgets_values"][0]
+    assert text == T[sp]["widgets_values_named"]["value"], sp
+    nums = [int(m) for m in re.findall(r"^(\d+)\. \*\*", text, re.M)]
+    assert nums == list(range(1, 13)), (sp, nums)
+    assert "11. **Camera Defaults:**" in text and "White balance 5500K" in text, sp
 assert "Keep every clothing item" in T["System prompt SFW"]["widgets_values"][0]
 
 # layout: every Prompt Builder node sits inside its column group

@@ -180,6 +180,27 @@ Số node regex (RegexReplace/RegexMatch): 10 → 13 (xoá `3c`, thêm `4a`, `6a
 
 Thời gian ước tính: 30 lượt × (LLM ~30–60 s + 8 bước ảnh) ≈ 30–45 phút; chạy nền và theo dõi qua `/history`.
 
+## Thay đổi khi thực thi (2026-10-29, đã duyệt)
+
+Mô phỏng offline sau Task 4 cho thấy vấn đề, bạn chọn:
+
+1. **`{char}` làm chủ ngữ đầu câu** (LLM hay viết `{char} lies…`): bỏ `{char}` khiến câu mất chủ ngữ. Cột 6 thành:
+   - `6a` bỏ `{char}` đứng riêng: `^\s*\{char\}(?:\s*[.,:;]+\s*|\s+(?=[^a-z\s'])|\s*$)` → rỗng (`{char}. …`, `{char} A 25yo…`)
+   - `6b` `^\s*\{char\}'s\b` → `His`
+   - `6c` `^\s*\{char\}\s+(?=[a-z])` → `He ` (`{char} lies…` → `He lies…`)
+   - `6d` `{char}` → MainTrigger (cũ 6b), `6e`/`6f`/`6g` ghép (cũ 6c/6d/6e)
+2. **Sửa 3 lỗi có sẵn từ v3** (cột 5 đánh số lại):
+   - `5a` **mới** gộp 1 đoạn `(?:\s*\n\s*)+` → ` `, luôn chạy (trước đây chỉ khi refine bật)
+   - `5b` tóc: guard "light/rim/glow" chỉ xét các từ **trước** `hair` → `dark brown hair and light stubble` giờ thành `short hair and light stubble`
+   - `5c` gộp `short` cả khi có dấu phẩy: `\bshort[\s,]+(?=(?:[\w/-]+[\s,]+){0,3}?short\s+(?:[\w/-]+\s+){0,3}?hair\b)` → `short, short hair` thành `short hair`
+   - `5d`/`5e`/`5f` = mặt / dấu phẩy / khoảng trắng (cũ 5c/5d/5e)
+3. **Rule camera mặc định** trong cả 2 system prompt, chèn làm rule 11, `Output Format` thành 12 (SFW 11 → 12; NSFW giữ 12, lỗ hổng số 11 được lấp):
+   > 11. **Camera Defaults:** If the user's prompt already states camera settings (white balance, lens or focal length, aperture or f-stop), keep them and add nothing. Otherwise end the paragraph with exactly: "White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft."
+
+   Chỉ có tác dụng khi refine bật.
+
+Số node sau patch: 54 (thêm `5a`, `6b`, `6c`). Còn lại chưa sửa: dấu `,.` khi `5d` xoá cụm cuối câu (`…shorts, sharp jawline.` → `…shorts,.`) và màu tóc viết **sau** chữ `hair` (`hair dyed pastel purple`).
+
 ## Rủi ro
 
 - Randomize của frontend có thể chọn trong `[0, n]` thay vì `[0, n-1]` → backend kẹp về `n-1`, item cuối bị ra nhiều hơn. Pass A sẽ cho thấy; nếu đúng thì sửa `select_random.js` (`max = n - 1`) và ghi trong report.

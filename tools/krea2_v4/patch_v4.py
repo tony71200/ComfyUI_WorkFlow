@@ -7,9 +7,10 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from pipeline_v4 import (FILENAME_PREFIX, README_V4, REFUSE_EXTRA, REGEX_NOTE, RX_DEDUP, RX_DEDUP_REPL,  # noqa: E402
-                         RX_DOTS, RX_DOTS_REPL, RX_LEAD_CHAR, RX_THINK, SFW_ANCHOR, SFW_KEEP_CLOTHES, SWAP_FIND,
-                         SWAP_ITEMS, TITLE, WF_PATH)
+from pipeline_v4 import (CAMERA_RULE, FILENAME_PREFIX, README_V4, REFUSE_EXTRA, REGEX_NOTE, RX_DEDUP,  # noqa: E402
+                         RX_DEDUP_REPL, RX_DOTS, RX_DOTS_REPL, RX_HAIR, RX_HAIR_DEDUP, RX_LEAD_CHAR, RX_LEAD_POSS,
+                         RX_LEAD_SUBJ, RX_ONE_PARA, RX_THINK, SFW_ANCHOR, SFW_KEEP_CLOTHES, SWAP_FIND, SWAP_ITEMS,
+                         TITLE, WF_PATH)
 
 sys.stdout.reconfigure(encoding="utf-8")
 w = json.loads(WF_PATH.read_text(encoding="utf-8"))
@@ -99,16 +100,25 @@ link(n4a, 0, 65, "string")
 link(n4a, 0, 69, "string")
 set_w(69, "regex_pattern", get_w(69, "regex_pattern") + REFUSE_EXTRA)
 
-# ---------- column 6: assemble MainTrigger. Prefix. body. Suffix ----------
+# ---------- column 5: one paragraph always, fixed hair rules ----------
+n5a = clone(66, TITLE["5a"], regex_pattern=RX_ONE_PARA, replace=" ", **RX_OFF)
+link(71, 0, n5a, "string")
+link(n5a, 0, 72, "string")
+set_w(72, "regex_pattern", RX_HAIR)
+set_w(73, "regex_pattern", RX_HAIR_DEDUP)
+
+# ---------- column 6: leading {char}, then MainTrigger. Prefix. body. Suffix ----------
 for nid in (78, 79, 80, 82):
     rm_node(nid)
 n6a = clone(65, TITLE["6a"], regex_pattern=RX_LEAD_CHAR, replace="", **RX_OFF)
-link(76, 0, n6a, "string")
-link(n6a, 0, 77, "string")
-n6c, n6d, n6e = (clone(58, TITLE[k], string_a="", string_b="", delimiter=". ") for k in ("6c", "6d", "6e"))
-link(38, 0, n6c, "string_a"); link(83, 0, n6c, "string_b")
-link(n6c, 0, n6d, "string_a"); link(77, 0, n6d, "string_b")
-link(n6d, 0, n6e, "string_a"); link(84, 0, n6e, "string_b")
+n6b = clone(65, TITLE["6b"], regex_pattern=RX_LEAD_POSS, replace="His", **RX_OFF)
+n6c = clone(65, TITLE["6c"], regex_pattern=RX_LEAD_SUBJ, replace="He ", **RX_OFF)
+link(76, 0, n6a, "string"); link(n6a, 0, n6b, "string"); link(n6b, 0, n6c, "string")
+link(n6c, 0, 77, "string")
+n6e, n6f, n6g = (clone(58, TITLE[k], string_a="", string_b="", delimiter=". ") for k in ("6e", "6f", "6g"))
+link(38, 0, n6e, "string_a"); link(83, 0, n6e, "string_b")
+link(n6e, 0, n6f, "string_a"); link(77, 0, n6f, "string_b")
+link(n6f, 0, n6g, "string_a"); link(84, 0, n6g, "string_b")
 
 # ---------- column 7: random clothing token swap + tidy ----------
 n7a = add_tony("Select_Random", TITLE["7a"], [], SWAP_ITEMS + [0, "randomize"], [320, 230])
@@ -116,7 +126,7 @@ n7b = add_tony("Find_and_Replace", TITLE["7b"],
                [{"name": "text", "type": "STRING", "link": None},
                 {"name": "replace_in", "shape": 7, "type": "STRING", "link": None}],
                [SWAP_FIND, "", True], [320, 130])
-link(n6e, 0, n7b, "text")
+link(n6g, 0, n7b, "text")
 link(n7a, 0, n7b, "replace_in")
 n7c = clone(65, TITLE["7c"], regex_pattern=RX_DEDUP, replace=RX_DEDUP_REPL, **{**RX_OFF, "case_insensitive": True})
 n7d = clone(65, TITLE["7d"], regex_pattern=RX_DOTS, replace=RX_DOTS_REPL, **RX_OFF)
@@ -133,21 +143,23 @@ for nid, title, val in ((38, "MainTrigger", None), (83, "Prefix", ""), (84, "Suf
         set_w(nid, "value", val)
 set_w(46, "filename_prefix", FILENAME_PREFIX)
 sfw = get_w(61, "value")
-assert sfw.count(SFW_ANCHOR) == 1, "SFW rule 7 anchor not found"
-set_w(61, "value", sfw.replace(SFW_ANCHOR, SFW_ANCHOR + SFW_KEEP_CLOTHES))
+assert sfw.count(SFW_ANCHOR) == 1 and sfw.count("11. **Output Format:**") == 1, "SFW anchors not found"
+sfw = sfw.replace(SFW_ANCHOR, SFW_ANCHOR + SFW_KEEP_CLOTHES)
+set_w(61, "value", sfw.replace("11. **Output Format:**", CAMERA_RULE + "12. **Output Format:**"))
 nsfw = get_w(62, "value")
-assert "12. **Output Format:**" in nsfw
-set_w(62, "value", nsfw.replace("12. **Output Format:**", "11. **Output Format:**"))
+assert nsfw.count("12. **Output Format:**") == 1  # rule 11 was missing: the camera rule takes its place
+set_w(62, "value", nsfw.replace("12. **Output Format:**", CAMERA_RULE + "12. **Output Format:**"))
 N[47]["title"] = "README – Krea2 LoRA T2I v4"
 set_w(47, "text", README_V4)
 note = clone(47, "Regex – bảng tra", text=REGEX_NOTE)
 N[note]["size"] = [560, 760]
 
 KEEP = {"1": 56, "2a": 81, "2b": 57, "2c": 58, "2d": 59, "3a": 60, "3b": 63, "4b": 65, "4c": 66, "4d": 67, "4e": 68,
-        "4f": 69, "4g": 70, "4h": 71, "5a": 72, "5b": 73, "5c": 74, "5d": 75, "5e": 76, "6b": 77}
+        "4f": 69, "4g": 70, "4h": 71, "5b": 72, "5c": 73, "5d": 74, "5e": 75, "5f": 76, "6d": 77}
 for k, nid in KEEP.items():
     N[nid]["title"] = TITLE[k]
-NEW = {"4a": n4a, "6a": n6a, "6c": n6c, "6d": n6d, "6e": n6e, "7a": n7a, "7b": n7b, "7c": n7c, "7d": n7d, "7e": n7e}
+NEW = {"4a": n4a, "5a": n5a, "6a": n6a, "6b": n6b, "6c": n6c, "6e": n6e, "6f": n6f, "6g": n6g,
+       "7a": n7a, "7b": n7b, "7c": n7c, "7d": n7d, "7e": n7e}
 ID = {**KEEP, **NEW}
 
 # ---------- layout: 7 colored column groups inside "Prompt Builder", left to right ----------

@@ -15,7 +15,23 @@ TEST_TXT = COMFY / "prompt" / "prompt_20261027_01.txt"
 TONY_FR = COMFY / "ComfyUI" / "custom_nodes" / "Load_IO_Tony" / "nodes" / "find_replace_node.py"
 
 RX_THINK = r"^[\s\S]*</think>\s*|</?think>"           # 4a: drop reasoning up to the last </think>, stray tags
-RX_LEAD_CHAR = r"^\s*\{char\}[\s.,:;]*"                # 6a: trigger goes first, so drop a leading {char}
+# 6a-6c: trigger goes first. A leading {char} that stands alone ("{char}. …", "{char} A 25yo…") is dropped;
+# one used as the subject ("{char} lies…", "{char}'s eyes…") becomes He / His so the sentence keeps a subject.
+RX_LEAD_CHAR = r"^\s*\{char\}(?:\s*[.,:;]+\s*|\s+(?=[^a-z\s'])|\s*$)"
+RX_LEAD_POSS = r"^\s*\{char\}'s\b"
+RX_LEAD_SUBJ = r"^\s*\{char\}\s+(?=[a-z])"
+RX_ONE_PARA = r"(?:\s*\n\s*)+"                         # 5a: one paragraph, also when refine is off
+# 5b: v3 hair rule, but the "lighting word" guard stops at "hair" ("dark hair and light stubble" is hair color).
+RX_HAIR = (r"\b(?:long|medium[- ]length|shoulder[- ]length|jet|black|dark|brown|chestnut|blond|blonde|platinum|silver"
+           r"|grey|gray|greyish|grayish|white|red|ginger|auburn|brunette|ash)\b[\s/-]*(?=(?:[\w/-]+\s+){0,4}hair\b)"
+           r"(?!(?:(?!hair\b)[\w/-]+\s+){0,3}?(?:light|lighting|backlight|rim\w*|glow\w*|highlights?)\b)")
+# 5c: v3 "short short" merge, now also across a comma ("short, short hair").
+RX_HAIR_DEDUP = r"\bshort[\s,]+(?=(?:[\w/-]+[\s,]+){0,3}?short\s+(?:[\w/-]+\s+){0,3}?hair\b)"
+CAMERA_TEXT = ("White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. "
+               "Remove unnecessary details; keep shadows natural and soft.")
+CAMERA_RULE = ("11. **Camera Defaults:** If the user's prompt already states camera settings (white balance, lens or "
+               "focal length, aperture or f-stop), keep them and add nothing. Otherwise end the paragraph with exactly: "
+               f"\"{CAMERA_TEXT}\"\n")
 RX_DEDUP = r"\b(\w+_\w+)(?:[\s,]+\1\b)+"               # 7c: "tnga_brief tnga_brief" -> one (tokens with "_" only)
 RX_DEDUP_REPL = r"\1"
 RX_DOTS = r"(\.)(?:\s*\.)+|[\s,]+$"                    # 7d: ".." / ". ." -> ".", trailing ", " removed
@@ -34,10 +50,10 @@ TITLE = {
     "4a": "4a. Cắt suy luận </think>", "4b": "4b. Bỏ câu dẫn / markdown", "4c": "4c. Gộp 1 đoạn",
     "4d": "4d. Bỏ nhãn 'Final Output:'", "4e": "4e. Trim", "4f": "4f. Qwen từ chối / bình luận?",
     "4g": "4g. Refine lỗi → prompt gốc", "4h": "4h. Prompt: refine / gốc",
-    "5a": "5a. Tóc: màu/độ dài → short", "5b": "5b. Gộp 'short short'", "5c": "5c. Bỏ jawline/chin/cheekbones…",
-    "5d": "5d. Dọn dấu phẩy thừa", "5e": "5e. Dọn khoảng trắng",
-    "6a": "6a. Bỏ {char} đầu thân", "6b": "6b. {char} → trigger", "6c": "6c. MainTrigger + Prefix",
-    "6d": "6d. + thân prompt", "6e": "6e. + Suffix",
+    "5a": "5a. Gộp 1 đoạn (luôn chạy)", "5b": "5b. Tóc: màu/độ dài → short", "5c": "5c. Gộp 'short short'",
+    "5d": "5d. Bỏ jawline/chin/cheekbones…", "5e": "5e. Dọn dấu phẩy thừa", "5f": "5f. Dọn khoảng trắng",
+    "6a": "6a. Bỏ {char} đứng riêng đầu thân", "6b": "6b. {char}'s đầu → His", "6c": "6c. {char} chủ ngữ đầu → He",
+    "6d": "6d. {char} → trigger", "6e": "6e. MainTrigger + Prefix", "6f": "6f. + thân prompt", "6g": "6g. + Suffix",
     "7a": "7a. Random token quần áo", "7b": "7b. Swap quần áo → token", "7c": "7c. Gộp token lặp",
     "7d": "7d. Dọn dấu chấm / cuối chuỗi", "7e": "7e. Trim",
 }
@@ -50,7 +66,9 @@ README_V4 = """## Krea-2 Turbo + LoRA — T2I v4
 
 **Prompt Builder (trái → phải):** 1 Nguồn · 2 `{char}` · 3 LLM refine · 4 Dọn output LLM · 5 Ép identity LoRA · 6 Ghép · 7 Random swap. Bảng regex: note *Regex – bảng tra*.
 
-**`{char}`:** chữ trigger trong prompt (vd `Ivan_Ryo.`) được đổi thành `{char}`; không có thì tự thêm vào đầu. `{char}` đứng đầu bị bỏ (trigger đã đứng đầu chuỗi), `{char}` giữa câu đổi thành trigger. **MainTrigger không được để trống.**
+**`{char}`:** chữ trigger trong prompt (vd `Ivan_Ryo.`) được đổi thành `{char}`; không có thì tự thêm vào đầu. `{char}` đứng riêng ở đầu (`{char}. …`, `{char} A 25yo…`) bị bỏ vì trigger đã đứng đầu chuỗi; `{char}` làm chủ ngữ đầu câu thành `He` / `His` (`{char} lies…` → `He lies…`); `{char}` giữa câu đổi thành trigger. **MainTrigger không được để trống.**
+
+**Camera mặc định (rule 11 của cả 2 system prompt, chỉ khi refine bật):** prompt chưa có white balance / lens / khẩu độ thì LLM thêm `White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft.`; đã có thì giữ nguyên.
 
 **Toggle:** `use_txt` (bật: .txt, tắt: Prompt tay) · `refine` (Qwen3-VL-4B viết lại; lỗi/từ chối → prompt gốc) · `nsfw` (System prompt NSFW thay SFW, chỉ khi refine bật).
 
@@ -72,13 +90,16 @@ REGEX_NOTE = """## Regex – bảng tra (R = chỉ khi refine bật, A = luôn c
 | 4c | xuống dòng | 1 dấu cách | 1 đoạn | R |
 | 4d | nhãn đầu "Final Output:", "Prompt:"… | rỗng | bỏ nhãn | R |
 | 4f | rỗng · I'm sorry · I can't · as an AI · chép system prompt… | (đúng/sai) | lỗi → dùng prompt gốc | R |
-| 5a | màu/độ dài trong 4 từ trước `hair` | `short ` | LoRA giữ tóc | A |
-| 5b | `short` thừa trước `hair` | rỗng | gộp short short | A |
-| 5c | sharp/defined/strong… + jawline/chin/cheekbones/nose | rỗng | LoRA giữ mặt | A |
-| 5d | ` ,` · `,,` · ` .` | rỗng | dọn dấu phẩy | A |
-| 5e | 2+ dấu cách | 1 dấu cách | dọn khoảng trắng | A |
-| 6a | `{char}` đầu thân | rỗng | trigger đã đứng đầu | A |
-| 6b | `{char}` | MainTrigger | `{char}` giữa câu | A |
+| 5a | xuống dòng | 1 dấu cách | 1 đoạn (cả khi refine tắt) | A |
+| 5b | màu/độ dài trong 4 từ trước `hair` (trừ khi có light/rim/glow trước `hair`) | `short ` | LoRA giữ tóc | A |
+| 5c | `short` thừa trước `hair` (kể cả `short, short`) | rỗng | gộp short short | A |
+| 5d | sharp/defined/strong… + jawline/chin/cheekbones/nose | rỗng | LoRA giữ mặt | A |
+| 5e | ` ,` · `,,` · ` .` | rỗng | dọn dấu phẩy | A |
+| 5f | 2+ dấu cách | 1 dấu cách | dọn khoảng trắng | A |
+| 6a | `{char}` đứng riêng đầu thân | rỗng | trigger đã đứng đầu | A |
+| 6b | `{char}'s` đầu thân | `His` | giữ chủ ngữ | A |
+| 6c | `{char}` + chữ thường đầu thân | `He ` | giữ chủ ngữ | A |
+| 6d | `{char}` | MainTrigger | `{char}` giữa câu | A |
 | 7b | brief/briefs/underwear/towel/pants/sweatpants/shorts/sweatshorts | token 7a | token LoRA quần áo (nguyên từ) | A |
 | 7c | token `_` lặp liền nhau | 1 token | gộp lặp | A |
 | 7d | `..` · `. .` · dấu thừa cuối | `.` | dọn sau khi ghép | A |
@@ -127,10 +148,10 @@ def simulate(wf, raw, prefix, suffix, token, refined=None):
             for k in ("4b", "4c", "4d"):
                 out = _rx(wf, TITLE[k], out)
             body = out.strip()                                        # 4e
-    for k in ("5a", "5b", "5c", "5d", "5e", "6a"):
+    for k in ("5a", "5b", "5c", "5d", "5e", "5f", "6a", "6b", "6c"):
         body = _rx(wf, TITLE[k], body)
-    body = body.replace("{char}", trig)                               # 6b
-    s = ". ".join([trig, prefix, body, suffix])                       # 6c / 6d / 6e
+    body = body.replace("{char}", trig)                               # 6d
+    s = ". ".join([trig, prefix, body, suffix])                       # 6e / 6f / 6g
     s = find_replace(s, SWAP_FIND, "", token, whole_word=True)       # 7b
     s = _rx(wf, TITLE["7c"], s)
     return _rx(wf, TITLE["7d"], s).strip()                            # 7d / 7e
@@ -141,7 +162,7 @@ def check_final(final, trig, token):
     bad = []
     if not final.startswith(trig):
         bad.append("not starting with trigger")
-    for needle in ("{char}", "<think>", "</think>", "..", "tnga_tnga"):
+    for needle in ("{char}", "<think>", "</think>", "..", "tnga_tnga", "short, short", "short short", "\n"):
         if needle in final:
             bad.append(f"contains {needle!r}")
     if re.search(RX_DEDUP, final, re.I):
@@ -157,6 +178,16 @@ def _pattern_asserts():
     assert re.sub(RX_THINK, "", "plan...</think>\n\nFinal text <think>") == "Final text "
     assert re.sub(RX_THINK, "", "no reasoning here") == "no reasoning here"
     assert re.sub(RX_LEAD_CHAR, "", "{char}. A man, {char} smiles") == "A man, {char} smiles"
+    assert re.sub(RX_LEAD_CHAR, "", "{char} A 25yo man") == "A 25yo man"
+    assert re.sub(RX_LEAD_CHAR, "", "{char} lies on a float") == "{char} lies on a float"
+    assert re.sub(RX_LEAD_SUBJ, "He ", "{char} lies on a float") == "He lies on a float"
+    assert re.sub(RX_LEAD_POSS, "His", "{char}'s eyes are closed") == "His eyes are closed"
+    hair = lambda s: re.sub(RX_HAIR_DEDUP, "", re.sub(RX_HAIR, "short ", s, flags=re.I), flags=re.I)
+    assert hair("with short, dark brown hair and light stubble.") == "with short hair and light stubble."
+    assert hair("He has short, dark hair, reclining") == "He has short hair, reclining"
+    assert hair("white rim light on his black hair") == "white rim light on his short hair"
+    assert hair("golden light on his hair") == "golden light on his hair"
+    assert re.sub(RX_ONE_PARA, " ", "line one\nline two\n\n") == "line one line two "
     assert re.sub(RX_DEDUP, RX_DEDUP_REPL, "white tnga_brief tnga_brief, x", flags=re.I) == "white tnga_brief, x"
     assert re.sub(RX_DEDUP, RX_DEDUP_REPL, "very very tall") == "very very tall"
     assert re.sub(RX_DOTS, RX_DOTS_REPL, "Ivan_Ryo.. . body.. . ").strip() == "Ivan_Ryo. body."
@@ -187,7 +218,7 @@ if __name__ == "__main__":
                 "**{char}** lies on a float in black swim shorts, sharp jawline.")
     llm = simulate(wf, "{char} on a float", "", "good bulge, briefs", "hpstr_brief", refined=fake_llm)
     print("[llm]", llm)
-    assert llm.startswith("Ivan_Ryo. ") and "**" not in llm and "plan" not in llm and "jawline" not in llm, llm
+    assert llm.startswith("Ivan_Ryo. He lies on a float") and "**" not in llm and "plan" not in llm and "jawline" not in llm, llm
     assert llm.endswith("good bulge, hpstr_brief") and "swim hpstr_brief" in llm, llm
-    assert simulate(wf, "{char} on a float", "", "", "x", refined="I'm sorry, I can't help.") == "Ivan_Ryo. on a float."
+    assert simulate(wf, "{char} sits on a float", "", "", "x", refined="I'm sorry, I can't help.") == "Ivan_Ryo. He sits on a float."
     print("simulation ok")
