@@ -20,7 +20,7 @@ Ngoài phạm vi: đóng gói subgraph, loader LLM riêng cho bản Thinking, đ
 | # | Lỗi | Hậu quả | Sửa trong v4 |
 |---|---|---|---|
 | B1 | `5d` (suffix "good bulge. strng_bikini underwear") nằm ở nhánh `on_false` của `5c`, chỉ chạy khi prompt **thiếu** trigger | Prompt bình thường (có trigger) không bao giờ có suffix | Bỏ `5a/5b/5c/5d`, ghép cố định ở cột 6 |
-| B2 | Save dùng `%Trigger.value%` nhưng node đã đổi tên `MainTrigger` | Tên file lỗi/không thay | `%MainTrigger.value%`, `v3` → `v4` |
+| B2 | Save dùng `%Trigger.value%`; 3 node `MainTrigger`, `Sub trigger LoRA`, `ReplaceTriggerLoRA` cùng mang S&R name `Trigger` | Tên file lấy trigger từ node nào là may rủi | S&R name riêng: `MainTrigger`, `Prefix`, `Suffix`; filename `%MainTrigger.value%`, `v3` → `v4` |
 | B3 | `Sub trigger LoRA`, `ReplaceTriggerLoRA` chưa nối | Không tác dụng | Đổi thành `Prefix`, `Suffix` và nối vào |
 | B4 | System prompt NSFW đánh số 10 → 12 | Nhỏ, có thể làm LLM 4B lúng túng | Đổi 12 → 11 |
 | B5 | `3g` (bắt từ chối) thiếu mẫu "LLM lặp lại system prompt" mà `tools/krea2_v3/regex_v3.py` có (`You are a prompt rewriter`, `Follow these rules strictly`, `Main Character Token`) | LLM chép lại system prompt thì lọt thẳng vào ảnh | Thêm 3 mẫu đó vào `3g` |
@@ -166,6 +166,7 @@ Số node regex (RegexReplace/RegexMatch): 10 → 13 (xoá `3c`, thêm `4a`, `6a
 - `tools/krea2_v4/patch_v4.py`: đọc `Krea2_LoRA_T2I_v4.json`, áp dụng mọi thay đổi ở mục 2, ghi đè file. Script cũng chạy assert-check các regex mới trên câu mẫu (mục test 1).
 - `tools/krea2_v4/check_v4.py`: kiểm tra cấu trúc (link, type, `%…%` trong tên file), dựa trên `tools/krea2_v3/check_v3.py`.
 - Bạn đã sửa v4 bằng tay trong ComfyUI nên script làm việc trên file đó (không sinh lại từ đầu như `build_v3.py`). Nếu cần làm lại thì `git checkout` file và chạy lại script.
+- `ComfyUI/user/default/workflows/Krea2_LoRA_T2I_v4.json` là bản cũ hơn (28/10, 85 KB). Sau khi patch: đổi tên bản đó thành `Krea2_LoRA_T2I_v4.bak.json` rồi chép bản trong repo vào, để ComfyUI mở đúng bản mới.
 
 ## 6. Test
 
