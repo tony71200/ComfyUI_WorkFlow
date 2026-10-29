@@ -68,8 +68,9 @@ for k, t in TITLE.items():
     assert (T[t]["id"] in INNER) == (k[0] in "123456S"), ("wrong side of the subgraph", t)
 for t in ("System prompt SFW", "System prompt NSFW"):
     assert T[t]["id"] in INNER, t
-for t in ("Prefix", "Suffix", "MainTrigger", "Regex – bảng tra", "README – Krea2 LoRA T2I v4"):
+for t in ("Prefix", "Suffix", "MainTrigger", "Regex – bảng tra", "refine (LLM)", "nsfw"):
     assert T.get(t, {}).get("id") in ROOT, ("missing root node", t)
+assert any(n.get("title") in ("README – Krea2 LoRA T2I v4", "README – Krea2 LoRA I2I v4") for n in ROOT.values()), "README"
 for gone in ("3c. Bỏ 'negative prompt…'", "5a. Có trigger?", "5b. Ghép trigger vào đầu", "5c. Chốt an toàn", "5d. Ghép trigger vào cuối"):
     assert gone not in T, ("should be removed", gone)
 RL = {l[0]: dict(zip(KEYS, l)) for l in d["links"]}
@@ -113,7 +114,11 @@ assert src(TITLE["6g"], "string_a") == TITLE["6f"] and src(TITLE["6g"], "string_
 assert src(TITLE["7b"], "text") == TITLE["6g"] and src(TITLE["7b"], "replace_in") == TITLE["7a"]
 assert src(TITLE["7c"], "string") == TITLE["7b"] and src(TITLE["7d"], "string") == TITLE["7c"]
 assert src(TITLE["7e"], "string") == TITLE["7d"]
-for nid, name in ((45, "prompt"), (46, "positive_prompt_override"), (44, "source")):
+sampler_ids = {sg["id"] for sg in d["definitions"]["subgraphs"] if sg["name"].startswith("Krea2 Sampler")}
+by_type = lambda pred: next(n["id"] for n in d["nodes"] if pred(n))
+for nid, name in ((by_type(lambda n: n["type"] in sampler_ids), "prompt"),
+                  (by_type(lambda n: n["type"] == "SaveImageA1Metadata"), "positive_prompt_override"),
+                  (by_type(lambda n: n["type"] == "PreviewAny"), "source")):
     assert src(nid, name) == TITLE["7e"], (nid, name)
 fr = T[TITLE["7b"]]["widgets_values"]
 assert fr[1] == "" and fr[2] is True, fr
@@ -130,7 +135,8 @@ assert "7. **Always Keep the Groin Covered:**" in sfw and "Keep every clothing i
 assert "let me know" in T[TITLE["4b"]]["widgets_values_named"]["regex_pattern"]
 
 assert src(TITLE["3b"], "clip") == "Text encoder Qwen3-VL-4B (type krea2)"
-assert src(TITLE["1"], "on_true") == "TextSplitter" and src(TITLE["1"], "switch").startswith("use_txt")
+assert src(TITLE["1"], "on_true") in ("TextSplitter", "ImageBatch") and src(TITLE["1"], "on_false") == "Prompt tay"
+assert src(TITLE["1"], "switch").startswith(("use_txt", "⚡ Dùng folder batch?"))
 assert src(TITLE["4h"], "switch") == "refine (LLM)" and src(TITLE["3a"], "switch") == "nsfw"
 
 # layout: every Prompt Builder node sits inside its column group (subgraph coordinates for columns 1-6 + S)

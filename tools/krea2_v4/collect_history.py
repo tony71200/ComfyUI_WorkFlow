@@ -17,15 +17,24 @@ def get(path):
     return json.load(urllib.request.urlopen(API + path, timeout=30))
 
 
+def find(api, cls=None, title=None):
+    """API key of the node with this class_type and/or title (works for T2I and I2I alike)."""
+    return next(k for k, v in api.items()
+                if (cls is None or v.get("class_type") == cls) and (title is None or v.get("_meta", {}).get("title") == title))
+
+
 def record(pid, h):
     api, extra = h["prompt"][2], h["prompt"][3]
-    sel = next(k for k, v in api.items() if v.get("class_type") == "Select_Random")
-    idx = api[sel]["inputs"]["index"]
+    idx = api[find(api, "Select_Random")]["inputs"]["index"]
+    src = find(api, title="TextSplitter") if any(v.get("_meta", {}).get("title") == "TextSplitter" for v in api.values()) \
+        else find(api, title="ImageBatch")
     out = h.get("outputs", {})
-    return {"prompt_id": pid, "ts_index": api["42"]["inputs"]["index"], "seed": api["39"]["inputs"]["value"],
-            "nsfw": api["55"]["inputs"]["value"], "select_index": idx, "token": SWAP_ITEMS[min(idx, len(SWAP_ITEMS) - 1)],
-            "final": "".join(out.get("44", {}).get("text", [""])),
-            "images": [f'{i["subfolder"]}/{i["filename"]}' for i in out.get("46", {}).get("images", [])],
+    preview, save = find(api, "PreviewAny"), find(api, "SaveImageA1Metadata")
+    return {"prompt_id": pid, "ts_index": api[src]["inputs"]["index"], "seed": api[find(api, title="Seed")]["inputs"]["value"],
+            "nsfw": api[find(api, title="nsfw")]["inputs"]["value"], "select_index": idx,
+            "token": SWAP_ITEMS[min(idx, len(SWAP_ITEMS) - 1)],
+            "final": "".join(out.get(preview, {}).get("text", [""])),
+            "images": [f'{i["subfolder"]}/{i["filename"]}' for i in out.get(save, {}).get("images", [])],
             "status": h.get("status", {}).get("status_str"), "api": api, "extra": extra}
 
 

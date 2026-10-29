@@ -11,7 +11,7 @@ import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from collect_history import API, get, record  # noqa: E402
+from collect_history import API, find, get, record  # noqa: E402
 from pipeline_v4 import WF_PATH  # noqa: E402
 
 SYNC_TYPES = {"RegexReplace", "RegexMatch", "StringReplace", "StringConcatenate", "StringTrim"}
@@ -52,8 +52,8 @@ if __name__ == "__main__":
     out = []
     for r in json.load(open(a.src, encoding="utf-8")):
         api = copy.deepcopy(r["api"])
-        api["55"]["inputs"]["value"] = a.nsfw == "true"
-        api["46"]["inputs"]["filename_prefix"] += f"_{a.tag}"
+        api[find(api, title="nsfw")]["inputs"]["value"] = a.nsfw == "true"
+        api[find(api, "SaveImageA1Metadata")]["inputs"]["filename_prefix"] += f"_{a.tag}"
         if a.sync:
             sync(api, wf)
         pid = post("/prompt", {"prompt": api, "extra_data": r["extra"], "client_id": f"krea2-v4-{a.tag}"})["prompt_id"]
