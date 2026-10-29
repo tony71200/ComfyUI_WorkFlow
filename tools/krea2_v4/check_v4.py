@@ -95,7 +95,9 @@ for sp in ("System prompt SFW", "System prompt NSFW"):
     nums = [int(m) for m in re.findall(r"^(\d+)\. \*\*", text, re.M)]
     assert nums == list(range(1, 13)), (sp, nums)
     assert "11. **Camera Defaults:**" in text and "White balance 5500K" in text, sp
-assert "Keep every clothing item" in T["System prompt SFW"]["widgets_values"][0]
+sfw = T["System prompt SFW"]["widgets_values"][0]
+assert "7. **Always Keep the Groin Covered:**" in sfw and "Keep every clothing item" in sfw and "Respect the Human Form" not in sfw
+assert "let me know" in T[TITLE["4b"]]["widgets_values_named"]["regex_pattern"]
 
 # layout: every Prompt Builder node sits inside its column group
 G = {g["title"]: g["bounding"] for g in d["groups"]}

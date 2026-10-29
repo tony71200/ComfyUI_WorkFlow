@@ -39,8 +39,19 @@ RX_DOTS_REPL = r"\1"
 REFUSE_EXTRA = "|You are a prompt rewriter|Follow these rules strictly|Main Character Token"  # 4f: echoed system prompt
 SWAP_FIND = "brief|briefs|underwear|towel|pants|sweatpants|shorts|sweatshorts"
 SWAP_ITEMS = ["tnga_brief", "lrcontour_brief", "stng_bikini", "hpstr_brief", "dblstrap_bikini"]
-SFW_ANCHOR = "natural framing and cropping."
-SFW_KEEP_CLOTHES = " Keep every clothing item the user wrote (e.g. briefs, towel, shorts) with the same word."
+SFW_RULE7_HEAD = "7. **Respect the Human Form:**"
+# The UNet is an NSFW fine-tune: anything not explicitly covered tends to be exposed, so SFW must state the cover.
+SFW_RULE7 = ("7. **Always Keep the Groin Covered:** Treat depictions of people with dignity. In your output every "
+             "person's groin and buttocks must be covered, and you must say so in words. If the input mentions nudity or "
+             "intimate anatomy (nude, naked, undressed, bare, penis, testicles, genitals, pubic hair, erection, bare "
+             "buttocks), delete those words and do one of: (a) dress the person in briefs and write \"wearing briefs that "
+             "fully cover the groin\"; or (b) when underwear does not fit the scene, frame the shot so the groin is out "
+             "of view (waist-up crop, seen from behind above the waist, or a solid object or thick fabric fully in front "
+             "of the hips) and write that the groin is out of frame or fully hidden. If the input never says what covers "
+             "the groin, add briefs the same way. Water, foam, steam, shadow and thin draped fabric do not count as "
+             "covering. Keep every clothing item the user wrote (e.g. briefs, towel, shorts) with the same word.")
+# 4b addition: trailing chat from the LLM ("Let me know if you want to adjust…") up to the end of the line.
+RX_CHATTER = r"|\s*\b(?:let me know|feel free to|hope this helps|would you like)\b[^\n]*"
 FILENAME_PREFIX = "Krea2_%date:yyyy_MM_dd%/Krea2_T2I_v4_%MainTrigger.value%_%TextSplitter.index%_%date:yyMMdd%_%Seed.value%"
 
 TITLE = {
@@ -71,6 +82,8 @@ README_V4 = """## Krea-2 Turbo + LoRA — T2I v4
 **Camera mặc định (rule 11 của cả 2 system prompt, chỉ khi refine bật):** prompt chưa có white balance / lens / khẩu độ thì LLM thêm `White balance 5500K, 50mm lens, f/1.8 aperture. Slightly blur the background for portrait shots. Remove unnecessary details; keep shadows natural and soft.`; đã có thì giữ nguyên.
 
 **Toggle:** `use_txt` (bật: .txt, tắt: Prompt tay) · `refine` (Qwen3-VL-4B viết lại; lỗi/từ chối → prompt gốc) · `nsfw` (System prompt NSFW thay SFW, chỉ khi refine bật).
+
+**SFW (rule 7):** LLM phải ghi rõ vùng kín được che — nude/naked → mặc briefs hoặc chọn góc máy giấu hông (waist-up, từ sau lưng, vật che). UNet là bản NSFW nên chỗ nào không ghi "che" thì dễ bị lộ. Khi refine lỗi và quay về prompt gốc thì không có lớp này.
 
 **Thinking:** text encoder dùng chung cho Krea2 và LLM — **không** thay bằng bản Qwen3-VL Thinking. Muốn LLM thinking thì cần loader riêng (chưa có), bật `thinking`, `max_length ≥ 2048`. Node *4a* cắt mọi thứ đến `</think>`. Giới hạn: suy luận bị cắt ngang mà không mở bằng `<think>` vẫn có thể lọt vào prompt.
 
@@ -188,6 +201,7 @@ def _pattern_asserts():
     assert hair("white rim light on his black hair") == "white rim light on his short hair"
     assert hair("golden light on his hair") == "golden light on his hair"
     assert re.sub(RX_ONE_PARA, " ", "line one\nline two\n\n") == "line one line two "
+    assert re.sub(RX_CHATTER[1:], "", "soft shadows. Let me know if you want to adjust it!", flags=re.I) == "soft shadows."
     assert re.sub(RX_DEDUP, RX_DEDUP_REPL, "white tnga_brief tnga_brief, x", flags=re.I) == "white tnga_brief, x"
     assert re.sub(RX_DEDUP, RX_DEDUP_REPL, "very very tall") == "very very tall"
     assert re.sub(RX_DOTS, RX_DOTS_REPL, "Ivan_Ryo.. . body.. . ").strip() == "Ivan_Ryo. body."
@@ -215,10 +229,10 @@ if __name__ == "__main__":
             assert not bad, (i, bad, final[:300])
             print(f"[{i:02d}] {final[:160]}")
     fake_llm = ("plan: keep it short</think>\n\nHere is the refined prompt:\n"
-                "**{char}** lies on a float in black swim shorts, sharp jawline.")
+                "**{char}** lies on a float in black swim shorts, sharp jawline. Let me know if you want changes!")
     llm = simulate(wf, "{char} on a float", "", "good bulge, briefs", "hpstr_brief", refined=fake_llm)
     print("[llm]", llm)
     assert llm.startswith("Ivan_Ryo. He lies on a float") and "**" not in llm and "plan" not in llm and "jawline" not in llm, llm
-    assert llm.endswith("good bulge, hpstr_brief") and "swim hpstr_brief" in llm, llm
+    assert llm.endswith("good bulge, hpstr_brief") and "swim hpstr_brief" in llm and "Let me" not in llm, llm
     assert simulate(wf, "{char} sits on a float", "", "", "x", refined="I'm sorry, I can't help.") == "Ivan_Ryo. He sits on a float."
     print("simulation ok")

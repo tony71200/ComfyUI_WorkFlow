@@ -7,10 +7,10 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from pipeline_v4 import (CAMERA_RULE, FILENAME_PREFIX, README_V4, REFUSE_EXTRA, REGEX_NOTE, RX_DEDUP,  # noqa: E402
-                         RX_DEDUP_REPL, RX_DOTS, RX_DOTS_REPL, RX_HAIR, RX_HAIR_DEDUP, RX_LEAD_CHAR, RX_LEAD_POSS,
-                         RX_LEAD_SUBJ, RX_ONE_PARA, RX_THINK, SFW_ANCHOR, SFW_KEEP_CLOTHES, SWAP_FIND, SWAP_ITEMS,
-                         TITLE, WF_PATH)
+from pipeline_v4 import (CAMERA_RULE, FILENAME_PREFIX, README_V4, REFUSE_EXTRA, REGEX_NOTE, RX_CHATTER,  # noqa: E402
+                         RX_DEDUP, RX_DEDUP_REPL, RX_DOTS, RX_DOTS_REPL, RX_HAIR, RX_HAIR_DEDUP, RX_LEAD_CHAR,
+                         RX_LEAD_POSS, RX_LEAD_SUBJ, RX_ONE_PARA, RX_THINK, SFW_RULE7, SFW_RULE7_HEAD, SWAP_FIND,
+                         SWAP_ITEMS, TITLE, WF_PATH)
 
 sys.stdout.reconfigure(encoding="utf-8")
 w = json.loads(WF_PATH.read_text(encoding="utf-8"))
@@ -99,6 +99,7 @@ link(63, 0, n4a, "string")
 link(n4a, 0, 65, "string")
 link(n4a, 0, 69, "string")
 set_w(69, "regex_pattern", get_w(69, "regex_pattern") + REFUSE_EXTRA)
+set_w(65, "regex_pattern", get_w(65, "regex_pattern") + RX_CHATTER)
 
 # ---------- column 5: one paragraph always, fixed hair rules ----------
 n5a = clone(66, TITLE["5a"], regex_pattern=RX_ONE_PARA, replace=" ", **RX_OFF)
@@ -143,8 +144,11 @@ for nid, title, val in ((38, "MainTrigger", None), (83, "Prefix", ""), (84, "Suf
         set_w(nid, "value", val)
 set_w(46, "filename_prefix", FILENAME_PREFIX)
 sfw = get_w(61, "value")
-assert sfw.count(SFW_ANCHOR) == 1 and sfw.count("11. **Output Format:**") == 1, "SFW anchors not found"
-sfw = sfw.replace(SFW_ANCHOR, SFW_ANCHOR + SFW_KEEP_CLOTHES)
+lines = sfw.split("\n")
+r7 = [k for k, line in enumerate(lines) if line.startswith(SFW_RULE7_HEAD)]
+assert len(r7) == 1 and sfw.count("11. **Output Format:**") == 1, "SFW anchors not found"
+lines[r7[0]] = SFW_RULE7
+sfw = "\n".join(lines)
 set_w(61, "value", sfw.replace("11. **Output Format:**", CAMERA_RULE + "12. **Output Format:**"))
 nsfw = get_w(62, "value")
 assert nsfw.count("12. **Output Format:**") == 1  # rule 11 was missing: the camera rule takes its place
